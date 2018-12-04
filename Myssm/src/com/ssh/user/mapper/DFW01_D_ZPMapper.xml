@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW01_D_ZPMapper">
+	<!-- 返回对应照片集合 -->
+	<resultMap type="DFW01_D_ZP" id="dkzp">
+		<result property="JFID" column="JFID" />
+		<result property="SL_LJ" column="SL_LJ" />
+		<result property="ZP_LJ" column="ZP_LJ" />
+		<result property="PZSJ" column="PZSJ" />
+		<result property="LB" column="LB" />
+		<result property="GPS_DJ" column="GPS_DJ" />
+		<result property="GPS_BW" column="GPS_BW" />
+	</resultMap>
+	<!-- 获取地块照片集合 -->
+	<select id="SelectByDK" parameterType="String" resultMap="dkzp">
+		SELECT
+		JFID,SL_LJ,ZP_LJ,PZSJ,LB,GPS_DJ,GPS_BW FROM DFW01_D_ZP WHERE DFW01_D_JFID=#{0} ORDER BY LB
+	</select>
+	<!-- 根据ID删除对应数据 -->
+	<delete id="delZP">
+		DELETE FROM DFW01_D_ZP WHERE JFID=#{0}
+	</delete>
+	<delete id="deleteByDFW01_D_JFID">
+		DELETE FROM DFW01_D_ZP WHERE DFW01_D_JFID=#{0}
+	</delete>
+	<insert id="insert" parameterType="DFW01_D_ZP">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT SDFW01_D_ZP.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DFW01_D_ZP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="DFW01_D_JFID != null and DFW01_D_JFID !=''"> DFW01_D_JFID,</if>
+			<if test="ZP_LJ != null and ZP_LJ !=''"> ZP_LJ,  </if>
+			<if test="ZP_WJM != null and ZP_WJM !=''"> ZP_WJM,   </if>
+			<if test="PZSJ != null and PZSJ !=''"> PZSJ, </if>
+			<if test="LB != null and LB !=''"> LB, </if>
+			<if test="GPS_DJ != null and GPS_DJ !=''"> GPS_DJ, </if>
+			<if test="GPS_BW != null and GPS_BW !=''"> GPS_BW, </if>
+			<if test="SL_LJ != null and SL_LJ !=''"> SL_LJ, </if>
+			<if test="SL_WJM != null and SL_WJM !=''"> SL_WJM, </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DFW01_D_JFID != null and DFW01_D_JFID !=''">#{DFW01_D_JFID,jdbcType=VARCHAR},</if>
+			<if test="ZP_LJ != null and ZP_LJ !=''"> #{ZP_LJ,jdbcType=VARCHAR},    </if>
+			<if test="ZP_WJM != null and ZP_WJM !=''"> #{ZP_WJM,jdbcType=VARCHAR},    </if>
+			<if test="PZSJ != null and PZSJ !=''"> TO_DATE(#{PZSJ},'yyyy-MM-dd hh24:mi:ss'),  </if>
+			<if test="LB != null and LB !=''"> #{LB,jdbcType=VARCHAR},</if>
+			<if test="GPS_DJ != null and GPS_DJ !=''"> #{GPS_DJ,jdbcType=VARCHAR},    </if>
+			<if test="GPS_BW != null and GPS_BW !=''"> #{GPS_BW,jdbcType=VARCHAR},  </if>
+			<if test="SL_LJ != null and SL_LJ !=''"> #{SL_LJ,jdbcType=VARCHAR},  </if>
+			<if test="SL_WJM != null and SL_WJM !=''"> #{SL_WJM,jdbcType=VARCHAR},  </if>
+		</trim>
+	</insert>
+</mapper>

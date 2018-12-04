@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW11Mapper">
+	<!-- 分页对应集合 -->
+	<resultMap type="DFW11" id="fyjh">
+		<result property="JFID" column="JFID" />
+		<result property="FL" column="FL" />
+		<result property="BT" column="BT" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="RN" column="RN" />
+		<association property="FLMC" select="SelectByFlMc" column="FLMC"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询分类名称 -->
+	<select id="SelectByFlMc" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='HXJSFL' AND BM=#{0}
+	</select>
+	<!-- 获取对应集合有分页 -->
+	<select id="SelectByPageAll" parameterType="map" resultMap="fyjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,FL,FL
+		FLMC,BT,LRRQ
+		FROM DFW11 WHERE ZT=1
+		<if test="FL != null and FL !=''">
+			AND FL=#{FL}
+		</if>
+		<if test="BT != null and BT !=''">
+			AND BT LIKE '%'||#{BT}||'%'
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取对应集合的数量 -->
+	<select id="GetCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW11 WHERE ZT =1
+		<if test="FL != null and FL !=''">
+			AND FL=#{FL}
+		</if>
+		<if test="BT != null and BT !=''">
+			AND BT LIKE '%'||#{BT}||'%'
+		</if>
+	</select>
+	<!-- 根据ID获取唯一数据 -->
+	<select id="SelectByJfid" parameterType="String" resultType="DFW11">
+		SELECT FL,BT,NR FROM DFW11 WHERE JFID=#{0}
+	</select>
+</mapper>

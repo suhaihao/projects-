@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW02Mapper">
+	<resultMap type="DFW02" id="tsjh">
+		<result property="DY_JFID" column="DY_JFID" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="PJ_JZRQ" column="PJ_JZRQ" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="DDJ02_JFID" column="DDJ02_JFID" />
+	</resultMap>
+	<!-- 查询需要推送的集合 -->
+	<select id="SelectByTXRQList" resultMap="tsjh">
+		SELECT
+		DY_JFID,F_GET_MC('FWNRLB',FWNRLB)
+		FWNRLB,PJ_JZRQ,DDJ01_JFID,DDJ01_MC,DDJ02_JFID FROM DFW02 WHERE ZT='0'
+		AND TO_CHAR(TXRQ,'yyyy-mm-dd')=TO_CHAR(SYSDATE,'yyyy-mm-dd')
+	</select>
+	<!-- 获取手机浏览集合数量 -->
+	<select id="getCountLL" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW02
+		D02,DDJ02 DD02 WHERE DD02.YHM=#{yhm} AND
+		DD02.JFID=D02.DDJ02_JFID
+		<if test="zt != null and zt !=''">
+			AND D02.ZT=#{zt}
+		</if>
+	</select>
+	<!-- 评论集合 -->
+	<resultMap type="DFW02" id="pljh">
+		<result property="JFID" column="JFID" />
+		<result property="DY_JFID" column="DY_JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="PJ_JZRQ" column="PJ_JZRQ" />
+		<result property="PJRQ" column="PJRQ" />
+		<result property="PJSM" column="PJSM" />
+		<result property="PJJG" column="PJJG" />
+		<result property="ZT" column="ZT" />
+		<association property="FWNRLBMC" select="SelectByFlMc"
+			column="FWNRLBMC" javaType="String" />
+	</resultMap>
+	<!-- 查找分类名称 -->
+	<select id="SelectByFlMc" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FWNRLB' AND BM=#{0}
+	</select>
+	<!-- 查找手机评论集合 -->
+	<select id="SelectByLLList" parameterType="map" resultMap="pljh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		D02.JFID,D02.DY_JFID,D02.DDJ01_MC,D02.FWNRLB,D02.FWNRLB FWNRLBMC,D02.PJ_JZRQ,D02.PJRQ,D02.PJSM,D02.PJJG,D02.ZT FROM
+		DFW02
+		D02,DDJ02 DD02 WHERE DD02.YHM=#{yhm} AND
+		DD02.JFID=D02.DDJ02_JFID
+		<if test="zt != null and zt !=''">
+			AND D02.ZT=#{zt}
+		</if>
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 手机根据ID获取唯一数据 -->
+	<select id="SelectByJFID" parameterType="String" resultType="DFW02">
+		SELECT D02.JFID,D02.DY_JFID,D02.DDJ02_JFID,D02.DDJ01_MC,DD02.MC,F_GET_MC('FWNRLB',D02.FWNRLB)
+		FWNRLB,D02.PJJG,TO_DATE(TO_CHAR(D02.PJRQ,'yyyy-mm-dd'),'yyyy-mm-dd') PJRQ,D02.PJSM,D02.ZT FROM DFW02
+		D02,DDJ02 DD02 WHERE DD02.JFID=D02.DDJ02_JFID
+		AND D02.JFID=#{0}
+	</select>
+	
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_PJJG" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_PJSM" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 手机提交评价调用接口 -->
+	<select id="p_gd_pj" parameterMap="testParameterMap"
+		statementType="CALLABLE">
+		{call p_gd_pj(?,?,?,?,?,?,?)}
+	</select>
+</mapper>

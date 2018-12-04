@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW11_DMapper">
+	<!-- 根据返回父类ID集合 -->
+	<resultMap type="DFW11_D" id="fjjh">
+		<result property="FJ_LJ" column="FJ_LJ" />
+		<result property="FJ_WJM" column="FJ_WJM" />
+	</resultMap>
+	<!-- 根据父表ID获取对应集合 -->
+	<select id="SelectByFatherID" parameterType="String" resultMap="fjjh">
+		SELECT FJ_LJ,FJ_WJM FROM DFW11_D WHERE DFW11_JFID=#{0}
+	</select>
+</mapper>

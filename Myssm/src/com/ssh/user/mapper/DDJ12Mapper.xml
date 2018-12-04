@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ12Mapper">
+	<!-- 根据名字查询一条数据 -->
+	<select id="selectByName" parameterType="String" resultType="DDJ12">
+		SELECT MC FROM DDJ12 WHERE MC=#{0}
+	</select>
+	<!-- 过程插入map-->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_cllb" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_ddj11_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	 
+	<!-- 插入一条数据 p_tj_fzcs -->
+	<select id="inddj12" parameterMap="testParameterMap" statementType="CALLABLE">
+		{call p_tj_fzcs(?,?,?,?)}
+	</select>
+	<!-- 条件查询返回集合 -->
+	<resultMap type="DDJ12" id="fhtjjh">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+		<association property="FL" select="SelectByfl" column="FL"
+			javaType="String" />
+	</resultMap>
+	<!-- 查出来分类信息 -->
+	<select id="SelectByfl" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FZCSFL' AND BM=#{0}
+	</select>
+	<!-- 根据条件的分页查询 -->
+	<select id="SelectctByTJ" parameterType="map" resultMap="fhtjjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,FL,MC,SCCJ FROM DDJ12
+		WHERE 1=1
+		<if test="mc != null and mc !=''">
+			AND MC LIKE '%'||#{mc}||'%'
+		</if>
+		<if test="fl != null and fl !=''">
+			AND FL=#{fl}
+		</if>
+		ORDER BY JFID DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取集合个数 -->
+	<select id="getcount" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ12
+	</select>
+	<!-- 返回公共库 -->
+	<resultMap type="DDJ12" id="fzjh">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+		<association property="FL" select="SelectByfl" column="FL"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询全部集合带分页 -->
+	<select id="SelectctAlllist" parameterType="com.ssh.user.util.Page"
+		resultMap="fzjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,FL,MC,SCCJ
+		FROM DDJ12 ORDER BY JFID DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 根据id获取相关数据 -->
+	<select id="selectById" parameterType="String" resultType="DDJ12">
+		SELECT FL,MC,DJ,DW,BZGG,BZ,SCCJ FROM DDJ12 WHERE JFID=#{0}
+	</select>
+</mapper>

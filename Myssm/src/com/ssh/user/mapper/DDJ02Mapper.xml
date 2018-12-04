@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ02Mapper">
+	<!-- 查询对应组织的map -->
+	<resultMap type="DDJ02" id="fhjh">
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="DZ" column="DZ" />
+		<result property="YDDH" column="YDDH" />
+		<result property="YX" column="YX" />
+		<result property="ZPLJ" column="ZPLJ" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<!-- 查询对应专访组织下的农户 -->
+	<select id="SelectByZZPage" parameterType="map" resultMap="fhjh">
+		SELECT
+		* FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		D2.JFID,D2.YHM,D2.MC,D2.DZ,D2.YDDH,D2.YX,D2.ZPLJ FROM DDJ02
+		D2,DDJ02_DDJ01 D1
+		WHERE
+		D2.JFID=D1.DDJ02_JFID AND
+		D1.DDJ01_JFID=#{DDJ01_JFID}
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||#{MC}||'%'
+		</if>
+		ORDER BY D2.MC ASC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max})
+		WHERE RN>=#{min}
+	</select>
+	<!-- 获取对应专访组织下的农户数量 -->
+	<select id="getCount" parameterType="String" resultType="Integer">
+		SELECT
+		COUNT(*) CON FROM DDJ02_DDJ01 WHERE DDJ01_JFID=#{0}
+	</select>
+	<!-- 获取对应专访组织下的农户数量根据条件 -->
+	<select id="getCountByTj" parameterType="String" resultType="Integer">
+		SELECT
+		COUNT(*) CON FROM DDJ02_DDJ01 D1,DDJ02 D2 WHERE
+		D1.DDJ01_JFID=#{0} AND D1.DDJ02_JFID=D2.JFID AND D2.MC LIKE
+		'%'||#{1}||'%'
+	</select>
+	<!-- 查询对应专访组织下是否有农户 -->
+	<select id="SelectByzz" parameterType="String" resultType="DDJ02">
+		SELECT
+		D2.YHM,D2.MC,D2.XZQH,D2.DZ,D2.YDDH,D2.XB,D2.SR,D2.XL,D2.JTRK,D2.RJSR,D2.SCMJ,D1.FWNR,D2.BZ
+		FROM DDJ02 D2,DDJ02_DDJ01 D1 WHERE D2.JFID=D1.DDJ02_JFID AND
+		D1.DDJ01_JFID=#{0} AND D2.YHM=#{1}
+	</select>
+	<resultMap type="DDJ02" id="cunzaijh">
+		<result property="JFID" column="JFID" />
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="XZQH" column="XZQH" />
+		<result property="DZ" column="DZ" />
+		<result property="YDDH" column="YDDH" />
+		<result property="YHLB" column="YHLB" />
+		<result property="XB" column="XB" />
+		<result property="SR" column="SR" />
+		<result property="XL" column="XL" />
+		<result property="JTRK" column="JTRK" />
+		<result property="RJSR" column="RJSR" />
+		<result property="SCMJ" column="SCMJ" />
+		<result property="BZ" column="BZ" />
+		<result property="YX" column="YX" />
+		<result property="JFPASSWORD" column="JFPASSWORD" />
+		<association property="XZQHMC" select="SelectByXzqhMc"
+			column="XZQHMC" javaType="String" />
+	</resultMap>
+	<!-- 查询农户是否存在不论哪个组织 -->
+	<select id="selectByYHM" parameterType="String" resultMap="cunzaijh">
+		SELECT
+		JFID,YHM,MC,XZQH,XZQH
+		XZQHMC,DZ,YDDH,YHLB,XB,SR,XL,JTRK,RJSR,SCMJ,BZ,YX,ZPLJ,JFPASSWORD
+		FROM
+		DDJ02 WHERE
+		YHM=#{0}
+	</select>
+	<resultMap type="DDJ02" id="bdzzjh">
+		<result property="JFID" column="JFID" />
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="XZQH" column="XZQH" />
+		<result property="DZ" column="DZ" />
+		<result property="YDDH" column="YDDH" />
+		<result property="YHLB" column="YHLB" />
+		<result property="XB" column="XB" />
+		<result property="SR" column="SR" />
+		<result property="XL" column="XL" />
+		<result property="JTRK" column="JTRK" />
+		<result property="RJSR" column="RJSR" />
+		<result property="SCMJ" column="SCMJ" />
+		<result property="FWNR" column="FWNR" />
+		<result property="BZ" column="BZ" />
+		<result property="YX" column="YX" />
+		<association property="XZQHMC" select="SelectByXzqhMc"
+			column="XZQHMC" javaType="String" />
+	</resultMap>
+	<!-- 查看排除自己组织以外是否有这个农户 -->
+	<select id="SelectByBDZZ" parameterType="String" resultMap="bdzzjh">
+		SELECT
+		D2.JFID,D2.YHM,D2.MC,D2.XZQH,D2.XZQH
+		XZQHMC,D2.DZ,D2.YDDH,D2.YHLB,D2.XB,D2.SR,D2.XL,D2.JTRK,D2.RJSR,D2.SCMJ,D1.FWNR,D2.BZ,D2.YX
+		FROM DDJ02 D2,DDJ02_DDJ01 D1 WHERE D2.JFID=D1.DDJ02_JFID AND
+		D1.DDJ01_JFID!=#{0} AND D2.YHM=#{1}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insddj02" parameterType="DDJ02">
+		INSERT INTO DDJ02
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="YHM != null and YHM !=''"> YHM,</if>
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> JFPASSWORD,</if>
+			<if test="MC != null and MC !=''"> MC,  </if>
+			<if test="XZQH != null and XZQH !=''"> XZQH,   </if>
+			<if test="DZ != null and DZ !=''"> DZ, </if>
+			<if test="YDDH != null and YDDH !=''"> YDDH,   </if>
+			<if test="XB != null and XB !=''"> XB,   </if>
+			<if test="SR != null and SR !=''"> SR,   </if>
+			<if test="XL != null and XL !=''"> XL,   </if>
+			<if test="JTRK != null and JTRK !=''"> JTRK,   </if>
+			<if test="RJSR != null and RJSR !=''"> RJSR,   </if>
+			<if test="YX != null and YX !=''"> YX,   </if>
+			<if test="BZ != null and BZ !=''"> BZ,   </if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,  </if>
+			<if test="LRRY_MC != null and LRRY_MC !=''"> LRRY_MC, </if>
+			<if test="LRRQ != null and LRRQ !=''"> LRRQ,    </if>
+			<if test="YHLB != null and YHLB !=''"> YHLB,    </if>
+			<if test="SCMJ != null and SCMJ !=''"> SCMJ,    </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="YHM != null and YHM !=''">#{YHM,jdbcType=VARCHAR},</if>
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> #{JFPASSWORD,jdbcType=VARCHAR},    </if>
+			<if test="MC != null and MC !=''"> #{MC,jdbcType=VARCHAR},    </if>
+			<if test="XZQH != null and XZQH !=''"> #{XZQH,jdbcType=VARCHAR},  </if>
+			<if test="DZ != null and DZ !=''"> #{DZ,jdbcType=VARCHAR},  </if>
+			<if test="YDDH != null and YDDH !=''"> #{YDDH,jdbcType=VARCHAR},  </if>
+			<if test="XB != null and XB !=''"> #{XB,jdbcType=CHAR},  </if>
+			<if test="SR != null and SR !=''"> #{SR,jdbcType=DATE},  </if>
+			<if test="XL != null and XL !=''"> #{XL,jdbcType=VARCHAR},</if>
+			<if test="JTRK != null and JTRK !=''"> #{JTRK,jdbcType=INTEGER},</if>
+			<if test="RJSR != null and RJSR !=''"> #{RJSR,jdbcType=INTEGER},</if>
+			<if test="YX != null and YX !=''"> #{YX,jdbcType=VARCHAR},    </if>
+			<if test="BZ != null and BZ !=''"> #{BZ,jdbcType=VARCHAR},  </if>
+			<if test="LRRY != null and LRRY !=''"> #{LRRY,jdbcType=VARCHAR},    </if>
+			<if test="LRRY_MC != null and LRRY_MC !=''"> #{LRRY_MC,jdbcType=VARCHAR},    </if>
+			<if test="LRRQ != null and LRRQ !=''"> SYSDATE,    </if>
+			<if test="YHLB != null and YHLB !=''"> #{YHLB,jdbcType=VARCHAR},    </if>
+			<if test="SCMJ != null and SCMJ !=''"> #{SCMJ,jdbcType=INTEGER},    </if>
+		</trim>
+	</insert>
+	<!-- 获取唯一id -->
+	<select id="getID" resultType="String">
+		SELECT S_DDJ02.NEXTVAL FROM DUAL
+	</select>
+	<resultMap type="DDJ02" id="fhup">
+		<result property="JFID" column="JFID" />
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="YDDH" column="YDDH" />
+		<result property="YX" column="YX" />
+		<result property="BZ" column="BZ" />
+		<result property="LRRY_MC" column="LRRY_MC" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="XZQH" column="XZQH" />
+		<result property="DZ" column="DZ" />
+		<result property="XB" column="XB" />
+		<result property="SR" column="SR" />
+		<result property="XL" column="XL" />
+		<result property="JTRK" column="JTRK" />
+		<result property="RJSR" column="RJSR" />
+		<result property="YHLB" column="YHLB" />
+		<association property="XZQHMC" select="SelectByXzqhMc"
+			column="XZQHMC" javaType="String" />
+	</resultMap>
+	<!-- 查询行政区划名称 -->
+	<select id="SelectByXzqhMc" parameterType="String" resultType="String">
+		SELECT QC2 FROM DSYS81 WHERE BM=#{0}
+	</select>
+	<!-- 根据id查找 -->
+	<select id="selectByID" parameterType="String" resultMap="fhup">
+		SELECT
+		JFID,YHM,MC,YDDH,YX,BZ,LRRY_MC,LRRQ,XZQH,XZQH
+		XZQHMC,DZ,XB,SR,XL,JTRK,RJSR,YHLB,SCMJ FROM DDJ02 WHERE JFID=#{0}
+	</select>
+	<!-- 更新农户信息 -->
+	<update id="upddj02" parameterType="DDJ02">
+		UPDATE DDJ02
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="MC != null and MC !=''"> MC=#{MC},</if>
+			<if test="XZQH != null and XZQH !=''"> XZQH=#{XZQH},</if>
+			<if test="DZ != null and DZ !=''"> DZ=#{DZ},</if>
+			<if test="YDDH != null and YDDH !=''"> YDDH=#{YDDH},</if>
+			<if test="YHLB != null and YHLB !=''"> YHLB=#{YHLB},</if>
+			<if test="XB != null"> XB=#{XB},</if>
+			<if test="SR != null"> SR=#{SR},</if>
+			<if test="SR == null"> SR=null,</if>
+			<if test="XL != null"> XL=#{XL},</if>
+			<if test="JTRK != null"> JTRK=#{JTRK},</if>
+			<if test="RJSR != null"> RJSR=#{RJSR},</if>
+			<if test="YX != null"> YX=#{YX},</if>
+			<if test="SCMJ != null"> SCMJ=#{SCMJ},</if>
+			<if test="BZ != null"> BZ=#{BZ},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 更新农户信息手机端 -->
+	<update id="upusermsg" parameterType="DDJ02">
+		UPDATE DDJ02
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="YDDH != null"> YDDH=#{YDDH},</if>
+			<if test="YX != null"> YX=#{YX},</if>
+			<if test="ZPLJ != null and ZPLJ !=''"> ZPLJ=#{ZPLJ},</if>
+			<if test="ZPWJM != null and ZPWJM !=''"> ZPWJM=#{ZPWJM},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 更新密码 -->
+	<update id="uppasword" parameterType="DDJ02">
+		UPDATE DDJ02
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> JFPASSWORD=#{JFPASSWORD},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据用户名查找相关信息 -->
+	<select id="SelectByYHMOne" parameterType="String" resultType="DDJ02">
+		SELECT JFID,YHM,JFPASSWORD,MC FROM DDJ02 WHERE YHM=#{0}
+	</select>
+	<!-- 更新用户的token -->
+	<update id="uoToken">
+		UPDATE DDJ02
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="DLRQ != null"> DLRQ=#{DLRQ},</if>
+			<if test="TOKEN != null"> TOKEN=#{TOKEN},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 返回全部集合 -->
+	<resultMap type="DDJ02" id="qbjh">
+		<result property="JFID" column="JFID" />
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="DZ" column="DZ" />
+		<result property="YDDH" column="YDDH" />
+		<result property="SCMJ" column="SCMJ" />
+		<result property="ZPLJ" column="ZPLJ" />
+		<result property="ZT" column="ZT" />
+		<result property="RN" column="RN" />
+	</resultMap>
+
+	<!-- 用户查询获取全部数据集合 -->
+	<select id="SelectAllSize" parameterType="map" resultMap="qbjh">
+		SELECT
+		* FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		D1.JFID,D1.YHM,D1.MC,D1.DZ,D1.YDDH,D1.SCMJ,D1.ZPLJ,D1.ZT FROM DDJ02
+		D1,DDJ02_DDJ01 D2
+		WHERE 1=1
+		<if test="MC != null and MC !=''">
+			AND D1.MC LIKE '%'||#{MC}||'%'
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND D1.XZQH LIKE '%'||#{XZQH}||'%'
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND D1.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND D1.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND D2.DDJ01_JFID =#{DDJ01_JFID}
+			AND D2.DDJ02_JFID=D1.JFID
+		</if>
+		ORDER BY D1.MC ASC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX})
+		WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取对应集合数量 -->
+	<select id="GetCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DDJ02 D1,DDJ02_DDJ01 D2 WHERE 1=1
+		<if test="MC != null and MC !=''">
+			AND D1.MC LIKE '%'||#{MC}||'%'
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND D1.XZQH =#{XZQH}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND D1.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND D1.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND D2.DDJ01_JFID =#{DDJ01_JFID}
+			AND D2.DDJ02_JFID=D1.JFID
+		</if>
+	</select>
+	<!-- 查询统计返回集合 -->
+	<resultMap type="DDJ02" id="cxtjjh">
+		<result property="XZQH" column="XZQH" />
+		<result property="XZQHMC" column="XZQHMC" />
+		<result property="SCMJ" column="SCMJ" />
+	</resultMap>
+	<!-- 查询统计 -->
+	<select id="SelectTJ" parameterType="map" resultMap="cxtjjh">
+		SELECT SUBSTR(A.XZQH,1,5)
+		XZQH,F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,5))
+		XZQHMC,COUNT(distinct A.JFID) JTRK,COUNT(C.JFID) DKS FROM DDJ02
+		A,DDJ02_DDJ01
+		B,DDJ02_D C
+		WHERE A.JFID=B.DDJ02_JFID
+		AND
+		C.DDJ02_JFID=A.JFID
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND B.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND A.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND A.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND A.XZQH LIKE '%'||#{XZQH}||'%'
+		</if>
+		AND SUBSTR(A.XZQH,1,5) IN ('15611','15612','15613')
+		GROUP BY
+		SUBSTR(A.XZQH,1,5),F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,5))
+		ORDER BY
+		SUBSTR(A.XZQH,1,5)
+	</select>
+	<select id="SelectTJ2" parameterType="map" resultMap="cxtjjh">
+		SELECT SUBSTR(A.XZQH,1,7)
+		XZQH,F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,7))
+		XZQHMC,COUNT(distinct A.JFID) JTRK,COUNT(C.JFID) DKS FROM DDJ02
+		A,DDJ02_DDJ01
+		B,DDJ02_D C
+		WHERE A.JFID=B.DDJ02_JFID
+		AND
+		C.DDJ02_JFID=A.JFID
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND B.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND A.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND A.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND A.XZQH LIKE '%'||#{XZQH}||'%'
+		</if>
+		AND SUBSTR(A.XZQH,1,5) IN ('15611','15612','15613')
+		GROUP BY
+		SUBSTR(A.XZQH,1,7),F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,7))
+		ORDER BY
+		SUBSTR(A.XZQH,1,7)
+	</select>
+	<select id="SelectTJ3" parameterType="map" resultMap="cxtjjh">
+		SELECT SUBSTR(A.XZQH,1,9)
+		XZQH,F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,9))
+		XZQHMC,COUNT(distinct A.JFID) JTRK,COUNT(C.JFID) DKS FROM DDJ02
+		A,DDJ02_DDJ01
+		B,DDJ02_D C
+		WHERE A.JFID=B.DDJ02_JFID
+		AND
+		C.DDJ02_JFID=A.JFID
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND B.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND A.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND A.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND A.XZQH LIKE '%'||#{XZQH}||'%'
+		</if>
+		AND SUBSTR(A.XZQH,1,5) IN ('15611','15612','15613')
+		GROUP BY
+		SUBSTR(A.XZQH,1,9),F_GET_MC('FBDQ',SUBSTR(A.XZQH,1,9))
+		ORDER BY
+		SUBSTR(A.XZQH,1,9)
+	</select>
+	<select id="SelectHj" parameterType="map" resultType="DDJ02">
+		SELECT
+		COUNT(distinct A.JFID) JTRK,COUNT(C.JFID) DKS FROM DDJ02
+		A,DDJ02_DDJ01
+		B,DDJ02_D C
+		WHERE A.JFID=B.DDJ02_JFID
+		AND
+		C.DDJ02_JFID=A.JFID
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND B.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND A.LRRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND A.LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			AND A.XZQH LIKE '%'||#{XZQH}||'%'
+		</if>
+		AND SUBSTR(A.XZQH,1,5) IN ('15611','15612','15613')
+	</select>
+	<!-- 手机用户集合 -->
+	<resultMap type="DDJ02" id="sjyhjh">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+	</resultMap>
+	<!-- 手机查找用户获取集合 -->
+	<select id="SelectAllSizeBySJ" parameterType="map" resultMap="sjyhjh">
+		SELECT
+		* FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT JFID,MC FROM DDJ02 WHERE 1=1
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||#{MC}||'%'
+		</if>
+		ORDER BY MC
+		)
+		A1 WHERE
+		ROWNUM
+		&lt;=#{MAX})
+		WHERE RN>=#{MIN}
+	</select>
+	<select id="getCountBySJ" resultType="Integer">
+		SELECT
+		COUNT(*) FROM DDJ02
+	</select>
+</mapper>

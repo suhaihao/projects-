@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.Dsys03Mapper">
+	<resultMap type="Dsys03" id="jslist">
+		<result column="JFID" property="JFID" />
+		<result column="ROLE_BM" property="ROLE_BM" />
+		<result column="ROLE_BMLB" property="ROLE_BMLB" />
+		<result column="ROLE_NAME" property="ROLE_NAME" />
+	</resultMap>
+	<!-- 获取角色集合 -->
+	<select id="SelectAllList" resultMap="jslist">
+	SELECT JFID,ROLE_BM,ROLE_BMLB,ROLE_NAME FROM DSYS03 WHERE ROLE_BM IN ('01','02')
+	</select>
+	<!-- 根据传入bm查询jfid -->
+	<select id="SelectByBm" parameterType="String" resultType="Integer">
+	SELECT JFID FROM DSYS03 WHERE ROLE_BM=#{0}
+	</select>
+</mapper>

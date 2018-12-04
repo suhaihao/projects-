@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 打印查询语句-->
+	<settings>
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+	<!-- 配置映射类的别名 -->
+	<typeAliases>
+		<typeAlias alias="User" type="com.ssh.user.model.User" />
+		<typeAlias alias="Dsys02_zfzz" type="com.ssh.user.model.Dsys02_zfzz" />
+		<typeAlias alias="Dsys11" type="com.ssh.user.model.Dsys11" />
+		<typeAlias alias="Dsys03" type="com.ssh.user.model.Dsys03" />
+		<typeAlias alias="Dsys02_dsys03" type="com.ssh.user.model.Dsys02_dsys03" />
+		<typeAlias alias="DDJ01" type="com.ssh.user.model.DDJ01" />
+		<typeAlias alias="Tree_bj" type="com.ssh.user.model.Tree_bj" />
+		<typeAlias alias="Tree_qx" type="com.ssh.user.model.Tree_qx" />
+		<typeAlias alias="Tree_jd" type="com.ssh.user.model.Tree_jd" />
+		<typeAlias alias="Tree_tj" type="com.ssh.user.model.Tree_tj" />
+		<typeAlias alias="Tree_tj_qx" type="com.ssh.user.model.Tree_tj_qx" />
+		<typeAlias alias="Tree_tj_jd" type="com.ssh.user.model.Tree_tj_jd" />
+		<typeAlias alias="Tree_hb" type="com.ssh.user.model.Tree_hb" />
+		<typeAlias alias="Tree_hb_ds" type="com.ssh.user.model.Tree_hb_ds" />
+		<typeAlias alias="Tree_hb_ds_qx" type="com.ssh.user.model.Tree_hb_ds_qx" />
+		<typeAlias alias="Tree_hb_ds_qx_jd" type="com.ssh.user.model.Tree_hb_ds_qx_jd" />
+		<typeAlias alias="DDJ01_D" type="com.ssh.user.model.DDJ01_D" />
+		<typeAlias alias="DDJ11" type="com.ssh.user.model.DDJ11" />
+		<typeAlias alias="DDJ12" type="com.ssh.user.model.DDJ12" />
+		<typeAlias alias="DDJ02_D" type="com.ssh.user.model.DDJ02_D" />
+		<typeAlias alias="DDJ02" type="com.ssh.user.model.DDJ02" />
+		<typeAlias alias="DDJ02_DDJ01" type="com.ssh.user.model.DDJ02_DDJ01" />
+		<typeAlias alias="DFW01" type="com.ssh.user.model.DFW01" />
+		<typeAlias alias="DFW01_D" type="com.ssh.user.model.DFW01_D" />
+		<typeAlias alias="DDJ03" type="com.ssh.user.model.DDJ03" />
+		<typeAlias alias="DFW01_D_ZP" type="com.ssh.user.model.DFW01_D_ZP" />
+		<typeAlias alias="DFW11_D" type="com.ssh.user.model.DFW11_D" />
+		<typeAlias alias="DFW11" type="com.ssh.user.model.DFW11" />
+		<typeAlias alias="Dsys01" type="com.ssh.user.model.Dsys01" />
+		<typeAlias alias="DFW02" type="com.ssh.user.model.DFW02" />
+		<typeAlias alias="FWTJ" type="com.ssh.user.model.FWTJ" />
+		<typeAlias alias="DFW01_D_FZMX" type="com.ssh.user.model.DFW01_D_FZMX" />
+		<typeAlias alias="DFW21_FJ" type="com.ssh.user.model.DFW21_FJ" />
+		<typeAlias alias="DFW21_JSR" type="com.ssh.user.model.DFW21_JSR" />
+		<typeAlias alias="DFW21" type="com.ssh.user.model.DFW21" />
+		<typeAlias alias="DFW22_FJ" type="com.ssh.user.model.DFW22_FJ" />
+		<typeAlias alias="DFW22_JSR" type="com.ssh.user.model.DFW22_JSR" />
+		<typeAlias alias="DFW22" type="com.ssh.user.model.DFW22" />
+		<typeAlias alias="DFW22_CKWJ" type="com.ssh.user.model.DFW22_CKWJ" />
+		<typeAlias alias="DSYS05" type="com.ssh.user.model.DSYS05" />
+		<typeAlias alias="DFW23_FJ" type="com.ssh.user.model.DFW23_FJ" />
+		<typeAlias alias="DFW23" type="com.ssh.user.model.DFW23" />
+	</typeAliases>
+	<!-- 配置Mapper文件的路径 -->
+	<mappers>
+		<mapper resource="com/ssh/user/mapper/UserMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/Dsys02_zfzzMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/Dsys11Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/Dsys03Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/Dsys02_dsys03Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ01Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/TreeMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ11Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ12Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ02Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ02_DDJ01Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DDJ02_DMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW01Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW01_DMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW01_D_ZPMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW11Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW11_DMapper.xml" />
+		<mapper resource="com/ssh/user/mapper/Dsys01Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW02Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW21Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW22Mapper.xml" />
+		<mapper resource="com/ssh/user/mapper/DFW23Mapper.xml" />
+	</mappers>
+</configuration>

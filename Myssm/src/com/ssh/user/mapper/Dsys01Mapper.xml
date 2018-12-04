@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.Dsys01Mapper">
+	<!-- 分页返回的集合 -->
+	<resultMap type="Dsys01" id="cxnr">
+		<result property="JFID" column="JFID" />
+		<result property="JFNAME" column="JFNAME" />
+		<result property="XB" column="XB" />
+		<result property="RYFL" column="RYFL" />
+		<result property="SJ" column="SJ" />
+		<result property="DZXX" column="DZXX" />
+		<result property="XXDBLB" column="XXDBLB" />
+		<result property="ZPLJ" column="ZPLJ" />
+		<association property="RYFLMC" select="SelectByRyfl"
+			column="RYFLMC" javaType="String" />
+	</resultMap>
+	<!-- 获取人员分类的名称 -->
+	<select id="SelectByRyfl" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='ZJ_RYLB' AND BM=#{0}
+	</select>
+	<!-- 根据分页获取对应集合 -->
+	<select id="SelectAllPage" parameterType="map" resultMap="cxnr">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,JFNAME,F_GET_MC('BMMC',JFDSYS05_CODE) JFDSYS05_CODE,RYFL,RYFL
+		RYFLMC,XB,SJ,DZXX,XXDBLB,ZPLJ FROM DSYS01 WHERE
+		JFSTATE=0
+		<if test="JFNAME != null and JFNAME !=''">
+			AND JFNAME LIKE '%'||#{JFNAME}||'%'
+		</if>
+		<if test="RYFL != null and RYFL !=''">
+			AND RYFL=#{RYFL}
+		</if>
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 植保站集合 -->
+	<select id="SelectAllPage_ZBZ" parameterType="map" resultMap="cxnr">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,JFNAME,F_GET_MC('BMMC',JFDSYS05_CODE) JFDSYS05_CODE,RYFL,RYFL
+		RYFLMC,XB,SJ,DZXX,XXDBLB,ZPLJ FROM DSYS01 WHERE
+		JFSTATE=0
+		<if test="JFNAME != null and JFNAME !=''">
+			AND JFNAME LIKE '%'||#{JFNAME}||'%'
+		</if>
+		<if test="RYFL != null and RYFL !=''">
+			AND RYFL=#{RYFL}
+		</if>
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取对应集合数量 -->
+	<select id="GetCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DSYS01 WHERE JFSTATE=0
+		<if test="JFNAME != null and JFNAME !=''">
+			AND JFNAME LIKE '%'||#{JFNAME}||'%'
+		</if>
+		<if test="RYFL != null and RYFL !=''">
+			AND RYFL=#{RYFL}
+		</if>
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+	</select>
+	<!-- 手机 植保站 植保站人员集合 -->
+	<resultMap type="Dsys01" id="sjzbjh">
+		<result property="JFID" column="JFID" />
+		<result property="JFNAME" column="JFNAME" />
+	</resultMap>
+	<!-- 手机 植保站 植保站人员集合 -->
+	<select id="SelectAllByxxdblb" parameterType="map" resultMap="sjzbjh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT JFID,JFNAME FROM
+		DSYS01 WHERE 1=1
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		<if test="JFDSYS05_CODE != null and JFDSYS05_CODE !=''">
+			AND JFDSYS05_CODE=#{JFDSYS05_CODE}
+		</if>
+		ORDER BY JFNAME
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 手机 植保站 植保站人员集合数量 -->
+	<select id="GetCountByZBZ" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DSYS01 WHERE 1=1
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+	</select>
+	<resultMap type="DSYS05" id="dsys05get">
+		<result property="BMBM" column="BMBM" />
+		<result property="BMMC" column="BMMC" />
+	</resultMap>
+	<!-- 获取部门信息 -->
+	<select id="selectBysys05" resultMap="dsys05get">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT BMBM,BMMC FROM
+		DSYS05 WHERE
+		BMBM!=00 AND ZT=1 ORDER BY BMBM
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE
+		RN>=#{MIN}
+	</select>
+</mapper>

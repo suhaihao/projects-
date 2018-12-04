@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.Dsys02_zfzzMapper">
+	<resultMap type="Dsys02_zfzz" id="menulist">
+		<result property="JFID" column="JFID" />
+		<result property="ITEM_ID" column="ITEM_ID" />
+		<result property="ITEM_CMT" column="ITEM_CMT" />
+		<result property="MENU_ID" column="MENU_ID" />
+		<result property="ITEM_NAME" column="ITEM_NAME" />
+		<result property="ITEM_PIC_NAME" column="ITEM_PIC_NAME" />
+		<result property="ITEM_PATH" column="ITEM_PATH" />
+	</resultMap>
+	<!-- 根据bm获取对应集合 -->
+	<select id="SelectByBmMenu" parameterType="map" resultMap="menulist">
+		SELECT B.JFID,B.ITEM_ID,B.ITEM_CMT,B.MENU_ID,B.ITEM_NAME,B.ITEM_PIC_NAME,B.ITEM_PATH FROM DSYS02_ZFZZ B,DSYS02_DSYS03 ZJ WHERE
+		B.SF_NOSHOW='0' AND B.JFID=ZJ.DSYS02_JFID 
+		<if test="DSYS03_JFID != null and DSYS03_JFID !=''">
+		AND ZJ.DSYS03_JFID=#{DSYS03_JFID} 
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+		AND ZJ.DDJ01_JFID=#{DDJ01_JFID} 
+		</if>
+		ORDER BY ITEM_ID ASC
+	</select>
+	<resultMap type="Dsys02_zfzz" id="QXlist">
+		<result property="JFID" column="JFID" />
+		<result property="ITEM_NAME" column="ITEM_NAME" />
+	</resultMap>
+	<!-- 角色获取的权限集合 -->
+	<select id="SelectAllByQXMenu" resultMap="QXlist">
+	SELECT JFID,ITEM_NAME FROM DSYS02_ZFZZ ORDER BY ITEM_ID ASC
+	</select>
+	<!-- 直接获取全部集合 -->
+	<select id="SelectAllMenu" resultMap="menulist">
+	SELECT JFID,ITEM_ID,MENU_ID,ITEM_NAME,ITEM_PIC_NAME,ITEM_PATH FROM DSYS02_ZFZZ WHERE
+	SF_NOSHOW='0' ORDER BY ITEM_ID ASC
+	</select>
+</mapper>

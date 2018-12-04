@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW01Mapper">
+	<!-- 获取专访组织下的集合带分页 -->
+	<resultMap type="DFW01" id="zfjh">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ02_MC" column="DDJ02_MC" />
+		<result property="DDJ02_DZ" column="DDJ02_DZ" />
+		<result property="DDJ02_YDDH" column="DDJ02_YDDH" />
+		<result property="FZFZR_MC" column="FZFZR_MC" />
+		<result property="PDRQ" column="PDRQ" />
+		<result property="ZT" column="ZT" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<select id="selectByPage" parameterType="map" resultMap="zfjh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ02_MC,DDJ02_DZ,DDJ02_YDDH,FZFZR_MC,PDRQ,ZT FROM DFW01 WHERE ZT
+		!=0
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+		ORDER BY PDRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取集合总数 -->
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) CON FROM DFW01 WHERE ZT!=0
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="inDFW01" parameterType="DFW01">
+		INSERT INTO DFW01
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,</if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''"> DDJ01_MC,  </if>
+			<if test="FWNRLB != null and FWNRLB !=''"> FWNRLB,   </if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''"> DDJ02_JFID, </if>
+			<if test="DDJ02_MC != null and DDJ02_MC !=''"> DDJ02_MC,   </if>
+			<if test="DDJ02_YDDH != null and DDJ02_YDDH !=''"> DDJ02_YDDH,   </if>
+			<if test="DDJ02_DZ != null and DDJ02_DZ !=''"> DDJ02_DZ, </if>
+			<if test="JHSJ != null and JHSJ !=''"> JHSJ,  </if>
+			<if test="FZFZR != null and FZFZR !=''"> FZFZR, </if>
+			<if test="FZFZR_MC != null and FZFZR_MC !=''"> FZFZR_MC, </if>
+			<if test="FZRY != null and FZRY !=''"> FZRY,    </if>
+			<if test="PDSM != null and PDSM !=''"> PDSM,  </if>
+			<if test="PDRY != null and PDRY !=''"> PDRY,  </if>
+			<if test="PDRY_MC != null and PDRY_MC !=''"> PDRY_MC,  </if>
+			PDRQ,
+			<!-- 
+			<if test="ZT != null and ZT !=''"> ZT,  </if>
+			 -->
+			<if test="BZ != null and BZ !=''"> BZ,  </if>
+			<if test="BMBM != null and BMBM !=''"> BMBM,  </if>
+			<if test="DDJ03_JFID != null and DDJ03_JFID !=''"> DDJ03_JFID,  </if>
+			<if test="FZRY_MC != null and FZRY_MC !=''"> FZRY_MC,  </if>
+			<if test="FZRS != null and FZRS !=''"> FZRS,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''">#{DDJ01_JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''">#{DDJ01_MC,jdbcType=VARCHAR},</if>
+			<if test="FWNRLB != null and FWNRLB !=''">#{FWNRLB,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''">#{DDJ02_JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_MC != null and DDJ02_MC !=''">#{DDJ02_MC,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_YDDH != null and DDJ02_YDDH !=''">#{DDJ02_YDDH,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_DZ != null and DDJ02_DZ !=''">#{DDJ02_DZ,jdbcType=VARCHAR},</if>
+			<if test="JHSJ != null and JHSJ !=''">to_date(#{JHSJ},'yyyy-MM-dd HH24:mi'),</if>
+			<if test="FZFZR != null and FZFZR !=''">#{FZFZR,jdbcType=VARCHAR},</if>
+			<if test="FZFZR_MC != null and FZFZR_MC !=''">#{FZFZR_MC,jdbcType=VARCHAR},</if>
+			<if test="FZRY != null and FZRY !=''">#{FZRY,jdbcType=VARCHAR},</if>
+			<if test="PDSM != null and PDSM !=''">#{PDSM,jdbcType=VARCHAR},</if>
+			<if test="PDRY != null and PDRY !=''">#{PDRY,jdbcType=VARCHAR},</if>
+			<if test="PDRY_MC != null and PDRY_MC !=''">#{PDRY_MC,jdbcType=VARCHAR},</if>
+			SYSDATE,
+			<!-- 
+			<if test="ZT != null and ZT !=''">#{ZT,jdbcType=CHAR},</if>
+			 -->
+			<if test="BZ != null and BZ !=''">#{BZ,jdbcType=VARCHAR},</if>
+			<if test="BMBM != null and BMBM !=''">#{BMBM,jdbcType=VARCHAR},</if>
+			<if test="DDJ03_JFID != null and DDJ03_JFID !=''">#{DDJ03_JFID,jdbcType=VARCHAR},</if>
+			<if test="FZRY_MC != null and FZRY_MC !=''">#{FZRY_MC,jdbcType=VARCHAR},</if>
+			<if test="FZRS != null and FZRS !=''">#{FZRS,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<!-- 获取唯一ID -->
+	<select id="getID" resultType="String">
+		SELECT SDFW01.NEXTVAL FROM DUAL
+	</select>
+	<!-- 根据id查询对应信息 -->
+	<select id="SelectByID" parameterType="String" resultType="DFW01">
+		SELECT
+		JFID,FWNRLB,DDJ03_JFID,DDJ02_JFID,DDJ02_MC,DDJ02_YDDH,DDJ02_DZ,JHSJ,FZFZR,FZFZR_MC,FZRY,PDSM,PDRY_MC,PDRQ,BZ,SFJE,WCRY_MC,WCRQ,FZRY_MC,ZT,RGCB
+		FROM DFW01 WHERE  JFID=#{0}
+	</select>
+	<!-- 更新主表数据 -->
+	<update id="updfw01" parameterType="DFW01">
+		UPDATE DFW01
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="FWNRLB != null and FWNRLB !=''"> FWNRLB=#{FWNRLB},</if>
+			<if test="DDJ03_JFID != null"> DDJ03_JFID=#{DDJ03_JFID},</if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''"> DDJ02_JFID=#{DDJ02_JFID},</if>
+			<if test="DDJ02_MC != null and DDJ02_MC !=''"> DDJ02_MC=#{DDJ02_MC},</if>
+			<if test="DDJ02_DZ != null and DDJ02_DZ !=''"> DDJ02_DZ=#{DDJ02_DZ},</if>
+			<if test="DDJ02_YDDH != null and DDJ02_YDDH !=''"> DDJ02_YDDH=#{DDJ02_YDDH},</if>
+			<if test="JHSJ != null and JHSJ !=''"> JHSJ=TO_DATE(#{JHSJ},'yyyy-MM-dd hh24:mi:ss'),</if>
+			<if test="FZFZR != null and FZFZR !=''"> FZFZR=#{FZFZR},</if>
+			<if test="FZFZR_MC != null and FZFZR_MC !=''"> FZFZR_MC=#{FZFZR_MC},</if>
+			<if test="FZRY != null"> FZRY=#{FZRY},</if>
+			<if test="FZRY_MC != null"> FZRY_MC=#{FZRY_MC},</if>
+			<if test="PDSM != null"> PDSM=#{PDSM},</if>
+			<if test="BZ != null"> BZ=#{BZ},</if>
+			<if test="FZRS != null"> FZRS=#{FZRS},</if>
+			<if test="SFJE != null"> SFJE=#{SFJE},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 更新金钱 -->
+	<update id="UPJE" parameterType="DFW01">
+		UPDATE DFW01
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="SFJE != null"> SFJE=#{SFJE},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_cllb" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 提交调用过程 -->
+	<select id="p_gd_pd" parameterMap="testParameterMap"
+		statementType="CALLABLE">
+		{call p_gd_pd(?,?,?,?,?,?)}
+	</select>
+	<!-- 根据JFID删除对应信息 -->
+	<delete id="delByID" parameterType="String">
+		DELETE FROM DFW01 WHERE
+		JFID=#{0}
+	</delete>
+	<!-- 分割线 -->
+	<!-- 获取专访组织下的集合带分页 -->
+	<resultMap type="DFW01" id="zfjhzt">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ02_MC" column="DDJ02_MC" />
+		<result property="DDJ02_DZ" column="DDJ02_DZ" />
+		<result property="DDJ02_YDDH" column="DDJ02_YDDH" />
+		<result property="FZFZR_MC" column="FZFZR_MC" />
+		<result property="PDRQ" column="PDRQ" />
+		<result property="ZT" column="ZT" />
+		<result property="WCRQ" column="WCRQ" />
+		<result property="RN" column="RN" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="PDRY_MC" column="PDRY_MC" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="JHSJ" column="JHSJ" />
+		<result property="FZRY_MC" column="FZRY_MC" />
+		<result property="PDSM" column="PDSM" />
+		<result property="BZ" column="BZ" />
+		<result property="SFJE" column="SFJE" />
+	</resultMap>
+	<select id="selectByPageZT" parameterType="map" resultMap="zfjhzt">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ02_MC,DDJ02_DZ,DDJ02_YDDH,FZFZR_MC,PDRQ,ZT,WCRQ FROM DFW01
+		WHERE ZT
+		!=1
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+		ORDER BY PDRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取集合总数 -->
+	<select id="getCountZT" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) CON FROM DFW01 WHERE ZT!=0
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+	</select>
+	<parameterMap type="map" id="testParameterMapwg">
+		<parameter property="psi_cllb" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 调用过程 -->
+	<select id="P_gd_wg" parameterMap="testParameterMap"
+		statementType="CALLABLE">
+		{call p_gd_wg(?,?,?,?,?,?)}
+	</select>
+	<!-- 查询状态等于4的 -->
+	<select id="selectByPageZT4" parameterType="map" resultMap="zfjhzt">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ02_MC,DDJ02_DZ,DDJ02_YDDH,FZFZR_MC,PDRQ,ZT,WCRQ,F_GET_MC('FWNRLB',FWNRLB) FWNRLB,PDRY_MC,DDJ01_MC,JHSJ,FZRY_MC,PDSM,BZ,SFJE FROM DFW01
+		WHERE
+		ZT=3
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+		<if test="FZFZR_MC != null and FZFZR_MC !=''">
+			AND FZFZR_MC LIKE '%'||#{FZFZR_MC}||'%'
+		</if>
+		ORDER BY WCRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取集合总数 -->
+	<select id="getCountZT4" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) CON FROM DFW01 WHERE ZT=3
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND PDRQ>=to_date(#{StarTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND PDRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')
+		</if>
+		<if test="DDJ02_MC != null and DDJ02_MC !=''">
+			AND DDJ02_MC LIKE '%'||#{DDJ02_MC}||'%'
+		</if>
+		<if test="FZFZR_MC != null and FZFZR_MC !=''">
+			AND FZFZR_MC LIKE '%'||#{FZFZR_MC}||'%'
+		</if>
+	</select>
+	<resultMap type="DFW01" id="zt2">
+		<result property="JFID" column="JFID" />
+	</resultMap>
+	<!-- 查询状态为2的集合 -->
+	<select id="SelectByZt" resultMap="zt2">
+		SELECT JFID FROM DFW01 WHERE
+		ZT=2
+	</select>
+	<parameterMap type="map" id="wanshang">
+		<parameter property="psi_cllb" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 晚上调用过程 -->
+	<select id="p_gddk_begin" parameterMap="wanshang" statementType="CALLABLE">
+		{call p_gddk_begin(?,?,?,?,?,?)}
+	</select>
+	<!-- 服务统计返回集合 -->
+	<resultMap type="FWTJ" id="fwtj">
+		<result property="n" column="n" />
+		<result property="nj" column="nj" />
+		<result property="ny" column="ny" />
+		<result property="r" column="r" />
+		<result property="jd" column="jd" />
+		<result property="yf" column="yf" />
+		<result property="fwnr" column="fwnr" />
+		<result property="xm" column="xm" />
+		<result property="fzfzrmc" column="fzfzrmc" />
+		<result property="ss" column="ss" />
+		<result property="qx" column="qx" />
+		<result property="xz" column="xz" />
+		<result property="yh" column="yh" />
+		<result property="fzmj" column="fzmj" />
+		<result property="sfje" column="sfje" />
+		<result property="mjje" column="mjje" />
+		<result property="mjgs" column="mjgs" />
+		<result property="mjsjgs" column="mjsjgs" />
+		<result property="swny" column="swny" />
+		<result property="hxny" column="hxny" />
+		<result property="lhyk" column="lhyk" />
+		<result property="yykc" column="yykc" />
+		<result property="qt" column="qt" />
+		<result property="hjcb" column="hjcb" />
+		<result property="mjcb" column="mjcb" />
+		<result property="mjjcb" column="mjjcb" />
+	</resultMap>
+	<!-- 服务统计 -->
+	<select id="TJSJ" parameterType="map" resultMap="fwtj"
+		statementType="STATEMENT">
+		select
+		<if test="SEL != null and SEL !=''">
+			${SEL}
+		</if>
+		nvl(sum(a.fzmj), 0) fzmj,
+		nvl(sum(a.sfje), 0) sfje,
+		round(nvl(sum(a.sfje), 0) / sum(a.fzmj), 2) mjje,
+		round(nvl(sum(a.rgcb), 0) / sum(a.fzmj), 2) mjgs,
+		round(nvl(sum(a.rgcb
+		* (split(a.fzry, ',') + 1)), 0) / sum(a.fzmj),
+		2) mjsjgs,
+		sum(b.swny)
+		swny,
+		sum(b.hxny) hxny,
+		sum(b.lhyk) lhyk,
+		sum(b.yykc) yykc,
+		sum(b.qt) qt,
+		sum(b.hjcb) hjcb,
+		round(sum(b.hjcb) / sum(a.fzmj), 2) mjcb,
+		round((sum(b.hjcb) - nvl(sum(a.sfje), 0)) /
+		sum(a.fzmj),
+		2) mjjcb
+		from
+		dfw01 a, (select dfw01_jfid,
+		sum(decode(substr(ddj11_fl, 1, 1), '0',
+		syl, 0)) swny,
+		sum(decode(substr(ddj11_fl, 1, 1), '1', syl, 0)) hxny,
+		sum(decode(substr(ddj11_fl, 1, 1), '2', syl, 0)) lhyk,
+		sum(decode(substr(ddj11_fl, 1, 1), '3', syl, 0)) yykc,
+		sum(decode(substr(ddj11_fl, 1, 1), '9', syl, 0)) qt,
+		nvl(sum(ddj11_dj *
+		syl), 0) hjcb
+		from dfw01_d_fzmx
+		group by dfw01_jfid) b, ddj02 c
+		where
+		a.jfid=b.dfw01_jfid(+)
+		and
+		a.ddj02_jfid=c.jfid
+		and a.zt='3'
+		and
+		a.DDJ01_JFID=${DDJ01_JFID}
+		<if test="FZFZR != null and FZFZR !=''">
+			and a.fzfzr =${FZFZR}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			and a.ddj02_jfid =${DDJ02_JFID}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			and a.ddj02_jfid =${DDJ02_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND WCRQ>=to_date(${StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WCRQ &lt; to_date(${EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ03_JFID != null and DDJ03_JFID !=''">
+			and a.DDJ03_JFID =${DDJ03_JFID}
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			and c.XZQH =${XZQH}
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			and a.FWNRLB =${FWNRLB}
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			and a.FWNRLB =${FWNRLB}
+		</if>
+		<if test="GROUP != null and GROUP !=''">
+			group by ${GROUP}
+			order by ${GROUP}
+		</if>
+	</select>
+	<select id="TJSJHJ" parameterType="map" resultType="FWTJ">
+		select
+		nvl(sum(a.fzmj), 0) fzmj,
+		nvl(sum(a.sfje), 0) sfje,
+		round(nvl(sum(a.sfje), 0) / sum(a.fzmj), 2) mjje,
+		round(nvl(sum(a.rgcb), 0) / sum(a.fzmj), 2) mjgs,
+		round(nvl(sum(a.rgcb
+		* (split(a.fzry, ',') + 1)), 0) / sum(a.fzmj),
+		2) mjsjgs,
+		sum(b.swny)
+		swny,
+		sum(b.hxny) hxny,
+		sum(b.lhyk) lhyk,
+		sum(b.yykc) yykc,
+		sum(b.qt) qt,
+		sum(b.hjcb) hjcb,
+		round(sum(b.hjcb) / sum(a.fzmj), 2) mjcb,
+		round((sum(b.hjcb) - nvl(sum(a.sfje), 0)) /
+		sum(a.fzmj),
+		2) mjjcb
+		from
+		dfw01 a, (select dfw01_jfid,
+		sum(decode(substr(ddj11_fl, 1, 1), '0',
+		syl, 0)) swny,
+		sum(decode(substr(ddj11_fl, 1, 1), '1', syl, 0)) hxny,
+		sum(decode(substr(ddj11_fl, 1, 1), '2', syl, 0)) lhyk,
+		sum(decode(substr(ddj11_fl, 1, 1), '3', syl, 0)) yykc,
+		sum(decode(substr(ddj11_fl, 1, 1), '9', syl, 0)) qt,
+		nvl(sum(ddj11_dj *
+		syl), 0) hjcb
+		from dfw01_d_fzmx
+		group by dfw01_jfid) b, ddj02 c
+		where
+		a.jfid=b.dfw01_jfid(+)
+		and
+		a.ddj02_jfid=c.jfid
+		and a.zt='3'
+		and
+		a.DDJ01_JFID=${DDJ01_JFID}
+		<if test="FZFZR != null and FZFZR !=''">
+			and a.fzfzr =${FZFZR}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			and a.ddj02_jfid =${DDJ02_JFID}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			and a.ddj02_jfid =${DDJ02_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND WCRQ>=to_date(${StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WCRQ &lt; to_date(${EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ03_JFID != null and DDJ03_JFID !=''">
+			and a.DDJ03_JFID =${DDJ03_JFID}
+		</if>
+		<if test="XZQH != null and XZQH !=''">
+			and c.XZQH =${XZQH}
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			and a.FWNRLB =${FWNRLB}
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			and a.FWNRLB =${FWNRLB}
+		</if>
+	</select>
+	<!-- 统计点击返回的集合 -->
+	<resultMap type="DFW01" id="tjdj">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="DDJ02_MC" column="DDJ02_MC" />
+		<result property="FZMJ" column="FZMJ" />
+		<result property="SFJE" column="SFJE" />
+		<result property="PDRQ" column="PDRQ" />
+		<result property="WCRQ" column="WCRQ" />
+	</resultMap>
+	<!-- 统计点击 -->
+	<select id="TJSJclick" parameterType="map" resultMap="tjdj"
+		statementType="STATEMENT">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		A.JFID,A.DDJ01_MC,A.DDJ02_MC,F_GET_MC('FWNRLB',A.FWNRLB)
+		FWNRLB,A.FZMJ,A.SFJE,A.PDRQ,A.WCRQ FROM DFW01 A,
+		DDJ02 c
+		WHERE
+		A.DDJ02_JFID=c.JFID AND A.ZT='3' AND A.DDJ01_JFID=${DDJ01_JFID}
+		<if test="FZFZR != null and FZFZR !=''">
+			AND A.FZFZR =${FZFZR}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND A.DDJ02_JFID =${DDJ02_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND WCRQ>=to_date(${StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WCRQ &lt; to_date(${EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			AND A.FWNRLB =${FWNRLB}
+		</if>
+		<if test="And != null and And !=''">
+			${And}
+		</if>
+		) A1 WHERE
+		ROWNUM
+		&lt;=${MAX}) WHERE RN>=${MIN}
+	</select>
+	<select id="getcounTJSJclick" parameterType="map" resultType="Integer"
+		statementType="STATEMENT">
+		SELECT COUNT(*) FROM DFW01 A,
+		DDJ02 c
+		WHERE A.DDJ02_JFID=c.JFID AND
+		A.ZT='3' AND A.DDJ01_JFID=${DDJ01_JFID}
+		<if test="FZFZR != null and FZFZR !=''">
+			AND A.FZFZR =${FZFZR}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND A.DDJ02_JFID =${DDJ02_JFID}
+		</if>
+		<if test="StarTime != null and StarTime !=''">
+			AND WCRQ>=to_date(${StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WCRQ &lt; to_date(${EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="FWNRLB != null and FWNRLB !=''">
+			AND A.FWNRLB =${FWNRLB}
+		</if>
+		<if test="And != null and And !=''">
+			${And}
+		</if>
+	</select>
+	<!-- 手机端根据id获取唯一服务数据 -->
+	<select id="SelectByJFID" parameterType="map" resultType="DFW01">
+		SELECT
+		D1.JFID,D1.DDJ01_MC,D1.DDJ02_MC,F_GET_MC('FWNRLB',D1.FWNRLB)
+		FWNRLB,D1.FZFZR_MC||','||D1.FZRY_MC
+		FZRY_MC,TO_CHAR(D1.JHSJ,'yyyy-mm-dd')
+		JHSJ,D1.SFJE,D1.PDSM,D1.BZ,D2.PJJG,TO_CHAR(D2.PJRQ,'yyyy-mm-dd')
+		PJRQ,TO_CHAR(D1.PDRQ,'yyyy-mm-dd hh24:mi:ss') PDRQ,D2.PJSM,D1.ZT FROM DFW01 D1,DFW02 D2 WHERE
+		D1.JFID=#{dfw01_jfid} AND
+		D1.JFID=D2.DY_JFID
+		<if test="FWNRLB != null and FWNRLB !=''">
+			AND D1.FWNRLB=#{FWNRLB}
+		</if>
+	</select>
+	<resultMap type="DFW01" id="rqyhjh">
+		<result property="JFID" column="JFID" />
+		<result property="WCRQSTR" column="WCRQSTR" />
+		<result property="ZT" column="ZT" />
+	</resultMap>
+	<!-- 根据日期用户id获取对应集合 -->
+	<select id="SelectByRqYh" parameterType="String" resultMap="rqyhjh">
+		SELECT JFID,TO_CHAR(WCRQ,'yyyy-mm-dd hh24:mi:ss') WCRQSTR,ZT FROM DFW01
+		WHERE
+		TO_CHAR(WCRQ,'yyyy.mm')=#{0} AND DDJ02_JFID=#{1} AND FWNRLB='01'
+	</select>
+	<resultMap type="DFW01" id="zbzfhjh">
+		<result property="JFID" column="JFID" />
+		<result property="PDRY_MC" column="PDRY_MC" />
+		<result property="PDSM" column="PDSM" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="JHSJ" column="JHSJ" />
+		<result property="DDJ02_DZ" column="DDJ02_DZ" />
+		<result property="DDJ02_YDDH" column="DDJ02_YDDH" />
+		<result property="FZFZR_MC" column="FZFZR_MC" />
+		<result property="FZRY_MC" column="FZRY_MC" />
+		<result property="SFJE" column="SFJE" />
+		<result property="FWNRLB" column="FWNRLB" />
+	</resultMap>
+	<!-- 查询状态为2的专访组织下的集合 -->
+	<select id="SelectBy_ZT_DDJ01_JFID" parameterType="map"
+		resultMap="zbzfhjh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT JFID,
+		PDRY_MC,
+		PDSM,
+		PDRQ,
+		DDJ01_MC,
+		JHSJ,
+		DDJ02_DZ,
+		DDJ02_MC,
+		DDJ02_YDDH,
+		FZFZR_MC,
+		FZRY_MC,
+		SFJE,
+		F_GET_MC('FWNRLB',FWNRLB) FWNRLB
+		FROM DFW01
+		WHERE ZT=2 AND
+		DDJ01_JFID=#{DDJ01_JFID}
+		) A1 WHERE
+		ROWNUM
+		&lt;=${MAX}) WHERE
+		RN>=${MIN}
+	</select>
+	<!-- 获取状态为2的集合数量 -->
+	<select id="getBy_ZT_DDJ01_JFIDCount" parameterType="map"
+		resultType="Integer">
+		SELECT COUNT(*) FROM DFW01 WHERE ZT=2 AND
+		DDJ01_JFID=#{DDJ01_JFID}
+	</select>
+	<resultMap type="DFW01_D_FZMX" id="fzmx">
+		<result property="DDJ11_MC" column="DDJ11_MC" />
+		<result property="DDJ11_FL" column="DDJ11_FL" />
+		<result property="DDJ11_DW" column="DDJ11_DW" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="SYL" column="SYL" />
+	</resultMap>
+	<!-- 查询措施详情数据 -->
+	<select id="SelectDFW01_D_FZMX" parameterType="String"
+		resultMap="fzmx">
+		SELECT DDJ11_MC,F_GET_MC('FZCSFL',DDJ11_FL)
+		DDJ11_FL,F_GET_MC('SLDW',DDJ11_DW) DDJ11_DW,SUM(SYL) SYL FROM
+		DFW01_D_FZMX WHERE DFW01_JFID=#{0} GROUP BY
+		DDJ11_MC,DDJ11_FL,DDJ11_DW
+	</select>
+</mapper>

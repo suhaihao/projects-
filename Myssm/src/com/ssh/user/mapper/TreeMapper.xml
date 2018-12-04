@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.TreeMapper">
+	<resultMap type="Tree_bj" id="bj">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="bj_qx_sel"
+			javaType="ArrayList" ofType="Tree_qx" />
+	</resultMap>
+	<resultMap type="Tree_qx" id="bj_qx">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="bj_xz_sel"
+			javaType="ArrayList" ofType="Tree_jd" />
+	</resultMap>
+	<resultMap type="Tree_jd" id="bj_jd">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+	</resultMap>
+	<!-- 北京街道 -->
+	<select id="bj_xz_sel" parameterType="String" resultMap="bj_jd">
+		SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=4 ORDER BY BM
+		ASC
+	</select>
+	<!-- 北京区县 -->
+	<select id="bj_qx_sel" parameterType="String" resultMap="bj_qx">
+		SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=3 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询北京 -->
+	<select id="seleByBJAllList" resultMap="bj">
+		SELECT BM,QC2 FROM
+		DSYS81 WHERE BM LIKE '%15611%' AND JC=2 ORDER BY BM ASC
+	</select>
+	<!-- 上面北京下面天津 -->
+	<resultMap type="Tree_tj" id="tj">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="tj_qx_sel"
+			javaType="ArrayList" ofType="Tree_tj_qx" />
+	</resultMap>
+	<resultMap type="Tree_tj_qx" id="tj_qx">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="tj_xz_sel"
+			javaType="ArrayList" ofType="Tree_tj_jd" />
+	</resultMap>
+	<resultMap type="Tree_tj_jd" id="tj_jd">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+	</resultMap>
+	<!-- 查询天津街道 -->
+	<select id="tj_xz_sel" parameterType="String" resultMap="tj_jd">
+		SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=4 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询天津区县 -->
+	<select id="tj_qx_sel" parameterType="String" resultMap="tj_qx">
+		SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=3 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询天津 -->
+	<select id="seleByTJAllList" resultMap="tj">
+		SELECT BM,QC2 FROM
+		DSYS81 WHERE BM LIKE '%15612%' AND JC=2 ORDER BY BM ASC
+	</select>
+	<!-- 上面天津 下面河北 -->
+	<resultMap type="Tree_hb" id="hb">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="hb_ds_sel"
+			javaType="ArrayList" ofType="Tree_hb_ds" />
+	</resultMap>
+	<resultMap type="Tree_hb_ds" id="hb_ds">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="hb_ds_qx_sel"
+			javaType="ArrayList" ofType="Tree_hb_ds_qx" />
+	</resultMap>
+	<resultMap type="Tree_hb_ds_qx" id="hb_qx">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+		<collection property="nodes" column="BM" select="hb_ds_qx_jd_sel"
+			javaType="ArrayList" ofType="Tree_hb_ds_qx_jd" />
+	</resultMap>
+	<resultMap type="Tree_hb_ds_qx_jd" id="hb_jd">
+		<result property="BM" column="BM" />
+		<result property="Text" column="QC2" />
+	</resultMap>
+	<!-- 查询河北街道 -->
+	<select id="hb_ds_qx_jd_sel" parameterType="String" resultMap="hb_jd">
+	    SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=5 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询河北地市区县 -->
+	<select id="hb_ds_qx_sel" parameterType="String" resultMap="hb_qx">
+	    SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=4 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询河北地市 -->
+	<select id="hb_ds_sel" parameterType="String" resultMap="hb_ds">
+	    SELECT
+		BM,QC2 FROM DSYS81 WHERE BM LIKE '%'||#{0}||'%' AND JC=3 ORDER
+		BY BM
+		ASC
+	</select>
+	<!-- 查询河北省 -->
+	<select id="seleByHBAllList" resultMap="hb">
+		SELECT BM,QC2 FROM
+		DSYS81 WHERE BM LIKE '%15613%' AND JC=2 ORDER BY BM ASC
+	</select>
+	
+</mapper>

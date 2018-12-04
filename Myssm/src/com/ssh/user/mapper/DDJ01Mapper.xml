@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ01Mapper">
+	<resultMap type="DDJ01" id="fyzz">
+		<id property="JFID" column="JFID" />
+		<result property="JFNAME" column="JFNAME" />
+		<result property="MC" column="MC" />
+		<result property="DZ" column="DZ" />
+		<result property="LX_SJ" column="LX_SJ" />
+		<result property="YX" column="YX" />
+		<result property="ZT" column="ZT" />
+		<association property="BMBM" select="SelectByBmmc" column="BMBM"
+			javaType="String" />
+	</resultMap>
+	<!-- 获取部门名称 -->
+	<select id="SelectByBmmc" parameterType="String" resultType="String">
+		SELECT BMMC FROM DSYS05 WHERE BMBM=#{0} AND ZT='1'
+	</select>
+	<!-- 根据用户名查询用户 -->
+	<select id="SelectByUserId" parameterType="map" resultMap="fyzz">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,MC,BMBM,DZ,LX_SJ,YX,ZT FROM DDJ01
+		WHERE ZT !='0' AND
+		JFID=#{ddj01id}
+		) A1 WHERE ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<select id="getALLByuser" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ01 WHERE JFID=#{0} AND ZT !='0'
+	</select>
+	<resultMap type="DDJ01" id="fhdg">
+		<id property="JFID" column="JFID" />
+		<result property="YHM" column="YHM" />
+		<result property="MC" column="MC" />
+		<result property="XZQH" column="XZQH" />
+		<result property="DZ" column="DZ" />
+		<result property="GPS_DJ" column="GPS_DJ" />
+		<result property="GPS_BW" column="GPS_BW" />
+		<result property="LX_DH" column="LX_DH" />
+		<result property="LX_SJ" column="LX_SJ" />
+		<result property="WWW" column="WWW" />
+		<result property="YX" column="YX" />
+		<result property="LOGO" column="LOGO" />
+		<result property="JJ" column="JJ" />
+		<result property="BZ" column="BZ" />
+		<result property="LRRY_MC" column="LRRY_MC" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="ZT" column="ZT" />
+		<result property="XY_JF" column="XY_JF" />
+		<result property="XY_PJS" column="XY_PJS" />
+		<result property="PJ" column="PJ" />
+		<association property="BMBM" select="SelectByBmmc" column="BMBM"
+			javaType="String" />
+		<association property="XZQHMC" select="SelectByXzqhMc"
+			column="XZQHMC" javaType="String" />
+	</resultMap>
+	<!-- 查询行政区划名称 -->
+	<select id="SelectByXzqhMc" parameterType="String" resultType="String">
+		SELECT QC2 FROM DSYS81 WHERE BM=#{0}
+	</select>
+	<!-- 查询录入人员 <select id="SelectByllry" parameterType="String" resultType="String"> 
+		SELECT JFNAME FROM DSYS01 WHERE JFID=#{0} </select> -->
+	<!-- 获取当前用户专访组织的信息 -->
+	<select id="selectByDDJ01id" parameterType="String" resultMap="fhdg">
+		SELECT
+		JFID,YHM,MC,BMBM,XZQH,XZQH XZQHMC,DZ,GPS_DJ,GPS_BW,PJ,
+		LX_DH,LX_SJ,WWW,YX,LOGO,JJ,BZ,LRRY_MC,LRRQ,ZT,XY_JF,XY_PJS
+		FROM DDJ01
+		WHERE ZT != '0' AND JFID=#{0}
+	</select>
+	<resultMap type="DDJ01_D" id="fwlist">
+		<result property="SM" column="SM" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<association property="FWNRLBMC" select="SelectByfwmc"
+			column="FWNRLBMC" javaType="String" />
+	</resultMap>
+	<!-- 查出服务名称 -->
+	<select id="SelectByfwmc" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FWNRLB' AND BM=#{0}
+	</select>
+	<!-- 查出服务集合 -->
+	<select id="selectBydd01id" parameterType="String" resultMap="fwlist">
+		SELECT FWNRLB,FWNRLB FWNRLBMC,SM FROM DDJ01_D WHERE DDJ01_JFID=#{0} ORDER BY FWNRLB
+	</select>
+	<!-- 更新对应数据 -->
+	<update id="upByID" parameterType="DDJ01">
+		UPDATE DDJ01
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="XZQH != null and XZQH !=''"> XZQH=#{XZQH},</if>
+			<if test="DZ != null and DZ !=''"> DZ=#{DZ},</if>
+			<if test="GPS_DJ != null and GPS_DJ !=''"> GPS_DJ=#{GPS_DJ},</if>
+			<if test="GPS_BW != null and GPS_BW !=''"> GPS_BW=#{GPS_BW},</if>
+			<if test="LX_DH != null and LX_DH !=''"> LX_DH=#{LX_DH},</if>
+			<if test="LX_SJ != null and LX_SJ !=''"> LX_SJ=#{LX_SJ},</if>
+			<if test="WWW != null and WWW !=''"> WWW=#{WWW},</if>
+			<if test="YX != null and YX !=''"> YX=#{YX},</if>
+			<if test="JJ != null and JJ !=''"> JJ=#{JJ},</if>
+			<if test="BZ != null and BZ !=''"> BZ=#{BZ},</if>
+			<if test="LOGO != null and LOGO !=''"> LOGO=#{LOGO},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 插入从表数据 -->
+	<insert id="ins_d" parameterType="DDJ01_D">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT S_DDJ01_D.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DDJ01_D
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,</if>
+			<if test="FWNRLB != null and FWNRLB !=''"> FWNRLB,  </if>
+			<if test="SM != null and SM !=''"> SM,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''">#{DDJ01_JFID,jdbcType=VARCHAR},</if>
+			<if test="FWNRLB != null and FWNRLB !=''"> #{FWNRLB,jdbcType=VARCHAR},    </if>
+			<if test="SM != null and SM !=''"> #{SM,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 删除对应dd01id的服务 -->
+	<delete id="delAllfw" parameterType="String">
+		DELETE FROM DDJ01_D WHERE
+		DDJ01_JFID=#{0}
+	</delete>
+	<!-- 根据id获取唯一数据 -->
+	<select id="SelectByID" parameterType="String" resultType="DDJ01">
+		SELECT
+		JFID,YHM,MC,BMBM,XZQH,XZQH XZQHMC,DZ,GPS_DJ,GPS_BW,PJ,
+		LX_DH,LX_SJ,WWW,YX,LOGO,JJ,BZ,LRRY_MC,LRRQ,ZT,XY_JF,XY_PJS
+		FROM DDJ01
+		WHERE ZT != '0' AND JFID=#{0}
+	</select>
+	<resultMap type="DDJ01" id="qbjh">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+		<result property="BMBM" column="BMBM" />
+		<result property="DZ" column="DZ" />
+		<result property="LX_DH" column="LX_DH" />
+		<result property="LX_SJ" column="LX_SJ" />
+	</resultMap>
+	<!-- 获取全部集合 -->
+	<select id="SelectAlllSize" resultMap="qbjh">
+		SELECT
+		JFID,MC,F_GET_MC('BMMC',BMBM) BMBM,DZ,LX_DH,LX_SJ FROM DDJ01   ORDER BY MC
+	</select>
+	<!-- 手机接口返回集合 -->
+	<resultMap type="DDJ01" id="sjzfw">
+		<result property="JFID" column="JFID" />
+		<result property="LOGO" column="LOGO" />
+		<result property="MC" column="MC" />
+		<result property="PJ" column="PJ" />
+		<result property="XY_PJS" column="XY_PJS" />
+		<result property="XY_JF" column="XY_JF" />
+		<result property="DZ" column="DZ" />
+		<result property="LX_DH" column="LX_DH" />
+		<result property="LX_SJ" column="LX_SJ" />
+		<result property="GPS_DJ" column="GPS_DJ" />
+		<result property="GPS_BW" column="GPS_BW" />
+	</resultMap>
+	<!-- 手机接口找服务 -->
+	<select id="PhoneSelectByPage" parameterType="map" resultMap="sjzfw" statementType="STATEMENT">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		D1.JFID,D1.LOGO,D1.MC,D1.PJ,D1.XY_PJS,D1.XY_JF,D1.DZ,D1.LX_DH,D1.LX_SJ,D1.GPS_DJ,D1.GPS_BW
+		FROM
+		DDJ01 D1,DDJ01_D D1_D WHERE ZT=2
+		AND D1_D.DDJ01_JFID=D1.JFID
+		<if test="FWNRLB != null and FWNRLB !=''">
+			AND D1_D.FWNRLB=${FWNRLB}
+		</if>
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||${MC}||'%'
+		</if>
+		<if test="sort_mode != null and sort_mode !=''">
+			ORDER BY PJ ${sort_mode}
+		</if>
+		) A1 WHERE ROWNUM &lt;=${MAX}) WHERE RN>=${MIN}
+	</select>
+	<!-- 手机集合的数量 -->
+	<select id="PhoneGetCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DDJ01 D1,DDJ01_D D1_D WHERE ZT=2
+		AND
+		D1_D.DDJ01_JFID=D1.JFID
+		<if test="FWNRLB != null and FWNRLB !=''">
+			AND D1_D.FWNRLB=#{FWNRLB}
+		</if>
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||#{MC}||'%'
+		</if>
+	</select>
+	<!-- 查询详情信息 -->
+	<select id="SelectBYJFID" parameterType="String" resultType="DDJ01">
+		SELECT
+		JFID,LOGO,MC,PJ,XY_PJS,DZ,LX_DH,LX_SJ,GPS_DJ,GPS_BW
+		FROM DDJ01
+		WHERE JFID=#{0}
+	</select>
+	<!-- 获取对应集合的数量 -->
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DDJ01 WHERE ZT!=0
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||#{MC}||'%'
+		</if>
+	</select>
+	<!-- 对应返回集合 -->
+	<resultMap type="DDJ01" id="dyzfzz">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+		<result property="BMBM" column="BMBM" />
+		<result property="DZ" column="DZ" />
+		<result property="LX_DH" column="LX_DH" />
+		<result property="LX_SJ" column="LX_SJ" />
+	</resultMap>
+	<!-- 获取对应专访组织集合 -->
+	<select id="SelectAllZFZZ" parameterType="map" resultMap="dyzfzz">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,MC,F_GET_MC('BMMC',BMBM) BMBM,DZ,LX_DH,LX_SJ
+		FROM
+		DDJ01 WHERE ZT!=0
+		<if test="MC != null and MC !=''">
+			AND MC LIKE '%'||#{MC}||'%'
+		</if>
+		ORDER BY MC ASC
+		) A1 WHERE ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+</mapper>

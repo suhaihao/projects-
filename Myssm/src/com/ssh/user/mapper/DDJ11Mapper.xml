@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ11Mapper">
+	<!-- 防治返回集合分类 -->
+	<resultMap type="DDJ11" id="fzjh">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="FL" column="FL" />
+		<result property="MC" column="MC" />
+		<result property="DJ" column="DJ" />
+		<result property="BZGG" column="BZGG" />
+		<result property="ZT" column="ZT" />
+		<result property="RN" column="RN" />
+		<association property="FL" select="SelectByfl" column="FL"
+			javaType="String" />
+		<association property="DW" select="SelectBydw" column="DW"
+			javaType="String" />
+	</resultMap>
+	<!-- 获取单位信息 -->
+	<select id="SelectBydw" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='SLDW' AND BM=#{0}
+	</select>
+	<!-- 查出来分类信息 -->
+	<select id="SelectByfl" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FZCSFL' AND BM=#{0}
+	</select>
+	<!-- 查询全部集合带分页 -->
+	<select id="selectByAlllist" parameterType="map" resultMap="fzjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,MC,DW,DJ,BZGG,ZT FROM DDJ11 WHERE ZT !=0 AND
+		DDJ01_JFID =#{ddj01_jfid} ORDER BY FL,MC ASC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取集合总个数 -->
+	<select id="getCount" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT !='0' AND DDJ01_JFID=#{0}
+	</select>
+	<!-- 获取集合总个数根据条件 -->
+	<select id="getCountByTJ" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT !='0' AND DDJ01_JFID=#{0}
+		<if test="param2 != null and param2 !=''">
+			AND MC LIKE '%'||#{1}||'%'
+		</if>
+		<if test="param3 != null and param3 !=''">
+			AND FL =#{2}
+		</if>
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="inddj11" parameterType="DDJ11">
+		INSERT INTO DDJ11
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,</if>
+			<if test="MC != null and MC !=''"> MC,</if>
+			<if test="FL != null and FL !=''"> FL,  </if>
+			<if test="DW != null and DW !=''"> DW,   </if>
+			<if test="DJ != null and DJ !=''"> DJ, </if>
+			<if test="BZGG != null and BZGG !=''"> BZGG,   </if>
+			<if test="BZ != null and BZ !=''"> BZ,   </if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,  </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> LRRYMC, </if>
+			<if test="LRRQ != null and LRRQ !=''"> LRRQ,    </if>
+			<if test="SCCJ != null and SCCJ !=''"> SCCJ,    </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''">#{DDJ01_JFID,jdbcType=VARCHAR},</if>
+			<if test="MC != null and MC !=''"> #{MC,jdbcType=VARCHAR},    </if>
+			<if test="FL != null and FL !=''"> #{FL,jdbcType=VARCHAR},    </if>
+			<if test="DW != null and DW !=''"> #{DW,jdbcType=VARCHAR},  </if>
+			<if test="DJ != null and DJ !=''"> #{DJ,jdbcType=INTEGER},</if>
+			<if test="BZGG != null and BZGG !=''"> #{BZGG,jdbcType=VARCHAR},    </if>
+			<if test="BZ != null and BZ !=''"> #{BZ,jdbcType=VARCHAR},  </if>
+			<if test="LRRY != null and LRRY !=''"> #{LRRY,jdbcType=VARCHAR},    </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> #{LRRYMC,jdbcType=VARCHAR},    </if>
+			<if test="LRRQ != null and LRRQ !=''"> sysdate,    </if>
+			<if test="SCCJ != null and SCCJ !=''"> #{SCCJ,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 获取唯一id -->
+	<select id="getID" resultType="String">
+		SELECT s_ddj11.NEXTVAL FROM DUAL
+	</select>
+	<!-- 根据id删除唯一数据 -->
+	<delete id="delddj11" parameterType="String">
+		DELETE FROM DDJ11 WHERE JFID=#{0}
+	</delete>
+	<!-- 条件查询返回集合 -->
+	<resultMap type="DDJ11" id="fhtjjh">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="FL" column="FL" />
+		<result property="MC" column="MC" />
+		<result property="DJ" column="DJ" />
+		<result property="BZGG" column="BZGG" />
+		<result property="ZT" column="ZT" />
+		<result property="RN" column="RN" />
+		<association property="FL" select="SelectByfl" column="FL"
+			javaType="String" />
+		<association property="DW" select="SelectBydw" column="DW"
+			javaType="String" />
+	</resultMap>
+	<!-- 根据条件的分页查询 -->
+	<select id="selectListByflname" parameterType="map" resultMap="fhtjjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,MC,DW,DJ,BZGG,ZT FROM DDJ11 WHERE ZT !=0 AND
+		DDJ01_JFID=#{ddj01_jfid}
+		<if test="mc != null and mc !=''">
+			AND MC LIKE '%'||#{mc}||'%'
+		</if>
+		<if test="fl != null and fl !=''">
+			AND FL=#{fl}
+		</if>
+		ORDER BY FL,MC ASC
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+
+	<!-- 根据名字获取唯一对象 -->
+	<select id="selectByMc" parameterType="String" resultType="DDJ11">
+		SELECT MC FROM DDJ11 WHERE MC=#{0} AND DDJ01_JFID=#{1}
+	</select>
+	<!-- 查询id 返回集合 -->
+	<resultMap type="DDJ11" id="cxid">
+		<result property="JFID" column="JFID" />
+		<result property="MC" column="MC" />
+		<result property="DJ" column="DJ" />
+		<result property="BZGG" column="BZGG" />
+		<result property="ZT" column="ZT" />
+		<result property="LRRYMC" column="LRRYMC" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="FL" column="FL" />
+		<result property="DW" column="DW" />
+	</resultMap>
+	<!-- 根据id获取唯一数据 -->
+	<select id="selectByid" parameterType="String" resultMap="cxid">
+		SELECT JFID,FL,MC,DJ,DW,BZGG,BZ,ZT,LRRYMC,LRRQ,SCCJ FROM DDJ11 WHERE JFID=#{0}
+	</select>
+	<!-- 根据排除id 查看名字是否重复 -->
+	<select id="selectByMcID" parameterType="String" resultType="DDJ11">
+		SELECT MC FROM DDJ11 WHERE JFID!=#{0} AND MC=#{1} AND DDJ01_JFID=#{2}
+	</select>
+	<!-- 更新对应数据 -->
+	<update id="updysj" parameterType="DDJ11">
+		UPDATE DDJ11
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="MC != null and MC !=''"> MC=#{MC},</if>
+			<if test="FL != null and FL !=''"> FL=#{FL},</if>
+			<if test="DW != null and DW !=''"> DW=#{DW},</if>
+			<if test="DJ != null and DJ !=''"> DJ=#{DJ},</if>
+			<if test="BZGG != null and BZGG !=''"> BZGG=#{BZGG},</if>
+			<if test="BZ != null"> BZ=#{BZ},</if>
+			<if test="SCCJ != null"> SCCJ=#{SCCJ},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_cllb" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_ddj11_jfid" jdbcType="VARCHAR"
+			mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 取消提交修改字段 -->
+	<select id="qxup" parameterMap="testParameterMap" statementType="CALLABLE">
+		{call p_tj_fzcs(?,?,?,?)}
+	</select>
+	<!-- 获取提交没条件个数 -->
+	<select id="getCountByZTTJ" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT ='2' AND DDJ01_JFID=#{0} AND FL IN
+		(01,11)
+	</select>
+	<!-- 获取提交有条件个数 -->
+	<select id="getCountBYTJZT" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT ='2' AND DDJ01_JFID=#{0} AND
+		FL IN (01,11)
+		<if test="param2 != null and param2 !=''">
+			AND MC LIKE '%'||#{1}||'%'
+		</if>
+		<if test="param3 != null and param3 !=''">
+			AND FL =#{2}
+		</if>
+	</select>
+	<resultMap type="DDJ11" id="fhtjjhzt">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="FL" column="FL" />
+		<result property="DW" column="DW" />
+		<result property="MC" column="MC" />
+		<result property="DJ" column="DJ" />
+		<result property="BZGG" column="BZGG" />
+		<result property="ZT" column="ZT" />
+		<association property="FLMC" select="SelectByfl" column="FLMC"
+			javaType="String" />
+		<association property="DWMC" select="SelectBydw" column="DWMC"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询提交有条件集合 -->
+	<select id="selectByFlandNameBYZT" parameterType="map"
+		resultMap="fhtjjhzt">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,FL FLMC,MC,DW,DW DWMC,DJ,BZGG,ZT FROM DDJ11 WHERE ZT =2 AND
+		DDJ01_JFID=#{ddj01_jfid} AND FL IN (01,11)
+		<if test="mc != null and mc !=''">
+			AND MC LIKE '%'||#{mc}||'%'
+		</if>
+		<if test="fl != null and fl !=''">
+			AND FL=#{fl}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<resultMap type="DDJ11" id="fzjhZT">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="MC" column="MC" />
+		<result property="FL" column="FL" />
+		<result property="DW" column="DW" />
+		<result property="DJ" column="DJ" />
+		<result property="BZGG" column="BZGG" />
+		<result property="ZT" column="ZT" />
+		<association property="FLMC" select="SelectByfl" column="FLMC"
+			javaType="String" />
+		<association property="DWMC" select="SelectBydw" column="DWMC"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询提交没条件提交集合 -->
+	<select id="selectAlllistBYZT" parameterType="map" resultMap="fzjhZT">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,FL FLMC,MC,DW,DW DWMC,DJ,BZGG,ZT FROM DDJ11 WHERE ZT =2 AND
+		DDJ01_JFID =#{ddj01_jfid} AND FL IN (01,11) ORDER BY LRRQ DESC
+		) A1
+		WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 获取非农药提交没条件个数 -->
+	<select id="getCountByQTZTTJ" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT ='2' AND DDJ01_JFID=#{0} AND FL NOT IN
+		(01,11)
+	</select>
+	<!-- 获取非农药提交有条件个数 -->
+	<select id="getCountBYQTTJZT" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ11 WHERE ZT ='2' AND DDJ01_JFID=#{0} AND
+		FL NOT IN (01,11)
+		<if test="param2 != null and param2 !=''">
+			AND MC LIKE '%'||#{1}||'%'
+		</if>
+		<if test="param3 != null and param3 !=''">
+			AND FL =#{2}
+		</if>
+	</select>
+	<!-- 非农药查询提交没条件提交集合 -->
+	<select id="selectByQTFlandNameBYZT" parameterType="map"
+		resultMap="fhtjjhzt">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,FL FLMC,MC,DW,DW DWMC,DJ,BZGG,ZT FROM DDJ11 WHERE ZT =2 AND
+		DDJ01_JFID=#{ddj01_jfid} AND FL NOT IN (01,11)
+		<if test="mc != null and mc !=''">
+			AND MC LIKE '%'||#{mc}||'%'
+		</if>
+		<if test="fl != null and fl !=''">
+			AND FL=#{fl}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 非农药查询提交没条件提交集合 -->
+	<select id="selectAlllistBYQTZT" parameterType="map" resultMap="fzjhZT">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,FL,FL FLMC,MC,DW,DW DWMC,DJ,BZGG,ZT FROM DDJ11 WHERE ZT =2 AND
+		DDJ01_JFID =#{ddj01_jfid} AND FL NOT IN (01,11) ORDER BY LRRQ DESC
+		) A1
+		WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+</mapper>

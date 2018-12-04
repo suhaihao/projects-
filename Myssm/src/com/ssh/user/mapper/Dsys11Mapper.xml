@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.Dsys11Mapper">
+	<!-- 返回对应集合 -->
+	<resultMap type="Dsys11" id="lblist">
+		<id property="JFID" column="JFID" />
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+	</resultMap>
+	<select id="SeleBybm" parameterType="String" resultType="Dsys11">
+		SELECT
+		HZMC,BM,BZ1 FROM DSYS11 WHERE BMLB=#{0} AND BM=#{1}
+	</select>
+	<select id="SelectAllList" parameterType="String" resultMap="lblist">
+		SELECT HZMC,BM FROM DSYS11 WHERE BMLB=#{0} ORDER BY BM ASC
+	</select>
+	<resultMap type="Dsys11" id="fw">
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+	</resultMap>
+	<select id="SelectAllFW" resultMap="fw">
+		SELECT BM,HZMC FROM DSYS11
+		WHERE BMLB='FWNRLB'
+	</select>
+	<!-- 防治措施分类返回集合 -->
+	<resultMap type="Dsys11" id="fzcsfl">
+	</resultMap>
+	<!-- 获取防治措施的分类集合 -->
+	<select id="SelectAllfzcsfl" resultMap="fzcsfl">
+		SELECT BM,HZMC FROM
+		DSYS11 WHERE BMLB='FZCSFL' AND LENGTH(BM)=2 ORDER BY BM
+		ASC
+	</select>
+	<resultMap type="Dsys11" id="djjh">
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+	</resultMap>
+	<!-- 获取单价集合 -->
+	<select id="SelectAllDj" resultMap="djjh">
+		SELECT BM,HZMC FROM DSYS11
+		WHERE BMLB='SLDW'
+	</select>
+	<!-- 根据bm查询一个单位 -->
+	<select id="SelectByBmDw" parameterType="String" resultType="Dsys11">
+		SELECT BM,HZMC FROM DSYS11 WHERE BMLB='SLDW' AND BM=#{0}
+	</select>
+	<!-- 视图集合 -->
+	<resultMap type="DDJ03" id="stjh">
+		<result property="JFID" column="JFID" />
+		<result property="XMMC" column="XMMC" />
+	</resultMap>
+	<!-- 获取视图中的集合 -->
+	<select id="SelectAllST" resultMap="stjh">
+		SELECT JFID,XMMC FROM DDJ03
+	</select>
+</mapper>

@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW01_DMapper">
+	<!--插入一条数据 -->
+	<insert id="insAdd" parameterType="DFW01_D">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT sdfw01_d.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DFW01_D
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="DFW01_JFID != null and DFW01_JFID !=''"> DFW01_JFID,</if>
+			<if test="DDJ02_D_JFID != null and DDJ02_D_JFID !=''"> DDJ02_D_JFID,  </if>
+			<if test="DDJ02_D_DH != null and DDJ02_D_DH !=''"> DDJ02_D_DH,   </if>
+			<if test="DDJ02_D_DLX != null and DDJ02_D_DLX !=''"> DDJ02_D_DLX, </if>
+			<if test="DDJ02_D_MJ != null and DDJ02_D_MJ !=''"> DDJ02_D_MJ,   </if>
+			<if test="ZW != null and ZW !=''"> ZW,   </if>
+			<if test="FZDX != null and FZDX !=''"> FZDX, </if>
+			<if test="SF_FZ != null and SF_FZ !=''"> SF_FZ,  </if>
+			<if test="SF_XP != null and SF_XP !=''"> SF_XP, </if>
+			<if test="FZMJ != null and FZMJ !=''"> FZMJ, </if>
+			<if test="SMZT != null and SMZT !=''"> SMZT,    </if>
+			<if test="DDJ11_JFID1 != null and DDJ11_JFID1 !=''"> DDJ11_JFID1,  </if>
+			<if test="DDJ11_MC1 != null and DDJ11_MC1 !=''"> DDJ11_MC1,  </if>
+			<if test="DDJ11_FL1 != null and DDJ11_FL1 !=''"> DDJ11_FL1,  </if>
+			<if test="DDJ11_DW1 != null and DDJ11_DW1 !=''"> DDJ11_DW1,  </if>
+			<if test="DDJ11_DJ1 != null and DDJ11_DJ1 !=''"> DDJ11_DJ1,  </if>
+			<if test="DDJ11_BZGG1 != null and DDJ11_BZGG1 !=''"> DDJ11_BZGG1,  </if>
+			<if test="SYL1 != null and SYL1 !=''"> SYL1,  </if>
+			<if test="DDJ11_JFID2 != null and DDJ11_JFID2 !=''"> DDJ11_JFID2,  </if>
+			<if test="DDJ11_JFID3 != null and DDJ11_JFID3 !=''"> DDJ11_JFID3,  </if>
+			<if test="DDJ11_JFID4 != null and DDJ11_JFID4 !=''"> DDJ11_JFID4,  </if>
+			<if test="DDJ11_MC2 != null and DDJ11_MC2 !=''"> DDJ11_MC2,  </if>
+			<if test="DDJ11_MC3 != null and DDJ11_MC3 !=''"> DDJ11_MC3,  </if>
+			<if test="DDJ11_MC4 != null and DDJ11_MC4 !=''"> DDJ11_MC4,  </if>
+			<if test="DDJ11_FL2 != null and DDJ11_FL2 !=''"> DDJ11_FL2,  </if>
+			<if test="DDJ11_FL3 != null and DDJ11_FL3 !=''"> DDJ11_FL3,  </if>
+			<if test="DDJ11_FL4 != null and DDJ11_FL4 !=''"> DDJ11_FL4,  </if>
+			<if test="DDJ11_DW2 != null and DDJ11_DW2 !=''"> DDJ11_DW2,  </if>
+			<if test="DDJ11_DW3 != null and DDJ11_DW3 !=''"> DDJ11_DW3,  </if>
+			<if test="DDJ11_DW4 != null and DDJ11_DW4 !=''"> DDJ11_DW4,  </if>
+			<if test="DDJ11_DJ2 != null and DDJ11_DJ2 !=''"> DDJ11_DJ2,  </if>
+			<if test="DDJ11_DJ3 != null and DDJ11_DJ3 !=''"> DDJ11_DJ3,  </if>
+			<if test="DDJ11_DJ4 != null and DDJ11_DJ4 !=''"> DDJ11_DJ4,  </if>
+			<if test="DDJ11_BZGG2 != null and DDJ11_BZGG2 !=''"> DDJ11_BZGG2,  </if>
+			<if test="DDJ11_BZGG3 != null and DDJ11_BZGG3 !=''"> DDJ11_BZGG3,  </if>
+			<if test="DDJ11_BZGG4 != null and DDJ11_BZGG4 !=''"> DDJ11_BZGG4,  </if>
+			<if test="SYL2 != null and SYL2 !=''"> SYL2,  </if>
+			<if test="SYL3 != null and SYL3 !=''"> SYL3,  </if>
+			<if test="SYL4 != null and SYL4 !=''"> SYL4,  </if>
+			<if test="SYQX != null and SYQX !=''"> SYQX,  </if>
+			<if test="ZW_MC != null and ZW_MC !=''"> ZW_MC,  </if>
+			<if test="SFJE != null and SFJE !=''"> SFJE,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DFW01_JFID != null and DFW01_JFID !=''">#{DFW01_JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_D_JFID != null and DDJ02_D_JFID !=''">#{DDJ02_D_JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_D_DH != null and DDJ02_D_DH !=''">#{DDJ02_D_DH,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_D_DLX != null and DDJ02_D_DLX !=''">#{DDJ02_D_DLX,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_D_MJ != null and DDJ02_D_MJ !=''">#{DDJ02_D_MJ,jdbcType=INTEGER},</if>
+			<if test="ZW != null and ZW !=''">#{ZW,jdbcType=VARCHAR},</if>
+			<if test="FZDX != null and FZDX !=''">#{FZDX,jdbcType=VARCHAR},</if>
+			<if test="SF_FZ != null and SF_FZ !=''">#{SF_FZ,jdbcType=CHAR},</if>
+			<if test="SF_XP != null and SF_XP !=''">#{SF_XP,jdbcType=CHAR},</if>
+			<if test="FZMJ != null and FZMJ !=''">#{FZMJ,jdbcType=INTEGER},</if>
+			<if test="SMZT != null and SMZT !=''">#{SMZT,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_JFID1 != null and DDJ11_JFID1 !=''">#{DDJ11_JFID1,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_MC1 != null and DDJ11_MC1 !=''">#{DDJ11_MC1,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_FL1 != null and DDJ11_FL1 !=''">#{DDJ11_FL1,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DW1 != null and DDJ11_DW1 !=''">#{DDJ11_DW1,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DJ1 != null and DDJ11_DJ1 !=''">#{DDJ11_DJ1,jdbcType=INTEGER},</if>
+			<if test="DDJ11_BZGG1 != null and DDJ11_BZGG1 !=''">#{DDJ11_BZGG1,jdbcType=VARCHAR},</if>
+			<if test="SYL1 != null and SYL1 !=''">#{SYL1,jdbcType=INTEGER},</if>
+			<if test="DDJ11_JFID2 != null and DDJ11_JFID2 !=''">#{DDJ11_JFID2,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_JFID3 != null and DDJ11_JFID3 !=''">#{DDJ11_JFID3,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_JFID4 != null and DDJ11_JFID4 !=''">#{DDJ11_JFID4,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_MC2 != null and DDJ11_MC2 !=''">#{DDJ11_MC2,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_MC3 != null and DDJ11_MC3 !=''">#{DDJ11_MC3,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_MC4 != null and DDJ11_MC4 !=''">#{DDJ11_MC4,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_FL2 != null and DDJ11_FL2 !=''">#{DDJ11_FL2,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_FL3 != null and DDJ11_FL3 !=''">#{DDJ11_FL3,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_FL4 != null and DDJ11_FL4 !=''">#{DDJ11_FL4,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DW2 != null and DDJ11_DW2 !=''">#{DDJ11_DW2,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DW3 != null and DDJ11_DW3 !=''">#{DDJ11_DW3,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DW4 != null and DDJ11_DW4 !=''">#{DDJ11_DW4,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_DJ2 != null and DDJ11_DJ2 !=''">#{DDJ11_DJ2,jdbcType=INTEGER},</if>
+			<if test="DDJ11_DJ3 != null and DDJ11_DJ3 !=''">#{DDJ11_DJ3,jdbcType=INTEGER},</if>
+			<if test="DDJ11_DJ4 != null and DDJ11_DJ4 !=''">#{DDJ11_DJ4,jdbcType=INTEGER},</if>
+			<if test="DDJ11_BZGG2 != null and DDJ11_BZGG2 !=''">#{DDJ11_BZGG2,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_BZGG3 != null and DDJ11_BZGG3 !=''">#{DDJ11_BZGG3,jdbcType=VARCHAR},</if>
+			<if test="DDJ11_BZGG4 != null and DDJ11_BZGG4 !=''">#{DDJ11_BZGG4,jdbcType=VARCHAR},</if>
+			<if test="SYL2 != null and SYL2 !=''">#{SYL2,jdbcType=INTEGER},</if>
+			<if test="SYL3 != null and SYL3 !=''">#{SYL3,jdbcType=INTEGER},</if>
+			<if test="SYL4 != null and SYL4 !=''">#{SYL4,jdbcType=INTEGER},</if>
+			<if test="SYQX != null and SYQX !=''">#{SYQX,jdbcType=VARCHAR},</if>
+			<if test="ZW_MC != null and ZW_MC !=''">#{ZW_MC,jdbcType=VARCHAR},</if>
+			<if test="SFJE != null and SFJE !=''">#{SFJE,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<resultMap type="DFW01_D" id="idjh">
+		<result property="JFID" column="JFID" />
+		<result property="DFW01_JFID" column="DFW01_JFID" />
+		<result property="DDJ02_D_JFID" column="DDJ02_D_JFID" />
+		<result property="DDJ02_D_DH" column="DDJ02_D_DH" />
+		<result property="DDJ02_D_DLX" column="DDJ02_D_DLX" />
+		<result property="DDJ02_D_MJ" column="DDJ02_D_MJ" />
+		<result property="ZW" column="ZW" />
+		<result property="FZDX" column="FZDX" />
+		<result property="SF_FZ" column="SF_FZ" />
+		<result property="SF_XP" column="SF_XP" />
+		<result property="KSSJ" column="KSSJ" />
+		<result property="JSSJ" column="JSSJ" />
+		<result property="FZMJ" column="FZMJ" />
+		<result property="SMZT" column="SMZT" />
+		<result property="DDJ11_JFID1" column="DDJ11_JFID1" />
+		<result property="DDJ11_MC1" column="DDJ11_MC1" />
+		<result property="DDJ11_FL1" column="DDJ11_FL1" />
+		<result property="DDJ11_DW1" column="DDJ11_DW1" />
+		<result property="DDJ11_DJ1" column="DDJ11_DJ1" />
+		<result property="DDJ11_BZGG1" column="DDJ11_BZGG1" />
+		<result property="SYL1" column="SYL1" />
+		<result property="DDJ11_JFID2" column="DDJ11_JFID2" />
+		<result property="DDJ11_JFID3" column="DDJ11_JFID3" />
+		<result property="DDJ11_JFID4" column="DDJ11_JFID4" />
+		<result property="DDJ11_MC2" column="DDJ11_MC2" />
+		<result property="DDJ11_MC3" column="DDJ11_MC3" />
+		<result property="DDJ11_MC4" column="DDJ11_MC4" />
+		<result property="DDJ11_FL2" column="DDJ11_FL2" />
+		<result property="DDJ11_FL3" column="DDJ11_FL3" />
+		<result property="DDJ11_FL4" column="DDJ11_FL4" />
+		<result property="DDJ11_DW2" column="DDJ11_DW2" />
+		<result property="DDJ11_DW3" column="DDJ11_DW3" />
+		<result property="DDJ11_DW4" column="DDJ11_DW4" />
+		<result property="DDJ11_DJ2" column="DDJ11_DJ2" />
+		<result property="DDJ11_DJ3" column="DDJ11_DJ3" />
+		<result property="DDJ11_DJ4" column="DDJ11_DJ4" />
+		<result property="DDJ11_BZGG2" column="DDJ11_BZGG2" />
+		<result property="DDJ11_BZGG3" column="DDJ11_BZGG3" />
+		<result property="DDJ11_BZGG4" column="DDJ11_BZGG4" />
+		<result property="SYL2" column="SYL2" />
+		<result property="SYL3" column="SYL3" />
+		<result property="SYL4" column="SYL4" />
+		<result property="SYQX" column="SYQX" />
+		<result property="SYQXMC" column="SYQXMC" />
+		<result property="ZW_MC" column="ZW_MC" />
+		<result property="SFJE" column="SFJE" />
+		<result property="ZT" column="ZT" />
+		<result property="LSRQ" column="LSRQ" />
+		<association property="DDJ11_DW1MC" select="SelectByDW"
+			column="DDJ11_DW1MC" javaType="String" />
+		<association property="DDJ11_DW2MC" select="SelectByDW"
+			column="DDJ11_DW2MC" javaType="String" />
+		<association property="DDJ11_DW3MC" select="SelectByDW"
+			column="DDJ11_DW3MC" javaType="String" />
+		<association property="DDJ11_DW4MC" select="SelectByDW"
+			column="DDJ11_DW4MC" javaType="String" />
+	</resultMap>
+	<!-- 查询单位名称 -->
+	<select id="SelectByDW" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='SLDW' AND
+		BM=#{0}
+	</select>
+	<!-- 根据DFW01_JFID -->
+	<select id="SelectByID" parameterType="String" resultMap="idjh">
+		SELECT
+		JFID,DFW01_JFID,DDJ02_D_JFID,DDJ02_D_DH,DDJ02_D_DLX,DDJ02_D_MJ,
+		ZW,FZDX,SF_FZ,SF_XP,KSSJ,JSSJ,FZMJ,SMZT,DDJ11_JFID1,DDJ11_MC1,
+		DDJ11_FL1,DDJ11_DW1,DDJ11_DW1
+		DDJ11_DW1MC,DDJ11_DJ1,DDJ11_BZGG1,SYL1,DDJ11_JFID2,
+		DDJ11_JFID3,DDJ11_JFID4,DDJ11_MC2,DDJ11_MC3,DDJ11_MC4,
+		DDJ11_FL2,DDJ11_FL3,DDJ11_FL4,DDJ11_DW2,DDJ11_DW2
+		DDJ11_DW2MC,DDJ11_DW3,DDJ11_DW3 DDJ11_DW3MC,DDJ11_DW4,DDJ11_DW4
+		DDJ11_DW4MC,
+		DDJ11_DJ2,DDJ11_DJ3,DDJ11_DJ4,DDJ11_BZGG2,DDJ11_BZGG3,DDJ11_BZGG4,
+		SYL2,SYL3,SYL4,SYQX,F_GET_MC('SYQX',SYQX) SYQXMC,ZW_MC,SFJE,ZT,TO_CHAR(KSSJ,'yyyy-mm-dd hh24:mi:ss')||'-'||TO_CHAR(JSSJ,'hh24:mi:ss') LSRQ
+		FROM DFW01_D WHERE
+		DFW01_JFID=#{0}
+		ORDER BY DDJ02_D_DH 
+	</select>
+	<!-- 根据id查找唯一数据 -->
+	<select id="SelectByJFID" parameterType="String" resultMap="idjh">
+		SELECT
+		JFID,DFW01_JFID,DDJ02_D_JFID,DDJ02_D_DH,DDJ02_D_DLX,DDJ02_D_MJ,
+		ZW,FZDX,SF_FZ,SF_XP,KSSJ,JSSJ,FZMJ,SMZT,DDJ11_JFID1,DDJ11_MC1,
+		DDJ11_FL1,DDJ11_DW1,DDJ11_DW1
+		DDJ11_DW1MC,DDJ11_DJ1,DDJ11_BZGG1,SYL1,DDJ11_JFID2,
+		DDJ11_JFID3,DDJ11_JFID4,DDJ11_MC2,DDJ11_MC3,DDJ11_MC4,
+		DDJ11_FL2,DDJ11_FL3,DDJ11_FL4,DDJ11_DW2,DDJ11_DW2
+		DDJ11_DW2MC,DDJ11_DW3,DDJ11_DW3 DDJ11_DW3MC,DDJ11_DW4,DDJ11_DW4
+		DDJ11_DW4MC,
+		DDJ11_DJ2,DDJ11_DJ3,DDJ11_DJ4,DDJ11_BZGG2,DDJ11_BZGG3,DDJ11_BZGG4,
+		SYL2,SYL3,SYL4,SYQX,F_GET_MC('SYQX',SYQX) SYQXMC,ZW_MC,SFJE,ZT,TO_CHAR(KSSJ,'yyyy-mm-dd hh24:mi:ss')||'-'||TO_CHAR(JSSJ,'hh24:mi:ss') LSRQ
+		FROM DFW01_D WHERE JFID=#{0}
+	</select>
+	<!-- 根据DFW01_JFID删除数据 -->
+	<delete id="delByDFW01ID">
+		DELETE FROM DFW01_D WHERE DFW01_JFID=#{0}
+	</delete>
+	<!-- 更新地块信息 -->
+	<update id="upDKXX" parameterType="DFW01_D">
+		UPDATE DFW01_D
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="DDJ02_D_JFID != null and DDJ02_D_JFID !=''"> DDJ02_D_JFID=#{DDJ02_D_JFID},</if>
+			<if test="DDJ02_D_DH != null and DDJ02_D_DH !=''"> DDJ02_D_DH=#{DDJ02_D_DH},</if>
+			<if test="DDJ02_D_DLX != null and DDJ02_D_DLX !=''"> DDJ02_D_DLX=#{DDJ02_D_DLX},</if>
+			<if test="DDJ02_D_MJ != null and DDJ02_D_MJ !=''"> DDJ02_D_MJ=#{DDJ02_D_MJ},</if>
+			<if test="ZW != null and ZW !=''"> ZW=#{ZW},</if>
+			<if test="FZDX != null"> FZDX=#{FZDX},</if>
+			<if test="SF_FZ != null and SF_FZ !=''"> SF_FZ=#{SF_FZ},</if>
+			<if test="SF_XP != null and SF_XP !=''"> SF_XP=#{SF_XP},</if>
+			<if test="FZMJ != null and FZMJ !=''"> FZMJ=#{FZMJ},</if>
+			<if test="DDJ11_JFID1 != null"> DDJ11_JFID1=#{DDJ11_JFID1},</if>
+			<if test="DDJ11_MC1 != null"> DDJ11_MC1=#{DDJ11_MC1},</if>
+			<if test="DDJ11_FL1 != null"> DDJ11_FL1=#{DDJ11_FL1},</if>
+			<if test="DDJ11_DW1 != null"> DDJ11_DW1=#{DDJ11_DW1},</if>
+			<if test="DDJ11_DJ1 != null"> DDJ11_DJ1=#{DDJ11_DJ1},</if>
+			<if test="DDJ11_BZGG1 != null"> DDJ11_BZGG1=#{DDJ11_BZGG1},</if>
+			<if test="SYL1 != null"> SYL1=#{SYL1},</if>
+			<if test="DDJ11_JFID2 != null"> DDJ11_JFID2=#{DDJ11_JFID2},</if>
+			<if test="DDJ11_JFID3 != null"> DDJ11_JFID3=#{DDJ11_JFID3},</if>
+			<if test="DDJ11_JFID4 != null"> DDJ11_JFID4=#{DDJ11_JFID4},</if>
+			<if test="DDJ11_MC2 != null"> DDJ11_MC2=#{DDJ11_MC2},</if>
+			<if test="DDJ11_MC3 != null"> DDJ11_MC3=#{DDJ11_MC3},</if>
+			<if test="DDJ11_MC4 != null"> DDJ11_MC4=#{DDJ11_MC4},</if>
+			<if test="DDJ11_FL2 != null"> DDJ11_FL2=#{DDJ11_FL2},</if>
+			<if test="DDJ11_FL3 != null"> DDJ11_FL3=#{DDJ11_FL3},</if>
+			<if test="DDJ11_FL4 != null"> DDJ11_FL4=#{DDJ11_FL4},</if>
+			<if test="DDJ11_DW2 != null"> DDJ11_DW2=#{DDJ11_DW2},</if>
+			<if test="DDJ11_DW3 != null"> DDJ11_DW3=#{DDJ11_DW3},</if>
+			<if test="DDJ11_DW4 != null"> DDJ11_DW4=#{DDJ11_DW4},</if>
+			<if test="DDJ11_DJ2 != null"> DDJ11_DJ2=#{DDJ11_DJ2},</if>
+			<if test="DDJ11_DJ3 != null"> DDJ11_DJ3=#{DDJ11_DJ3},</if>
+			<if test="DDJ11_DJ4 != null"> DDJ11_DJ4=#{DDJ11_DJ4},</if>
+			<if test="DDJ11_BZGG2 != null"> DDJ11_BZGG2=#{DDJ11_BZGG2},</if>
+			<if test="DDJ11_BZGG3 != null"> DDJ11_BZGG3=#{DDJ11_BZGG3},</if>
+			<if test="DDJ11_BZGG4 != null"> DDJ11_BZGG4=#{DDJ11_BZGG4},</if>
+			<if test="SYL2 != null"> SYL2=#{SYL2},</if>
+			<if test="SYL3 != null"> SYL3=#{SYL3},</if>
+			<if test="SYL4 != null"> SYL4=#{SYL4},</if>
+			<if test="SMZT != null"> SMZT=#{SMZT},</if>
+			<if test="SYQX != null"> SYQX=#{SYQX},</if>
+			<if test="ZW_MC != null"> ZW_MC=#{ZW_MC},</if>
+			<if test="SFJE != null"> SFJE=#{SFJE},</if>
+			<if test="KSSJ != null"> KSSJ=#{KSSJ},</if>
+			<if test="KSSJ == null"> KSSJ='',</if>
+			<if test="ZT != null and ZT !=''"> ZT=#{ZT},</if>
+			<if test="JSSJ != null and JSSJ !=''"> JSSJ=#{JSSJ},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据ID删除一条数据 -->
+	<delete id="delDK">
+		DELETE FROM DFW01_D WHERE JFID=#{0}
+	</delete>
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 地块调用过程 -->
+	<select id="p_gddk_wg" parameterMap="testParameterMap"
+		statementType="CALLABLE">
+		{call P_gddk_WG(?,?,?,?,?)}
+	</select>
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMapzf">
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 地块调用过程 -->
+	<select id="P_gddk_zf" parameterMap="testParameterMapzf"
+		statementType="CALLABLE">
+		{call P_gddk_zf(?,?,?,?,?)}
+	</select>
+	<resultMap type="DFW01_D" id="idjhcx">
+		<result property="JFID" column="JFID" />
+		<result property="DFW01_JFID" column="DFW01_JFID" />
+		<result property="DDJ02_D_JFID" column="DDJ02_D_JFID" />
+		<result property="DDJ02_D_DH" column="DDJ02_D_DH" />
+		<result property="DDJ02_D_DLX" column="DDJ02_D_DLX" />
+		<result property="DDJ02_D_MJ" column="DDJ02_D_MJ" />
+		<result property="FZDX" column="FZDX" />
+		<result property="SF_FZ" column="SF_FZ" />
+		<result property="SF_XP" column="SF_XP" />
+		<result property="KSSJ" column="KSSJ" />
+		<result property="JSSJ" column="JSSJ" />
+		<result property="FZMJ" column="FZMJ" />
+		<result property="SMZT" column="SMZT" />
+		<result property="WGRQ" column="WGRQ" />
+		<result property="DDJ11_JFID1" column="DDJ11_JFID1" />
+		<result property="DDJ11_MC1" column="DDJ11_MC1" />
+		<result property="DDJ11_FL1" column="DDJ11_FL1" />
+		<result property="DDJ11_DW1" column="DDJ11_DW1" />
+		<result property="DDJ11_DJ1" column="DDJ11_DJ1" />
+		<result property="DDJ11_BZGG1" column="DDJ11_BZGG1" />
+		<result property="SYL1" column="SYL1" />
+		<result property="DDJ11_JFID2" column="DDJ11_JFID2" />
+		<result property="DDJ11_JFID3" column="DDJ11_JFID3" />
+		<result property="DDJ11_JFID4" column="DDJ11_JFID4" />
+		<result property="DDJ11_MC2" column="DDJ11_MC2" />
+		<result property="DDJ11_MC3" column="DDJ11_MC3" />
+		<result property="DDJ11_MC4" column="DDJ11_MC4" />
+		<result property="DDJ11_FL2" column="DDJ11_FL2" />
+		<result property="DDJ11_FL3" column="DDJ11_FL3" />
+		<result property="DDJ11_FL4" column="DDJ11_FL4" />
+		<result property="DDJ11_DW2" column="DDJ11_DW2" />
+		<result property="DDJ11_DW3" column="DDJ11_DW3" />
+		<result property="DDJ11_DW4" column="DDJ11_DW4" />
+		<result property="DDJ11_DJ2" column="DDJ11_DJ2" />
+		<result property="DDJ11_DJ3" column="DDJ11_DJ3" />
+		<result property="DDJ11_DJ4" column="DDJ11_DJ4" />
+		<result property="DDJ11_BZGG2" column="DDJ11_BZGG2" />
+		<result property="DDJ11_BZGG3" column="DDJ11_BZGG3" />
+		<result property="DDJ11_BZGG4" column="DDJ11_BZGG4" />
+		<result property="SYL2" column="SYL2" />
+		<result property="SYL3" column="SYL3" />
+		<result property="SYL4" column="SYL4" />
+		<result property="SYQX" column="SYQX" />
+		<result property="SYQXMC" column="SYQXMC" />
+		<result property="ZW_MC" column="ZW_MC" />
+		<result property="SFJE" column="SFJE" />
+		<result property="ZT" column="ZT" />
+		<result property="FZFZR_MC" column="FZFZR_MC" />
+		<result property="FZRY_MC" column="FZRY_MC" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="LSRQ" column="LSRQ" />
+		<result property="ZW" column="ZW" />
+		<association property="DDJ11_DW1MC" select="SelectByDW"
+			column="DDJ11_DW1MC" javaType="String" />
+		<association property="DDJ11_DW2MC" select="SelectByDW"
+			column="DDJ11_DW2MC" javaType="String" />
+		<association property="DDJ11_DW3MC" select="SelectByDW"
+			column="DDJ11_DW3MC" javaType="String" />
+		<association property="DDJ11_DW4MC" select="SelectByDW"
+			column="DDJ11_DW4MC" javaType="String" />
+		<association property="FWNRLB" select="SelectByffnr"
+			column="FWNRLB" javaType="String" />
+	</resultMap>
+	<!-- 查询服务内容 -->
+	<select id="SelectByffnr" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FWNRLB' AND BM=#{0}
+	</select>
+	<!-- 根据地块查询相应信息 -->
+	<select id="SelectByDDJ02_D_JFID" parameterType="map"
+		resultMap="idjhcx">
+		SELECT D2.JFID,
+		D2.DFW01_JFID,
+		D2.DDJ02_D_JFID,
+		D2.DDJ02_D_DH,
+		D2.DDJ02_D_DLX,
+		D2.DDJ02_D_MJ,
+		D2.ZW,
+		D2.FZDX,
+		D2.SF_FZ,
+		D2.SF_XP,
+		D2.KSSJ,
+		D2.JSSJ,
+		TO_CHAR(D2.KSSJ,'yyyy-mm-dd hh24:mi:ss')||'-'||TO_CHAR(D2.JSSJ,'hh24:mi:ss') LSRQ,
+		D2.FZMJ,
+		D2.SMZT,
+		D2.WGRQ,
+		D2.DDJ11_JFID1,
+		D2.DDJ11_MC1,
+		D2.DDJ11_FL1,
+		D2.DDJ11_DW1,
+		D2.DDJ11_DW1,
+		D2.DDJ11_DW1 DDJ11_DW1MC,
+		D2.DDJ11_DJ1,
+		D2.DDJ11_BZGG1,
+		D2.SYL1,
+		D2.DDJ11_JFID2,
+		D2.DDJ11_JFID3,
+		D2.DDJ11_JFID4,
+		D2.DDJ11_MC2,
+		D2.DDJ11_MC3,
+		D2.DDJ11_MC4,
+		D2.DDJ11_FL2,
+		D2.DDJ11_FL3,
+		D2.DDJ11_FL4,
+		D2.DDJ11_DW2,
+		D2.DDJ11_DW2,
+		D2.DDJ11_DW2
+		DDJ11_DW2MC,
+		D2.DDJ11_DW3,
+		D2.DDJ11_DW3,
+		D2.DDJ11_DW3 DDJ11_DW3MC,
+		D2.DDJ11_DW4,
+		D2.DDJ11_DW4,
+		D2.DDJ11_DW4 DDJ11_DW4MC,
+		D2.DDJ11_DJ2,
+		D2.DDJ11_DJ3,
+		D2.DDJ11_DJ4,
+		D2.DDJ11_BZGG2,
+		D2.DDJ11_BZGG3,
+		D2.DDJ11_BZGG4,
+		D2.SYL2,
+		D2.SYL3,
+		D2.SYL4,
+		D2.SYQX,
+		D2.ZW_MC,
+		D2.SFJE,
+		D2.ZT,
+		D1.FZFZR_MC,
+		D1.FZRY_MC,
+		D1.FWNRLB,
+		D1.DDJ01_MC
+		FROM DFW01_D D2,
+		DFW01 D1
+		WHERE
+		D2.DDJ02_D_JFID =#{DDJ02_D_JFID}
+		<if test="StarTime != null and StarTime !=''">
+			AND D2.WGRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND D2.WGRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		AND D2.DFW01_JFID = D1.JFID
+		AND D2.ZT
+		= 4
+		ORDER BY
+		WGRQ DESC
+	</select>
+	<select id="SelectByDDJ02_D_JFIDZT" parameterType="map"
+		resultMap="idjhcx">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT D1.JFID||'-'||D2.JFID JFID,
+		D2.DFW01_JFID,
+		D2.DDJ02_D_JFID,
+		D2.DDJ02_D_DH,
+		D2.DDJ02_D_DLX,
+		D2.DDJ02_D_MJ,
+		D2.ZW,
+		D2.FZDX,
+		D2.SF_FZ,
+		D2.SF_XP,
+		TO_CHAR(D2.KSSJ,'yyyy-mm-dd hh24:mi:ss')||'-'||TO_CHAR(D2.JSSJ,'hh24:mi:ss') LSRQ,
+		D2.KSSJ,
+		D2.JSSJ,
+		D2.FZMJ,
+		D2.SMZT,
+		D2.WGRQ,
+		D2.DDJ11_JFID1,
+		D2.DDJ11_MC1,
+		D2.DDJ11_FL1,
+		D2.DDJ11_DW1,
+		D2.DDJ11_DW1 DDJ11_DW1MC,
+		D2.DDJ11_DJ1,
+		D2.DDJ11_BZGG1,
+		D2.SYL1,
+		D2.DDJ11_JFID2,
+		D2.DDJ11_JFID3,
+		D2.DDJ11_JFID4,
+		D2.DDJ11_MC2,
+		D2.DDJ11_MC3,
+		D2.DDJ11_MC4,
+		D2.DDJ11_FL2,
+		D2.DDJ11_FL3,
+		D2.DDJ11_FL4,
+		D2.DDJ11_DW2,
+		D2.DDJ11_DW2
+		DDJ11_DW2MC,
+		D2.DDJ11_DW3,
+		D2.DDJ11_DW3 DDJ11_DW3MC,
+		D2.DDJ11_DW4,
+		D2.DDJ11_DW4 DDJ11_DW4MC,
+		D2.DDJ11_DJ2,
+		D2.DDJ11_DJ3,
+		D2.DDJ11_DJ4,
+		D2.DDJ11_BZGG2,
+		D2.DDJ11_BZGG3,
+		D2.DDJ11_BZGG4,
+		D2.SYL2,
+		D2.SYL3,
+		D2.SYL4,
+		D2.SYQX,
+		F_GET_MC('SYQX',D2.SYQX) SYQXMC,
+		D2.ZW_MC,
+		D2.SFJE,
+		D2.ZT,
+		D1.DDJ01_MC,
+		D1.FZFZR_MC||','||D1.FZRY_MC FZRY_MC
+		FROM DFW01_D D2,DFW01 D1
+		WHERE
+	    D1.JFID=D2.DFW01_JFID AND
+		D2.DDJ02_D_JFID =#{DDJ02_D_JFID}
+		AND D2.ZT
+		= 4
+		ORDER BY D1.JFID DESC,D2.JFID
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<resultMap type="DFW01_D" id="allfzjh">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ02_D_JFID" column="DDJ02_D_JFID" />
+		<result property="DDJ02_D_DH" column="DDJ02_D_DH" />
+		<result property="DDJ02_D_MJ" column="DDJ02_D_MJ" />
+		<result property="FZDX" column="FZDX" />
+		<result property="WGRQ" column="WGRQ" />
+		<result property="FZMJ" column="FZMJ" />
+		<result property="SFJE" column="SFJE" />
+		<result property="ZT" column="ZT" />
+		<result property="ZW" column="ZW" />
+		<result property="ZW_MC" column="ZW_MC" />
+		<result property="SYQX" column="SYQX" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<!-- 获取地块的防防治措施 -->
+	<select id="SelectAllList" parameterType="map" resultMap="allfzjh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ02_D_JFID,DDJ02_D_DH,DDJ02_D_MJ,FZDX,WGRQ,FZMJ,SFJE,ZT,ZW,ZW_MC,SYQX FROM
+		DFW01_D
+		WHERE ZT=4
+		<if test="StarTime != null and StarTime !=''">
+			AND WGRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WGRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ02_D_JFID != null and DDJ02_D_JFID !=''">
+			AND DDJ02_D_JFID=#{DDJ02_D_JFID}
+		</if>
+		ORDER BY WGRQ DESC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW01_D WHERE ZT=4
+		<if test="StarTime != null and StarTime !=''">
+			AND WGRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND WGRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ02_D_JFID != null and DDJ02_D_JFID !=''">
+			AND DDJ02_D_JFID=#{DDJ02_D_JFID}
+		</if>
+	</select>
+	<resultMap type="DFW01_D" id="sjdkcx">
+		<result property="JFID" column="JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="DDJ02_D_DH" column="DDJ02_D_DH" />
+		<result property="DDJ02_D_DLX" column="DDJ02_D_DLX" />
+		<result property="ZW" column="ZW" />
+		<result property="ZW_MC" column="ZW_MC" />
+		<result property="FZDX" column="FZDX" />
+		<result property="SYQX" column="SYQX" />
+		<result property="SFJE" column="SFJE" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="FZRY_MC" column="FZRY_MC" />
+		<result property="KSSJ" column="KSSJ" />
+		<result property="JSSJ" column="JSSJ" />
+		<result property="SF_FZ" column="SF_FZ" />
+		<result property="SF_XP" column="SF_XP" />
+		<result property="DDJ11_JFID1" column="DDJ11_JFID1" />
+		<result property="DDJ11_MC1" column="DDJ11_MC1" />
+		<result property="DDJ11_FL1" column="DDJ11_FL1" />
+		<result property="DDJ11_DW1" column="DDJ11_DW1" />
+		<result property="DDJ11_DJ1" column="DDJ11_DJ1" />
+		<result property="DDJ11_BZGG1" column="DDJ11_BZGG1" />
+		<result property="SYL1" column="SYL1" />
+		<result property="DDJ11_JFID2" column="DDJ11_JFID2" />
+		<result property="DDJ11_MC2" column="DDJ11_MC2" />
+		<result property="DDJ11_FL2" column="DDJ11_FL2" />
+		<result property="DDJ11_DW2" column="DDJ11_DW2" />
+		<result property="DDJ11_DJ2" column="DDJ11_DJ2" />
+		<result property="DDJ11_BZGG2" column="DDJ11_BZGG2" />
+		<result property="SYL2" column="SYL2" />
+		<result property="DDJ11_JFID3" column="DDJ11_JFID3" />
+		<result property="DDJ11_MC3" column="DDJ11_MC3" />
+		<result property="DDJ11_FL3" column="DDJ11_FL3" />
+		<result property="DDJ11_DW3" column="DDJ11_DW3" />
+		<result property="DDJ11_DJ3" column="DDJ11_DJ3" />
+		<result property="DDJ11_BZGG3" column="DDJ11_BZGG3" />
+		<result property="SYL3" column="SYL3" />
+		<result property="DDJ11_JFID4" column="DDJ11_JFID4" />
+		<result property="DDJ11_MC4" column="DDJ11_MC4" />
+		<result property="DDJ11_FL4" column="DDJ11_FL4" />
+		<result property="DDJ11_DW4" column="DDJ11_DW4" />
+		<result property="DDJ11_DJ4" column="DDJ11_DJ4" />
+		<result property="DDJ11_BZGG4" column="DDJ11_BZGG4" />
+		<result property="SYL4" column="SYL4" />
+		<result property="SMZT" column="SMZT" />
+		<association property="DDJ02_D_DLX" select="SelectByDKLX"
+			column="DDJ02_D_DLX" javaType="String" />
+		<association property="ZW" select="SelectByZW" column="ZW"
+			javaType="String" />
+		<association property="FWNRLB" select="SelectByfwnr"
+			column="FWNRLB" javaType="String" />
+		<association property="DDJ11_DW1" select="SelectByDW"
+			column="DDJ11_DW1" javaType="String" />
+		<association property="DDJ11_DW2" select="SelectByDW"
+			column="DDJ11_DW2" javaType="String" />
+		<association property="DDJ11_DW3" select="SelectByDW"
+			column="DDJ11_DW3" javaType="String" />
+		<association property="DDJ11_DW4" select="SelectByDW"
+			column="DDJ11_DW4" javaType="String" />
+		<collection property="zpjh" column="JFID" select="SelectByDKzp"
+			javaType="ArrayList" ofType="DFW01_D_ZP" />
+	</resultMap>
+	<!-- 返回对应照片集合 -->
+	<resultMap type="DFW01_D_ZP" id="dkzp">
+		<result property="JFID" column="JFID" />
+		<result property="SL_LJ" column="SL_LJ" />
+	</resultMap>
+	<!-- 获取地块照片集合 -->
+	<select id="SelectByDKzp" parameterType="String" resultMap="dkzp">
+		SELECT
+		JFID,SL_LJ FROM DFW01_D_ZP WHERE DFW01_D_JFID=#{0}
+	</select>
+	<!-- 地类型 -->
+	<select id="SelectByDKLX" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='DLX' AND BM=#{0}
+	</select>
+	<!-- 查询作物 -->
+	<select id="SelectByZW" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='NZW' AND BM=#{0}
+	</select>
+	<!-- 服务类型 -->
+	<select id="SelectByfwnr" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FWNRLB' AND BM=#{0}
+	</select>
+	<!-- 手机对应用户地块查询 -->
+	<select id="SelectByYHList" parameterType="map" resultMap="sjdkcx">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT DF01.JFID||'-'||DF01_D.JFID JFID,
+		DF01.DDJ01_MC,
+		DF01_D.DDJ02_D_DH,
+		DF01_D.DDJ02_D_DLX,
+		DF01_D.ZW,
+		DF01_D.ZW_MC,
+		DF01_D.FZDX,
+		F_GET_MC('SYQX',DF01_D.SYQX) SYQX,
+		DF01_D.SFJE,
+		DF01.FWNRLB,
+		DF01_D.FZMJ,
+		DF01.FZFZR_MC||','||DF01.FZRY_MC FZRY_MC,
+		decode(DF01_D.KSSJ,null,TO_CHAR(DF01.JHSJ,'yyyy-mm-dd hh24:mi:ss'),TO_CHAR(DF01_D.KSSJ,'yyyy-mm-dd hh24:mi:ss')||'-'||TO_CHAR(DF01_D.JSSJ,'hh24:mi:ss')) LSRQ,
+		DF01_D.SF_FZ,
+		DF01_D.SF_XP,
+		DF01_D.DDJ11_JFID1,
+		DF01_D.DDJ11_MC1,
+		DF01_D.DDJ11_FL1,
+		DF01_D.DDJ11_DW1,
+		DF01_D.DDJ11_DJ1,
+		DF01_D.DDJ11_BZGG1,
+		DF01_D.SYL1,
+		DF01_D.DDJ11_JFID2,
+		DF01_D.DDJ11_MC2,
+		DF01_D.DDJ11_FL2,
+		DF01_D.DDJ11_DW2,
+		DF01_D.DDJ11_DJ2,
+		DF01_D.DDJ11_BZGG2,
+		DF01_D.SYL2,
+		DF01_D.DDJ11_JFID3,
+		DF01_D.DDJ11_MC3,
+		DF01_D.DDJ11_FL3,
+		DF01_D.DDJ11_DW3,
+		DF01_D.DDJ11_DJ3,
+		DF01_D.DDJ11_BZGG3,
+		DF01_D.SYL3,
+		DF01_D.DDJ11_JFID4,
+		DF01_D.DDJ11_MC4,
+		DF01_D.DDJ11_FL4,
+		DF01_D.DDJ11_DW4,
+		DF01_D.DDJ11_DJ4,
+		DF01_D.DDJ11_BZGG4,
+		DF01_D.SYL4,
+		DF01_D.SMZT,
+		DF01_D.ZT
+		FROM DFW01 DF01, DFW01_D
+		DF01_D, DDJ02 D2, DDJ02_D D2_D
+		WHERE D2.JFID = D2_D.DDJ02_JFID
+		AND
+		D2_D.JFID = DF01_D.DDJ02_D_JFID
+		AND DF01.JFID = DF01_D.DFW01_JFID
+		AND
+		D2.YHM =#{YHM}
+		ORDER BY DF01.JFID DESC,DF01_D.JFID
+		) A1 WHERE 
+		ROWNUM
+		&lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<select id="getCountByYHSize" parameterType="map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM DFW01 DF01, DFW01_D
+		DF01_D, DDJ02 D2, DDJ02_D D2_D
+		WHERE D2.JFID = D2_D.DDJ02_JFID
+		AND
+		D2_D.JFID = DF01_D.DDJ02_D_JFID
+		AND
+		DF01.JFID = DF01_D.DFW01_JFID
+		AND
+		D2.YHM =#{YHM}
+	</select>
+	<resultMap type="DFW01_D" id="zt2">
+		<result property="JFID" column="JFID" />
+	</resultMap>
+	<select id="SelectByZT2" resultMap="zt2">
+		SELECT JFID FROM DFW01_D WHERE ZT='2'
+	</select>
+</mapper>
