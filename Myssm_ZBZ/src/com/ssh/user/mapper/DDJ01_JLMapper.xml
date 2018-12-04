@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ01_JLMapper">
+	<!-- 获取专访组织条件下集合数量 -->
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DDJ01_JL WHERE 1=1
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+	</select>
+	<!-- 根据组织查询返回集合 -->
+	<resultMap type="DDJ01_JL" id="gjzzhq">
+		<id property="JFID" column="JFID" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="JL" column="JL" />
+		<result property="JL_SM" column="JL_SM" />
+		<result property="LRRY" column="LRRY" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="ZT" column="ZT" />
+	</resultMap>
+	<!-- 根据组织查询 -->
+	<select id="SelectByDDJ01_JFID" parameterType="map" resultMap="gjzzhq">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DDJ01_JFID,DDJ01_MC,JL,JL_SM,LRRY,LRRQ,ZT FROM DDJ01_JL WHERE 1=1
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取新的jfid -->
+	<select id="getJFID" resultType="String">
+		SELECT SDDJ01_JL.NEXTVAL FROM
+		DUAL
+	</select>
+	<!-- 插入一条新数据 -->
+	<insert id="insert" parameterType="DDJ01_JL">
+		INSERT INTO DDJ01_JL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,</if>
+			<if test="JL != null and JL !=''"> JL,</if>
+			<if test="JL_SM != null and JL_SM !=''"> JL_SM,</if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,</if>
+			 LRRQ,
+			<if test="ZT != null and ZT !=''"> ZT,  </if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''"> DDJ01_MC,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''">#{DDJ01_JFID,jdbcType=VARCHAR},</if>
+			<if test="JL != null and JL !=''">#{JL,jdbcType=CHAR},</if>
+			<if test="JL_SM != null and JL_SM !=''">#{JL_SM,jdbcType=VARCHAR},</if>
+			<if test="LRRY != null and LRRY !=''">#{LRRY,jdbcType=VARCHAR},</if>
+			sysdate,
+			<if test="ZT != null and ZT !=''">#{ZT,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''">#{DDJ01_MC,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<!-- 根据ID获取唯一数据 -->
+	<select id="SelectById" parameterType="String" resultType="DDJ01_JL">
+		SELECT JFID,DDJ01_JFID,JL,JL_SM,LRRY,LRRQ,ZT,DDJ01_MC FROM DDJ01_JL
+		WHERE JFID=#{0}
+	</select>
+	<!-- 更新数据信息 -->
+	<update id="update" parameterType="DDJ01_JL">
+		UPDATE DDJ01_JL
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID=#{DDJ01_JFID},</if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''"> DDJ01_MC=#{DDJ01_MC},</if>
+			<if test="JL != null and JL !=''"> JL=#{JL},</if>
+			<if test="ZT != null and ZT !=''"> ZT=#{ZT},</if>
+			<if test="JL_SM != null"> JL_SM=#{JL_SM},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<delete id="delete" parameterType="String">
+		DELETE FROM DDJ01_JL WHERE JFID=#{0}
+	</delete>
+</mapper>

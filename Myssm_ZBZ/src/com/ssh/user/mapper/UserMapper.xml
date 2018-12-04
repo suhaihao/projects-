@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.UserMapper">
+	<!-- 根据用户名查询用户 -->
+	<select id="SelectByName" parameterType="String" resultType="User">
+		SELECT * FROM
+		DSYS01
+		WHERE
+		JFUSERID=#{0} AND JFSTATE='0'
+	</select>
+	<select id="SelectByName_zfzz" parameterType="String" resultType="User">
+		SELECT * FROM
+		DSYS01_ZFZZ
+		WHERE
+		JFUSERID=#{0} AND JFSTATE='0'
+	</select>
+	<resultMap type="User" id="userlist">
+		<id property="JFID" column="JFID" />
+		<result property="JFUSERID" column="JFUSERID" />
+		<result property="JFNAME" column="JFNAME" />
+		<result property="JFSTATE" column="JFSTATE" />
+		<result property="SR" column="SR" />
+		<result property="XB" column="XB" />
+		<result property="DH" column="DH" />
+		<result property="SJ" column="SJ" />
+		<result property="DZXX" column="DZXX" />
+		<result property="ZPLJ" column="ZPLJ" />
+		<result property="RN" column="RN" />
+		<result property="JFDSYS05_CODE" column="JFDSYS05_CODE" />
+		<result property="JFDSYS05_CODEMC" column="JFDSYS05_CODEMC" />
+		<association property="RYFL" select="SelectByRyfl" column="RYFL"
+			javaType="String" />
+		<association property="XL" select="SelectByLx" column="XL"
+			javaType="String" />
+	</resultMap>
+	<!-- 获取相应信息 -->
+	<select id="SelectByRyfl" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='ZJ_RYLB' AND BM=#{0}
+	</select>
+	<!-- 获取相应信息 -->
+	<select id="SelectByLx" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='ZJ_XL' AND BM=#{0}
+	</select>
+	<!-- 获得全部用户集合 -->
+	<select id="SelectAllUser" parameterType="map" resultMap="userlist">
+		SELECT
+		* FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,JFUSERID,JFNAME,JFDSYS05_CODE,F_GET_MC('BMMC',JFDSYS05_CODE)
+		JFDSYS05_CODEMC,JFSTATE,SR,XB,XL,DH,SJ,DZXX,RYFL,ZPLJ FROM
+		DSYS01
+		WHERE
+		JFSTATE='0'
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 添加用户信息 -->
+	<insert id="addUser" parameterType="User">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="JFID">
+			SELECT S_DSYS01.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DSYS01
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="JFUSERID != null and JFUSERID!=''"> JFUSERID,</if>
+			<if test="JFPASSWORD != null and JFPASSWORD!=''"> JFPASSWORD,  </if>
+			<if test="JFDSYS05_CODE != null and JFDSYS05_CODE!=''"> JFDSYS05_CODE,  </if>
+			<if test="JFNAME != null and JFNAME !=''"> JFNAME,   </if>
+			<if test="JFREMARK != null and JFREMARK !=''"> JFREMARK,   </if>
+			<if test="JFSTATE != null and JFSTATE !=''"> JFSTATE,   </if>
+			<if test="SR != null and SR !=''"> SR, </if>
+			<if test="XB != null and XB !=''"> XB,  </if>
+			<if test="XXDBLB != null and XXDBLB !=''"> XXDBLB, </if>
+			<if test="XL != null and XL !=''"> XL, </if>
+			<if test="DH != null and DH !=''"> DH,    </if>
+			<if test="SJ != null and SJ !=''"> SJ,  </if>
+			<if test="DZXX != null and DZXX !=''"> DZXX,  </if>
+			<if test="LRRQ != null and LRRQ !=''"> LRRQ,  </if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,  </if>
+			<if test="SF_XGPW != null and SF_XGPW !=''"> SF_XGPW,  </if>
+			<if test="RYFL != null and RYFL !=''"> RYFL,  </if>
+			<if test="ZPLJ != null and ZPLJ !=''"> ZPLJ,  </if>
+			<if test="ZPWJM != null and ZPWJM !=''"> ZPWJM,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="JFUSERID != null and JFUSERID !=''">#{JFUSERID,jdbcType=VARCHAR},</if>
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> #{JFPASSWORD,jdbcType=VARCHAR},    </if>
+			<if test="JFDSYS05_CODE != null and JFDSYS05_CODE !=''"> #{JFDSYS05_CODE,jdbcType=VARCHAR},    </if>
+			<if test="JFNAME != null and JFNAME !=''"> #{JFNAME,jdbcType=VARCHAR},    </if>
+			<if test="JFREMARK != null and JFREMARK !=''"> #{JFREMARK,jdbcType=VARCHAR},</if>
+			<if test="JFSTATE != null and JFSTATE !=''"> #{JFSTATE,jdbcType=VARCHAR},    </if>
+			<if test="SR != null and SR !=''"> #{SR,jdbcType=VARCHAR},  </if>
+			<if test="XB != null and XB !=''"> #{XB,jdbcType=VARCHAR},    </if>
+			<if test="XXDBLB != null and XXDBLB !=''"> #{XXDBLB,jdbcType=VARCHAR},    </if>
+			<if test="XL != null and XL !=''"> #{XL,jdbcType=VARCHAR},  </if>
+			<if test="DH != null and DH !=''"> #{DH,jdbcType=VARCHAR},  </if>
+			<if test="SJ != null and SJ !=''"> #{SJ,jdbcType=VARCHAR},    </if>
+			<if test="DZXX != null and DZXX !=''"> #{DZXX,jdbcType=VARCHAR},    </if>
+			<if test="LRRQ != null and LRRQ !=''"> #{LRRQ,jdbcType=DATE},    </if>
+			<if test="LRRY != null and LRRY !=''"> #{LRRY,jdbcType=VARCHAR},    </if>
+			<if test="SF_XGPW != null and SF_XGPW !=''"> #{SF_XGPW,jdbcType=CHAR},    </if>
+			<if test="RYFL != null and RYFL !=''"> #{RYFL,jdbcType=VARCHAR},    </if>
+			<if test="ZPLJ != null and ZPLJ !=''"> #{ZPLJ,jdbcType=VARCHAR},    </if>
+			<if test="ZPWJM != null and ZPWJM !=''"> #{ZPWJM,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 查询对应用户信息 -->
+	<select id="SelectById" parameterType="String" resultType="User">
+		SELECT
+		JFID,JFNAME,JFREMARK,JFDSYS05_CODE,F_GET_MC('BMMC',JFDSYS05_CODE)
+		JFDSYS05_CODEMC,JFSTATE,SR,XB,XXDBLB,XL,DH,SJ,DZXX,RYFL,ZPLJ,SF_XGPW
+		FROM DSYS01 WHERE JFID=#{0}
+	</select>
+	<!-- 查询对应ZFZZ用户信息 -->
+	<select id="SelectByIdZFZZ" parameterType="String" resultType="User">
+		SELECT
+		JFNAME,F_GET_MC('ZFZZ',DDJ01_JFID) DDJ01_JFID,SR,XB,DH,SJ,DZXX,LRRQ,LRRYMC,JFREMARK
+		FROM DSYS01_ZFZZ WHERE JFID=#{0}
+	</select>
+	<!-- 更新用户信息 -->
+	<update id="UpUser" parameterType="User">
+		UPDATE DSYS01
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="DH != null and DH !=''"> DH=#{DH},</if>
+			<if test="JFDSYS05_CODE != null and JFDSYS05_CODE !=''"> JFDSYS05_CODE=#{JFDSYS05_CODE},</if>
+			<if test="DZXX != null and DZXX !=''"> DZXX=#{DZXX},</if>
+			<if test="JFNAME != null and JFNAME !=''"> JFNAME=#{JFNAME},</if>
+			<if test="JFREMARK != null and JFREMARK !=''"> JFREMARK=#{JFREMARK},</if>
+			<if test="JFSTATE != null and JFSTATE !=''"> JFSTATE=#{JFSTATE},</if>
+			<if test="RYFL != null and RYFL !=''"> RYFL=#{RYFL},</if>
+			<if test="SF_XGPW != null and SF_XGPW !=''"> SF_XGPW=#{SF_XGPW},</if>
+			<if test="SJ != null and SJ !=''"> SJ=#{SJ},</if>
+			<if test="SR != null and SR !=''"> SR=#{SR},</if>
+			<if test="XB != null and XB !=''"> XB=#{XB},</if>
+			<if test="XXDBLB != null and XXDBLB !=''"> XXDBLB=#{XXDBLB},</if>
+			<if test="XL != null and XL !=''"> XL=#{XL},</if>
+			<if test="ZPLJ != null and ZPLJ !=''"> ZPLJ=#{ZPLJ},</if>
+			<if test="ZPWJM != null and ZPWJM !=''"> ZPWJM=#{ZPWJM},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据ID删除用户 -->
+	<delete id="delUser" parameterType="String">
+		DELETE FROM DSYS01 WHERE
+		JFID=#{0}
+	</delete>
+	<!-- 获取用户全部集合的数量 -->
+	<select id="getAllUserSize" resultType="Integer">
+		SELECT COUNT(*) CON FROM
+		DSYS01 WHERE JFSTATE='0'
+	</select>
+	<!-- 获取用户的集合数量根据名字 -->
+	<select id="getAllUserSizeByTj" resultType="Integer">
+		SELECT COUNT(*) CON
+		FROM DSYS01 WHERE JFSTATE='0' AND JFNAME LIKE
+		'%'||#{0}||'%'
+	</select>
+	<!-- 修改用户密码 -->
+	<update id="uppasword" parameterType="User">
+		UPDATE DSYS01
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> JFPASSWORD=#{JFPASSWORD},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<resultMap type="User" id="userAlllist">
+		<id property="JFID" column="JFID" />
+		<result property="JFUSERID" column="JFUSERID" />
+		<result property="JFNAME" column="JFNAME" />
+		<result property="JFSTATE" column="JFSTATE" />
+		<result property="SR" column="SR" />
+		<result property="XB" column="XB" />
+		<result property="DH" column="DH" />
+		<result property="SJ" column="SJ" />
+		<result property="DZXX" column="DZXX" />
+		<result property="ZPLJ" column="ZPLJ" />
+		<result property="XXDBLB" column="XXDBLB" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="RN" column="RN" />
+		<result property="JFDSYS05_CODE" column="JFDSYS05_CODE" />
+		<result property="JFDSYS05_CODEMC" column="JFDSYS05_CODEMC" />
+		<association property="RYFL" select="SelectByRyfl" column="RYFL"
+			javaType="String" />
+		<association property="XL" select="SelectByLx" column="XL"
+			javaType="String" />
+	</resultMap>
+	<!-- 根据名字获取数据集合 -->
+	<select id="SelectByNameAll" parameterType="map" resultMap="userAlllist">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,JFUSERID,JFNAME,JFSTATE,JFDSYS05_CODE,F_GET_MC('BMMC',JFDSYS05_CODE)
+		JFDSYS05_CODEMC,SR,XB,XL,DH,SJ,DZXX,RYFL,ZPLJ,XXDBLB FROM
+		DSYS01
+		WHERE
+		JFSTATE='0' AND JFNAME LIKE #{name}
+		) A1 WHERE ROWNUM &lt;=#{max})
+		WHERE
+		RN>=#{min}
+	</select>
+	<!-- 查询全部集合传入一个map -->
+	<select id="SelectAllList" parameterType="map" resultMap="userAlllist">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,JFNAME,JFSTATE,SR,XB,XL,DH,SJ,DZXX,RYFL,ZPLJ,XXDBLB,DDJ01_JFID
+		FROM
+		DSYS01_ZFZZ
+		WHERE JFSTATE='0' 
+		<if test="JFNAME != null and JFNAME !=''">
+			AND JFNAME LIKE '%'||#{JFNAME}||'%'
+		</if>
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="JFID != null and JFID !=''">
+			AND JFID !=#{JFID}
+		</if>
+		ORDER BY JFNAME
+		) A1 WHERE ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取集合数量传入一个map -->
+	<select id="getCountAllSize" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) CON FROM DSYS01_ZFZZ WHERE JFSTATE='0'
+		<if test="JFNAME != null and JFNAME !=''">
+			AND JFNAME LIKE '%'||#{JFNAME}||'%'
+		</if>
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="JFID != null and JFID !=''">
+			AND JFID !=#{JFID}
+		</if>
+	</select>
+	<!-- 晚上获取对应的对话人 -->
+	<select id="SelectByZFZZ" parameterType="String" resultType="User">
+		SELECT JFID FROM DSYS01_ZFZZ WHERE DDJ01_JFID=#{0} AND RYFL='99'
+	</select>
+	<resultMap type="User" id="lbzzzz">
+		<result property="JFID" column="JFID" />
+		<result property="JFNAME" column="JFNAME" />
+	</resultMap>
+	<!-- 手机根据类别和专访组织获取对应集合 -->
+	<select id="SelectByLBZZ" parameterType="map" resultMap="lbzzzz">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT JFID,JFNAME FROM
+		DSYS01_ZFZZ WHERE 1=1
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		) A1 WHERE ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取对应专访组织下农户的类别 -->
+	<select id="getCountByzz" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM
+		DSYS01_ZFZZ WHERE 1=1
+		<if test="XXDBLB != null and XXDBLB !=''">
+			AND XXDBLB=#{XXDBLB}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+	</select>
+	<!-- 判断是否有工单权限 -->
+	<select id="SelectByQx" parameterType="Integer" resultType="String">
+		SELECT DS1.JFNAME FROM DSYS02_DSYS03 DS2_DS3,DSYS03 DS3,DSYS01_ZFZZ
+		DS1 WHERE DS2_DS3.DSYS02_JFID='22' AND DS1.JFID=#{0} AND
+		DS1.RYFL=DS3.ROLE_BM AND DS3.JFID=DS2_DS3.DSYS03_JFID
+	</select>
+	<!-- 插入专访组织信息 -->
+	<insert id="insertZFZZ" parameterType="User">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFIDSTR">
+			SELECT S_DSYS01_ZFZZ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DSYS01_ZFZZ
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFIDSTR != null and JFIDSTR !=''"> JFID,</if>
+			<if test="JFUSERID != null and JFUSERID !=''"> JFUSERID,</if>
+			<if test="JFPASSWORD != null and JFPASSWORD!=''"> JFPASSWORD,  </if>
+			<if test="JFNAME != null and JFNAME !=''"> JFNAME,   </if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,  </if>
+			<if test="JFSTATE != null and JFSTATE !=''"> JFSTATE,   </if>
+			<if test="LRRQ != null and LRRQ !=''"> LRRQ,   </if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,   </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> LRRYMC,   </if>
+			<if test="RYFL != null and RYFL !=''"> RYFL,   </if>
+			<if test="XXDBLB != null and XXDBLB !=''"> XXDBLB,   </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFIDSTR != null and JFIDSTR !=''">#{JFIDSTR,jdbcType=VARCHAR},</if>
+			<if test="JFUSERID != null and JFUSERID !=''">#{JFUSERID,jdbcType=VARCHAR},</if>
+			<if test="JFPASSWORD != null and JFPASSWORD !=''"> #{JFPASSWORD,jdbcType=VARCHAR},    </if>
+			<if test="JFNAME != null and JFNAME !=''"> #{JFNAME,jdbcType=VARCHAR},    </if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> #{DDJ01_JFID,jdbcType=VARCHAR},    </if>
+			<if test="JFSTATE != null and JFSTATE !=''"> #{JFSTATE,jdbcType=VARCHAR},    </if>
+			<if test="LRRQ != null and LRRQ !=''"> #{LRRQ,jdbcType=DATE},  </if>
+			<if test="LRRY != null and LRRY !=''"> #{LRRY,jdbcType=VARCHAR},    </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> #{LRRYMC,jdbcType=VARCHAR},    </if>
+			<if test="RYFL != null and RYFL !=''"> #{RYFL,jdbcType=VARCHAR},    </if>
+			<if test="XXDBLB != null and XXDBLB !=''"> #{XXDBLB,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 根据专访组织ID删除对应数据 -->
+	<delete id="deleteByZFZZ" parameterType="String">
+		DELETE FROM DSYS01_ZFZZ WHERE DDJ01_JFID=${0}
+	</delete>
+	<!-- 根据专防组织查询人员为99的 -->
+	<select id="SelectByZFZZBy99" parameterType="String" resultType="User">
+	SELECT JFID FROM DSYS01_ZFZZ WHERE RYFL='99' AND DDJ01_JFID=#{0}
+	</select>
+</mapper>

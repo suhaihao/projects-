@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ02_DMapper">
+
+	<!-- 插入一条数据 -->
+	<insert id="insedk" parameterType="DDJ02_D">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT S_DDJ02_D.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DDJ02_D
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''"> DDJ02_JFID,</if>
+			<if test="DH != null and DH !=''"> DH,</if>
+			<if test="DLX != null and DLX !=''"> DLX,</if>
+			<if test="MJ != null and MJ !=''"> MJ,  </if>
+			<if test="NZW != null and NZW !=''"> NZW,   </if>
+			<if test="NZW_MC != null and NZW_MC !=''"> NZW_MC, </if>
+			<if test="FZDX != null and FZDX !=''"> FZDX,   </if>
+			<if test="BZ != null and BZ !=''"> BZ,   </if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,   </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> LRRYMC,   </if>
+			<if test="LRRQ != null and LRRQ !=''"> LRRQ,   </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''">#{DDJ02_JFID,jdbcType=VARCHAR},</if>
+			<if test="DH != null and DH !=''">#{DH,jdbcType=VARCHAR},</if>
+			<if test="DLX != null and DLX !=''"> #{DLX,jdbcType=VARCHAR},    </if>
+			<if test="MJ != null and MJ !=''"> #{MJ,jdbcType=INTEGER},    </if>
+			<if test="NZW != null and NZW !=''"> #{NZW,jdbcType=VARCHAR},    </if>
+			<if test="NZW_MC != null and NZW_MC !=''"> #{NZW_MC,jdbcType=VARCHAR},    </if>
+			<if test="FZDX != null and FZDX !=''"> #{FZDX,jdbcType=VARCHAR},    </if>
+			<if test="BZ != null and BZ !=''"> #{BZ,jdbcType=VARCHAR},    </if>
+			<if test="LRRY != null and LRRY !=''"> #{LRRY,jdbcType=VARCHAR},    </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> #{LRRYMC,jdbcType=VARCHAR},    </if>
+			<if test="LRRQ != null and LRRQ !=''"> SYSDATE,    </if>
+		</trim>
+	</insert>
+	<resultMap type="DDJ02_D" id="fhjh">
+		<result property="JFID" column="JFID" />
+		<result property="DH" column="DH" />
+		<result property="MJ" column="MJ" />
+		<result property="NZW" column="NZW" />
+		<result property="NZW_MC" column="NZW_MC" />
+		<association property="DLX" select="SelectBydlx" column="DLX"
+			javaType="String" />
+		<association property="NZW" select="SelectByzw" column="NZW"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询地块名称 -->
+	<select id="SelectBydlx" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='DLX' AND BM=#{0}
+	</select>
+	<!-- 查询地块名称 -->
+	<select id="SelectByzw" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='NZW' AND BM=#{0}
+	</select>
+	<!-- 根据ddj02.jfid获取相应集合 -->
+	<select id="selectByddj02_jfid" parameterType="String"
+		resultMap="fhjh">
+		SELECT JFID,DH,DLX,MJ,NZW,NZW_MC,JD,WD FROM DDJ02_D WHERE
+		DDJ02_JFID=#{0}
+	</select>
+	<!-- 根据id获取唯一的信息 -->
+	<select id="SelectByID" parameterType="String" resultType="DDJ02_D">
+		SELECT JFID,DDJ02_JFID,DH,DLX,MJ,NZW,NZW_MC,FZDX,LRRYMC,LRRQ,BZ FROM
+		DDJ02_D WHERE JFID=#{0}
+	</select>
+	<!-- 更新地块信息 -->
+	<update id="updkxx" parameterType="DDJ02_D">
+		UPDATE DDJ02_D
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="DH != null and DH !=''"> DH=#{DH},</if>
+			<if test="DLX != null and DLX !=''"> DLX=#{DLX},</if>
+			<if test="MJ != null and MJ !=''"> MJ=#{MJ},</if>
+			<if test="NZW != null and NZW !=''"> NZW=#{NZW},</if>
+			<if test="NZW_MC != null"> NZW_MC=#{NZW_MC},</if>
+			<if test="BZ != null and BZ !=''"> BZ=#{BZ},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据id删除一条数据 -->
+	<delete id="delById">
+		DELETE FROM DDJ02_D WHERE JFID=#{0}
+	</delete>
+	<resultMap type="DDJ02_D" id="nhdkjh">
+		<result property="JFID" column="JFID" />
+		<result property="DH" column="DH" />
+		<result property="DLX" column="DLX" />
+		<result property="MJ" column="MJ" />
+		<result property="NZW" column="NZW" />
+		<result property="NZWMC" column="NZWMC" />
+		<result property="NZW_MC" column="NZW_MC" />
+		<result property="FZDX" column="FZDX" />
+		<association property="DLXMC" select="SelectByDLX" column="DLXMC"
+			javaType="String" />
+		<association property="NZWMC" select="SelectByNZW" column="NZWMC"
+			javaType="String" />
+	</resultMap>
+	<!-- 查找对应地类型的名称 -->
+	<select id="SelectByDLX" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='DLX' AND BM=#{0}
+	</select>
+	<!-- 查询农作物的名称 -->
+	<select id="SelectByNZW" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='NZW' AND BM=#{0}
+	</select>
+	<!-- 获取对应农户下地块集合带分页 -->
+	<select id="SelectBYDDJ02_JFIDPage" parameterType="map"
+		resultMap="nhdkjh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,DH,DLX,DLX
+		DLXMC,MJ,NZW,NZW NZWMC,NZW_MC,FZDX FROM DDJ02_D WHERE ZT
+		!=0
+		<if test="DH != null and DH !=''">
+			AND DH LIKE '%'||#{DH}||'%'
+		</if>
+		AND DDJ02_JFID=#{DDJ02_JFID}
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{max}) WHERE
+		RN>=#{min}
+	</select>
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) CON FROM DDJ02_D WHERE ZT!=0
+		<if test="DH != null and DH !=''">
+			AND DH LIKE '%'||#{DH}||'%'
+		</if>
+		AND DDJ02_JFID=#{DDJ02_JFID}
+	</select>
+	<resultMap type="DDJ02_D" id="synh">
+		<result property="JFID" column="JFID" />
+		<result property="DH" column="DH" />
+		<result property="DLX" column="DLX" />
+		<result property="MJ" column="MJ" />
+		<result property="MC" column="MC" />
+		<association property="DLXMC" select="SelectByDLX" column="DLXMC"
+			javaType="String" />
+	</resultMap>
+	<select id="SelectAllNhDk" parameterType="map" resultMap="synh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT DISTINCT D2_D.JFID, D2_D.DH,
+		D2_D.DLX,D2_D.DLX DLXMC, D2_D.MJ,D02.MC
+		FROM
+		DDJ02_DDJ01 D21,
+		DDJ02_D D2_D,DDJ02 D02
+		WHERE
+		D21.DDJ02_JFID = D2_D.DDJ02_JFID
+		AND D02.JFID=D2_D.DDJ02_JFID
+		<if test="DH != null and DH !=''">
+			AND D2_D.DH LIKE '%'||#{DH}||'%'
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND D2_D.DDJ02_JFID=#{DDJ02_JFID}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND D21.DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE
+		RN>=#{MIN}
+	</select>
+	<select id="GetAllNhDkCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(DISTINCT D2_D.JFID) CON FROM DDJ02_DDJ01 D21,
+		DDJ02_D D2_D
+		WHERE
+		D21.DDJ02_JFID = D2_D.DDJ02_JFID
+		<if test="DH != null and DH !=''">
+			AND D2_D.DH LIKE '%'||#{DH}||'%'
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND D2_D.DDJ02_JFID=#{DDJ02_JFID}
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND D21.DDJ01_JFID =#{DDJ01_JFID}
+		</if>
+	</select>
+</mapper>

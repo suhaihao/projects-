@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.Dsys11Mapper">
+	<!-- 返回对应集合 -->
+	<resultMap type="Dsys11" id="lblist">
+		<id property="JFID" column="JFID" />
+		<result property="BMLB" column="BMLB" />
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+		<result property="BZ1" column="BZ1" />
+		<result property="BZ2" column="BZ2" />
+		<result property="BZ3" column="BZ3" />
+		<result property="BZ4" column="BZ4" />
+		<result property="BZ5" column="BZ5" />
+		<result property="BZ6" column="BZ6" />
+		<result property="BZ" column="BZ" />
+	</resultMap>
+	<select id="SeleBybm" parameterType="String" resultType="Dsys11">
+		SELECT
+		HZMC,BM,BZ1 FROM DSYS11 WHERE BMLB=#{0} AND BM=#{1}
+	</select>
+	<select id="SelectAllList" parameterType="String" resultMap="lblist">
+		SELECT JFID,BMLB,BM,HZMC,BZ1,BZ2,BZ3,BZ4,BZ5,BZ6,BZ FROM DSYS11 WHERE
+		BMLB=#{0} ORDER BY BM ASC
+	</select>
+	<resultMap type="Dsys11" id="fw">
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+	</resultMap>
+	<select id="SelectAllFW" resultMap="fw">
+		SELECT BM,HZMC FROM DSYS11
+		WHERE BMLB='FWNRLB'
+	</select>
+	<!-- 防治措施分类返回集合 -->
+	<resultMap type="Dsys11" id="fzcsfl">
+	</resultMap>
+	<!-- 获取防治措施的分类集合 -->
+	<select id="SelectAllfzcsfl" resultMap="fzcsfl">
+		SELECT BM,HZMC FROM
+		DSYS11 WHERE BMLB='FZCSFL' AND LENGTH(BM)=2 ORDER BY BM
+		ASC
+	</select>
+	<resultMap type="Dsys11" id="djjh">
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+	</resultMap>
+	<!-- 获取单价集合 -->
+	<select id="SelectAllDj" resultMap="djjh">
+		SELECT BM,HZMC FROM DSYS11
+		WHERE BMLB='SLDW'
+	</select>
+	<!-- 根据bm查询一个单位 -->
+	<select id="SelectByBmDw" parameterType="String" resultType="Dsys11">
+		SELECT BM,HZMC FROM DSYS11 WHERE BMLB='SLDW' AND BM=#{0}
+	</select>
+	<!-- 视图集合 -->
+	<resultMap type="DDJ03" id="stjh">
+		<result property="JFID" column="JFID" />
+		<result property="XMMC" column="XMMC" />
+	</resultMap>
+	<!-- 获取视图中的集合 -->
+	<select id="SelectAllST" resultMap="stjh">
+		SELECT JFID,XMMC FROM DDJ03
+	</select>
+	<!-- 返回集合 -->
+	<resultMap type="Dsys10" id="zbfh">
+		<result property="JFID" column="JFID" />
+		<result property="BMLB" column="BMLB" />
+		<result property="HZMC" column="HZMC" />
+		<result property="COL_BZ1" column="COL_BZ1" />
+		<result property="COL_BZ2" column="COL_BZ2" />
+		<result property="COL_BZ3" column="COL_BZ3" />
+		<result property="COL_BZ4" column="COL_BZ4" />
+		<result property="COL_BZ5" column="COL_BZ5" />
+		<result property="COL_BZ6" column="COL_BZ6" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<!-- 查询dsys10 -->
+	<select id="SelectDsys10" parameterType="map" resultMap="zbfh">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,BMLB,HZMC,COL_BZ1,COL_BZ2,COL_BZ3,COL_BZ4,COL_BZ5,COL_BZ6 FROM
+		DSYS10 WHERE 1=1
+		<if test="HZMC != null and HZMC !=''">
+			AND HZMC LIKE '%'||#{HZMC}||'%'
+		</if>
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE
+		RN>=#{MIN}
+	</select>
+	<!-- 查询数据 -->
+	<select id="getDsys10Count" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DSYS10 WHERE 1=1
+		<if test="HZMC != null and HZMC !=''">
+			AND HZMC LIKE '%'||#{HZMC}||'%'
+		</if>
+	</select>
+	<resultMap type="Dsys11" id="fh11">
+		<result property="JFID" column="JFID" />
+		<result property="BMLB" column="BMLB" />
+		<result property="BM" column="BM" />
+		<result property="HZMC" column="HZMC" />
+		<result property="BZ1" column="BZ1" />
+		<result property="BZ2" column="BZ2" />
+		<result property="BZ3" column="BZ3" />
+		<result property="BZ4" column="BZ4" />
+		<result property="BZ5" column="BZ5" />
+		<result property="BZ6" column="BZ6" />
+		<result property="BZ" column="BZ" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<!-- 查询dsys11 -->
+	<select id="SelectDsys11" parameterType="map" resultMap="fh11">
+		SELECT *
+		FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,BMLB,BM,HZMC,BZ1,BZ2,BZ3,BZ4,BZ5,BZ6,BZ FROM
+		DSYS11 WHERE 1=1
+		<if test="BMLB != null and BMLB !=''">
+			AND BMLB =#{BMLB}
+		</if>
+		<if test="HZMC != null and HZMC !=''">
+			AND HZMC LIKE '%'||#{HZMC}||'%'
+		</if>
+		ORDER BY BM ASC
+		) A1 WHERE
+		ROWNUM
+		&lt;=#{MAX}) WHERE
+		RN>=#{MIN}
+	</select>
+	<select id="getDsys11Count" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DSYS11 WHERE 1=1
+		<if test="BMLB != null and BMLB !=''">
+			AND BMLB =#{BMLB}
+		</if>
+		<if test="HZMC != null and HZMC !=''">
+			AND HZMC LIKE '%'||#{HZMC}||'%'
+		</if>
+	</select>
+	<!-- 验证BM是否重复 -->
+	<select id="SelectByBM_BMLB" parameterType="String" resultType="Dsys11">
+		SELECT JFID FROM DSYS11 WHERE BM=#{0} AND BMLB=#{1}
+	</select>
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="Dsys11">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT S_DSYS11.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DSYS11
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="BMLB != null and BMLB !=''"> BMLB,  </if>
+			<if test="BM != null and BM !=''"> BM,  </if>
+			<if test="HZMC != null and HZMC !=''"> HZMC,  </if>
+			<if test="BZ1 != null and BZ1 !=''"> BZ1,  </if>
+			<if test="BZ2 != null and BZ2 !=''"> BZ2,  </if>
+			<if test="BZ3 != null and BZ3 !=''"> BZ3,  </if>
+			<if test="BZ4 != null and BZ4 !=''"> BZ4,  </if>
+			<if test="BZ5 != null and BZ5 !=''"> BZ5,  </if>
+			<if test="BZ6 != null and BZ6 !=''"> BZ6,  </if>
+			<if test="BZ != null and BZ !=''"> BZ,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=INTEGER},</if>
+			<if test="BMLB != null and BMLB !=''">#{BMLB,jdbcType=VARCHAR},</if>
+			<if test="BM != null and BM !=''">#{BM,jdbcType=VARCHAR},</if>
+			<if test="HZMC != null and HZMC !=''">#{HZMC,jdbcType=VARCHAR},</if>
+			<if test="BZ1 != null and BZ1 !=''">#{BZ1,jdbcType=VARCHAR},</if>
+			<if test="BZ2 != null and BZ2 !=''">#{BZ2,jdbcType=VARCHAR},</if>
+			<if test="BZ3 != null and BZ3 !=''">#{BZ3,jdbcType=VARCHAR},</if>
+			<if test="BZ4 != null and BZ4 !=''">#{BZ4,jdbcType=VARCHAR},</if>
+			<if test="BZ5 != null and BZ5 !=''">#{BZ5,jdbcType=VARCHAR},</if>
+			<if test="BZ6 != null and BZ6 !=''">#{BZ6,jdbcType=VARCHAR},</if>
+			<if test="BZ != null and BZ !=''">#{BZ,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<!-- 根据JFID查询唯一数据 -->
+	<select id="SelectByJFID" parameterType="String" resultType="DSYS11">
+		SELECT JFID,BMLB,BM,HZMC,BZ1,BZ2,BZ3,BZ4,BZ5,BZ6,BZ FROM DSYS11 WHERE
+		JFID=#{0}
+	</select>
+	<!-- 更新数据 -->
+	<update id="update" parameterType="DSYS11">
+		UPDATE DSYS11
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="BM != null and BM !=''"> BM=#{BM},</if>
+			<if test="HZMC != null and HZMC !=''"> HZMC=#{HZMC},</if>
+			<if test="BZ1 != null"> BZ1=#{BZ1},</if>
+			<if test="BZ2 != null"> BZ2=#{BZ2},</if>
+			<if test="BZ3 != null"> BZ3=#{BZ3},</if>
+			<if test="BZ4 != null"> BZ4=#{BZ4},</if>
+			<if test="BZ5 != null"> BZ5=#{BZ5},</if>
+			<if test="BZ6 != null"> BZ6=#{BZ6},</if>
+			<if test="BZ != null"> BZ=#{BZ},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据ID删除数据 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM DSYS11 WHERE JFID=#{0}
+	</delete>
+</mapper>

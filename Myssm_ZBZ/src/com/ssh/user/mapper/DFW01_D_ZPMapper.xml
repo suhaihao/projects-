@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW01_D_ZPMapper">
+	<!-- 返回对应照片集合 -->
+	<resultMap type="DFW01_D_ZP" id="dkzp">
+		<result property="JFID" column="JFID" />
+		<result property="SL_LJ" column="SL_LJ" />
+		<result property="ZP_LJ" column="ZP_LJ" />
+		<result property="PZSJ" column="PZSJ" />
+		<result property="LB" column="LB" />
+		<result property="GPS_DJ" column="GPS_DJ" />
+		<result property="GPS_BW" column="GPS_BW" />
+	</resultMap>
+	<!-- 获取地块照片集合 -->
+	<select id="SelectByDK" parameterType="String" resultMap="dkzp">
+		SELECT
+		JFID,SL_LJ,ZP_LJ,PZSJ,LB,GPS_DJ,GPS_BW FROM DFW01_D_ZP WHERE DFW01_D_JFID=#{0} ORDER BY LB
+	</select>
+	<!-- 根据ID删除对应数据 -->
+	<delete id="delZP">
+		DELETE FROM DFW01_D_ZP WHERE JFID=#{0}
+	</delete>
+</mapper>

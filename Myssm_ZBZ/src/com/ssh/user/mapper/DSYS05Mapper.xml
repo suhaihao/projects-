@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DSYS05Mapper">
+	<!-- 不是末级对应的集合 -->
+	<resultMap type="DSYS05" id="nomj">
+		<result property="BM" column="BMBM" />
+		<result property="Text" column="BMMC" />
+		<result property="BMJC" column="BMJC" />
+		<result property="SF_MJ" column="SF_MJ" />
+	</resultMap>
+	<!-- 查询不是末级集合 -->
+	<select id="SelectAllBM" parameterType="String" resultMap="nomj">
+		SELECT BMBM,BMMC,BMJC,SF_MJ FROM DSYS05 WHERE ZT!=0 ORDER BY BMBM
+	</select>
+	<!-- 根据BM查出唯一数据 -->
+	<select id="SelectByBM" parameterType="String" resultType="DSYS05">
+		SELECT JFID,BMBM BM,BMMC
+		Text,BMJC,SF_MJ,DH_FIRST,FZR,DH,BMZZ,BZ,YB,DZ,QC FROM DSYS05 WHERE
+		ZT!=0 AND BMBM=#{0}
+	</select>
+	<!-- 查询对应的子集合 -->
+	<resultMap type="DSYS05" id="zjh">
+		<result property="BM" column="BMBM" />
+		<result property="Text" column="BMMC" />
+	</resultMap>
+	<!-- 根据父部门查询相关集合 -->
+	<select id="SelectByFather" parameterType="String" resultMap="zjh">
+		SELECT BMBM,BMMC FROM
+		DSYS05 WHERE ZT!=0
+		AND BMBM LIKE '%'||#{0}||'%' AND
+		BMJC=#{1}
+	</select>
+	<!-- 根据ID查询唯一数据 -->
+	<select id="SelectByJFID" parameterType="Integer" resultType="DSYS05">
+		SELECT BMBM BM,BMJC FROM DSYS05 WHERE ZT!=0 AND JFID=#{0}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="instInfo" parameterType="DSYS05">
+		<selectKey resultType="Integer" order="BEFORE" keyProperty="JFID">
+			SELECT S_DSYS05.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DSYS05
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="BM != null and BM !=''"> BMBM,</if>
+			<if test="Text != null and Text !=''"> BMMC,  </if>
+			<if test="BMJC != null and BMJC !=''"> BMJC,   </if>
+			<if test="SF_MJ != null and SF_MJ !=''"> SF_MJ, </if>
+			<if test="DH_FIRST != null"> DH_FIRST,   </if>
+			<if test="FZR != null"> FZR,   </if>
+			<if test="DH != null"> DH,   </if>
+			<if test="BMZZ != null"> BMZZ,   </if>
+			<if test="PARENT_ID != null and PARENT_ID !=''"> PARENT_ID,   </if>
+			<if test="BZ != null"> BZ,   </if>
+			<if test="YB != null"> YB,   </if>
+			<if test="DZ != null"> DZ,   </if>
+			<if test="QC != null"> QC,   </if>
+			<if test="ZT != null and ZT !=''"> ZT,   </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''">#{JFID,jdbcType=INTEGER},</if>
+			<if test="BM != null and BM !=''">#{BM,jdbcType=VARCHAR},</if>
+			<if test="Text != null and Text !=''">#{Text,jdbcType=VARCHAR},</if>
+			<if test="BMJC != null and BMJC !=''">#{BMJC,jdbcType=VARCHAR},</if>
+			<if test="SF_MJ != null and SF_MJ !=''">#{SF_MJ,jdbcType=VARCHAR},</if>
+			<if test="DH_FIRST != null">#{DH_FIRST,jdbcType=VARCHAR},</if>
+			<if test="FZR != null">#{FZR,jdbcType=VARCHAR},</if>
+			<if test="DH != null">#{DH,jdbcType=VARCHAR},</if>
+			<if test="BMZZ != null">#{BMZZ,jdbcType=VARCHAR},</if>
+			<if test="PARENT_ID != null and PARENT_ID !=''">#{PARENT_ID,jdbcType=INTEGER},</if>
+			<if test="BZ != null">#{BZ,jdbcType=VARCHAR},</if>
+			<if test="YB != null">#{YB,jdbcType=VARCHAR},</if>
+			<if test="DZ != null">#{DZ,jdbcType=VARCHAR},</if>
+			<if test="QC != null">#{QC,jdbcType=VARCHAR},</if>
+			<if test="ZT != null and ZT !=''">#{ZT,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<!-- 修改一条数据 -->
+	<update id="upInfo" parameterType="DSYS05">
+		UPDATE DSYS05
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="Text != null and Text !=''"> BMMC=#{Text},</if>
+			<if test="BMJC != null and BMJC !=''"> BMJC=#{BMJC},</if>
+			<if test="SF_MJ != null and SF_MJ !=''"> SF_MJ=#{SF_MJ},</if>
+			<if test="DH_FIRST != null"> DH_FIRST=#{DH_FIRST},</if>
+			<if test="FZR != null"> FZR=#{FZR},</if>
+			<if test="DH != null"> DH=#{DH},</if>
+			<if test="BMZZ != null"> BMZZ=#{BMZZ},</if>
+			<if test="BZ != null"> BZ=#{BZ},</if>
+			<if test="YB != null"> YB=#{YB},</if>
+			<if test="DZ != null"> DZ=#{DZ},</if>
+			<if test="QC != null"> QC=#{QC},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+</mapper>

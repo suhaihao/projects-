@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DSYS01_DSYS03Mapper">
+	<!-- 插入对应数据 -->
+	<insert id="insertJS" parameterType="Dsys01_dsys03">
+		INSERT INTO DSYS01_DSYS03
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="DSYS01_JFID != null and DSYS01_JFID !=''"> DSYS01_JFID,</if>
+			<if test="DSYS03_JFID != null and DSYS03_JFID !=''"> DSYS03_JFID,</if>
+			<if test="BZ != null and BZ !=''"> BZ,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="DSYS01_JFID != null and DSYS01_JFID !=''">#{DSYS01_JFID,jdbcType=INTEGER},</if>
+			<if test="DSYS03_JFID != null and DSYS03_JFID !=''">#{DSYS03_JFID,jdbcType=INTEGER},</if>
+			<if test="BZ != null and BZ !=''"> #{BZ,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 根据ID删除全部数据 -->
+	<delete id="delAll" parameterType="Integer">
+		DELETE FROM DSYS01_DSYS03
+		WHERE DSYS01_JFID=#{0}
+	</delete>
+	<!-- 相关返回的集合 -->
+	<resultMap type="Dsys01_dsys03" id="fhjh">
+		<result property="DSYS03_JFID" column="DSYS03_JFID" />
+	</resultMap>
+	<!-- 查询相关数据 -->
+	<select id="SelectByJS" parameterType="String" resultMap="fhjh">
+		SELECT DSYS03_JFID FROM DSYS01_DSYS03 WHERE DSYS01_JFID=#{0}
+	</select>
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW23Mapper">
+	<!-- 根据组织查询返回集合 -->
+	<resultMap type="DFW23" id="selall">
+		<id property="JFID" column="JFID" />
+		<result property="BT" column="BT" />
+		<result property="NR" column="NR" />
+		<result property="LRRY" column="LRRY" />
+		<result property="LRRQ" column="LRRQ" />
+		<result property="ZT" column="ZT" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="JDRY" column="JDRY" />
+		<result property="JDRQ" column="JDRQ" />
+		<result property="JD" column="JD" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="LRRYMC" column="LRRYMC" />
+		<result property="JDRYMC" column="JDRYMC" />
+	</resultMap>
+	<!-- 根据条件获取集合 -->
+	<select id="SelectAll" parameterType="map" resultMap="selall">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		JFID,BT,NR,LRRY,LRRQ,ZT,DDJ01_JFID,JDRY,JDRQ,JD,DDJ01_MC,LRRYMC,JDRYMC
+		FROM DFW23
+		WHERE ZT !=0 AND ZT!=1
+		<if test="StarTime != null and StarTime !=''">
+			AND LRRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BT != null and BT !=''">
+			AND BT LIKE '%'||#{BT}||'%'
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="ZT != null and ZT !=''">
+			AND ZT=#{ZT}
+		</if>
+		ORDER BY LRRQ DESC
+		) A1 WHERE ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 根据条件获取集合数量 -->
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW23 WHERE ZT !=0
+		AND ZT !=1
+		<if test="StarTime != null and StarTime !=''">
+			AND LRRQ>=to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND LRRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BT != null and BT !=''">
+			AND BT LIKE '%'||#{BT}||'%'
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="ZT != null and ZT !=''">
+			AND ZT=#{ZT}
+		</if>
+	</select>
+	<!-- 获取新的jfid -->
+	<select id="getJFID" resultType="String">
+		SELECT SDFW23.NEXTVAL FROM DUAL
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="DFW23">
+		INSERT INTO DFW23
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="BT != null and BT !=''"> BT,</if>
+			<if test="NR != null and NR !=''"> NR,</if>
+			<if test="LRRY != null and LRRY !=''"> LRRY,</if>
+			LRRQ,
+			<if test="ZT != null and ZT !=''"> ZT,  </if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,  </if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''"> DDJ01_MC,  </if>
+			<if test="LRRYMC != null and LRRYMC !=''"> LRRYMC,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="BT != null and BT !=''">#{BT,jdbcType=VARCHAR},</if>
+			<if test="NR != null and NR !=''">#{NR,jdbcType=VARCHAR},</if>
+			<if test="LRRY != null and LRRY !=''">#{LRRY,jdbcType=VARCHAR},</if>
+			sysdate,
+			<if test="ZT != null and ZT !=''">#{ZT,jdbcType=CHAR},</if>
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''">#{DDJ01_JFID,jdbcType=VARCHAR},</if>
+			<if test="DDJ01_MC != null and DDJ01_MC !=''">#{DDJ01_MC,jdbcType=VARCHAR},</if>
+			<if test="LRRYMC != null and LRRYMC !=''">#{LRRYMC,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<!-- 插入附件 -->
+	<insert id="insert_fj" parameterType="DFW23_FJ">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT SDFW23_FJ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DFW23_FJ
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''"> JFID,</if>
+			<if test="DFW23_JFID != null and DFW23_JFID !=''"> DFW23_JFID,</if>
+			<if test="FJ != null and FJ !=''"> FJ,</if>
+			<if test="WJM != null and WJM !=''"> WJM,</if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID!=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DFW23_JFID != null and DFW23_JFID !=''">#{DFW23_JFID,jdbcType=VARCHAR},</if>
+			<if test="FJ != null and FJ !=''">#{FJ,jdbcType=VARCHAR},</if>
+			<if test="WJM != null and WJM !=''">#{WJM,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+
+	<!-- 根据ID查询数据 -->
+	<select id="SelectByID" parameterType="String" resultType="DFW23">
+		SELECT
+		JFID,BT,NR,LRRY,LRRQ,ZT,DDJ01_JFID,JDRY,JDRQ,JD,DDJ01_MC,LRRYMC,JDRYMC
+		FROM DFW23 WHERE JFID=#{0}
+	</select>
+	<!-- 根据组织查询返回集合 -->
+	<resultMap type="DFW23_FJ" id="selfj">
+		<id property="JFID" column="JFID" />
+		<result property="DFW23_JFID" column="DFW23_JFID" />
+		<result property="FJ" column="FJ" />
+		<result property="WJM" column="WJM" />
+	</resultMap>
+	<!-- 根据父id获取对应集合 -->
+	<select id="SelectByDFW23_JFID_FJ" parameterType="map"
+		resultMap="selfj">
+		SELECT JFID,DFW23_JFID,FJ,WJM FROM DFW23_FJ WHERE 1=1
+		<if test="DFW23_JFID != null and DFW23_JFID !=''">
+			AND DFW23_JFID=#{DFW23_JFID}
+		</if>
+	</select>
+	<!-- 根据ID删除一条附件数据 -->
+	<delete id="del_fj" parameterType="String">
+		DELETE FROM DFW23_FJ WHERE
+		JFID=#{0}
+	</delete>
+	<!-- 更新数据 -->
+	<update id="update" parameterType="DFW23">
+		UPDATE DFW23
+		<trim prefix=" SET " suffixOverrides=",">
+			<if test="JDRY != null and JDRY !=''"> JDRY=#{JDRY},</if>
+			<if test="JDRQ != null and JDRQ !=''"> JDRQ=sysdate,</if>
+			<if test="JD != null and JD !=''"> JD=#{JD},</if>
+			<if test="JDRYMC != null and JDRYMC !=''"> JDRYMC=#{JDRYMC},</if>
+			<if test="ZT != null and ZT !=''"> ZT=#{ZT},</if>
+		</trim>
+		WHERE JFID=#{JFID}
+	</update>
+	<!-- 根据父ID删除数据 -->
+	<delete id="del_fj_f" parameterType="String">
+		DELETE FROM DFW23_FJ WHERE
+		DFW23_JFID=#{0}
+	</delete>
+	<!-- 根据父ID删除数据 -->
+	<delete id="del" parameterType="String">
+		DELETE FROM DFW23 WHERE JFID=#{0}
+	</delete>
+</mapper>

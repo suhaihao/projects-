@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DDJ02_DDJ01Mapper">
+
+	<!-- 插入一条数据 -->
+	<insert id="insddj02_d" parameterType="DDJ02_DDJ01">
+		INSERT INTO DDJ02_DDJ01
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> DDJ01_JFID,</if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''"> DDJ02_JFID,</if>
+			<if test="FWNR != null and FWNR !=''"> FWNR,   </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="DDJ01_JFID != null and DDJ01_JFID !=''"> #{DDJ01_JFID,jdbcType=VARCHAR},  </if>
+			<if test="DDJ02_JFID != null and DDJ02_JFID !=''"> #{DDJ02_JFID,jdbcType=VARCHAR},  </if>
+			<if test="FWNR != null and FWNR !=''"> #{FWNR,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<!-- 查询返回的集合 -->
+	<resultMap type="DDJ02_DDJ01" id="fhjh">
+		<id property="FWNR" column="FWNR" />
+		<association property="DDJ01_JFID" select="SelectByZFZZ"
+			column="DDJ01_JFID" javaType="String" />
+	</resultMap>
+	<!-- 查询专防组织名称 -->
+	<select id="SelectByZFZZ" parameterType="String" resultType="String">
+		SELECT MC FROM DDJ01 WHERE JFID=#{0}
+	</select>
+	<!-- 根据传入的id 获取需要更新信息 -->
+	<select id="selectByZZBYID" parameterType="String" resultMap="fhjh">
+		SELECT DDJ01_JFID,FWNR FROM DDJ02_DDJ01 WHERE DDJ02_JFID=#{0}
+	</select>
+	<!-- 更新对应数据 -->
+	<update id="updysj" parameterType="DDJ02_DDJ01">
+		UPDATE DDJ02_DDJ01 SET
+		FWNR=#{FWNR}
+		WHERE DDJ01_JFID=#{DDJ01_JFID} AND
+		DDJ02_JFID=#{DDJ02_JFID}
+	</update>
+	<!-- 删除对应的关系信息 -->
+	<delete id="delgxb" parameterType="DDJ02_DDJ01">
+		DELETE FROM DDJ02_DDJ01 WHERE
+		DDJ01_JFID=#{DDJ01_JFID} AND
+		DDJ02_JFID=#{DDJ02_JFID}
+	</delete>
+</mapper>

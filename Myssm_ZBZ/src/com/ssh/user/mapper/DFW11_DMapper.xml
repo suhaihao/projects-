@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW11_DMapper">
+	<!-- 根据返回父类ID集合 -->
+	<resultMap type="DFW11_D" id="fjjh">
+		<result property="JFID" column="JFID" />
+		<result property="FJ_LJ" column="FJ_LJ" />
+		<result property="FJ_WJM" column="FJ_WJM" />
+	</resultMap>
+	<!-- 根据父表ID获取对应集合 -->
+	<select id="SelectByFatherID" parameterType="String" resultMap="fjjh">
+		SELECT JFID,FJ_LJ,FJ_WJM FROM DFW11_D WHERE DFW11_JFID=#{0}
+	</select>
+	<!-- 插入一条数据 -->
+	<insert id="insert" parameterType="DFW11_D">
+		<selectKey resultType="String" order="BEFORE" keyProperty="JFID">
+			SELECT SDFW11_D.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO DFW11_D
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''"> JFID,</if>
+			<if test="DFW11_JFID != null and DFW11_JFID !=''"> DFW11_JFID,</if>
+			<if test="FJ_LJ != null and FJ_LJ !=''"> FJ_LJ,  </if>
+			<if test="FJ_WJM != null and FJ_WJM !=''"> FJ_WJM,  </if>
+		</trim>
+		<trim prefix=" values(" suffix=")" suffixOverrides=",">
+			<if test="JFID != null and JFID !=''">#{JFID,jdbcType=VARCHAR},</if>
+			<if test="DFW11_JFID != null and DFW11_JFID !=''">#{DFW11_JFID,jdbcType=VARCHAR},</if>
+			<if test="FJ_LJ != null and FJ_LJ !=''"> #{FJ_LJ,jdbcType=VARCHAR},    </if>
+			<if test="FJ_WJM != null and FJ_WJM !=''"> #{FJ_WJM,jdbcType=VARCHAR},    </if>
+		</trim>
+	</insert>
+	<!-- 根据父ID删除数据 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM DFW11_D WHERE DFW11_JFID=#{0}
+	</delete>
+	<!-- 根据ID删除数据 -->
+	<delete id="deleteByJFID" parameterType="String">
+		DELETE FROM DFW11_D WHERE JFID=#{0}
+	</delete>
+</mapper>

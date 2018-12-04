@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssh.user.dao.DFW02Mapper">
+	<resultMap type="DFW02" id="tsjh">
+		<result property="DY_JFID" column="DY_JFID" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="PJ_JZRQ" column="PJ_JZRQ" />
+		<result property="DDJ01_JFID" column="DDJ01_JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="DDJ02_JFID" column="DDJ02_JFID" />
+	</resultMap>
+	<!-- 查询需要推送的集合 -->
+	<select id="SelectByTXRQList" resultMap="tsjh">
+		SELECT
+		DY_JFID,F_GET_MC('FWNRLB',FWNRLB)
+		FWNRLB,PJ_JZRQ,DDJ01_JFID,DDJ01_MC,DDJ02_JFID FROM DFW02 WHERE ZT='0'
+		AND TO_CHAR(TXRQ,'yyyy-mm-dd')=TO_CHAR(SYSDATE,'yyyy-mm-dd');
+	</select>
+	<!-- 获取手机浏览集合数量 -->
+	<select id="getCountLL" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW02
+		D02,DDJ02 DD02 WHERE DD02.YHM=#{yhm} AND
+		DD02.JFID=D02.DDJ02_JFID
+		<if test="zt != null and zt !=''">
+			AND D02.ZT=#{zt}
+		</if>
+	</select>
+	<!-- 评论集合 -->
+	<resultMap type="DFW02" id="pljh">
+		<result property="JFID" column="JFID" />
+		<result property="DY_JFID" column="DY_JFID" />
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="FWNRLB" column="FWNRLB" />
+		<result property="PJ_JZRQ" column="PJ_JZRQ" />
+		<result property="ZT" column="ZT" />
+		<association property="FWNRLB" select="SelectByFlMc"
+			column="FWNRLB" javaType="String" />
+	</resultMap>
+	<!-- 查找分类名称 -->
+	<select id="SelectByFlMc" parameterType="String" resultType="String">
+		SELECT HZMC FROM DSYS11 WHERE BMLB='FWNRLB' AND BM=#{0}
+	</select>
+	<!-- 查找手机评论集合 -->
+	<select id="SelectByLLList" parameterType="map" resultMap="pljh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT
+		D02.JFID,D02.DY_JFID,D02.DDJ01_MC,D02.FWNRLB,D02.PJ_JZRQ,D02.ZT FROM
+		DFW02
+		D02,DDJ02 DD02 WHERE DD02.YHM=#{yhm} AND
+		DD02.JFID=D02.DDJ02_JFID
+		<if test="zt != null and zt !=''">
+			AND D02.ZT=#{zt}
+		</if>
+		) A1 WHERE
+		ROWNUM &lt;=#{max}) WHERE RN>=#{min}
+	</select>
+	<!-- 手机根据ID获取唯一数据 -->
+	<select id="SelectByJFID" parameterType="String" resultType="DFW02">
+		SELECT
+		D02.JFID,D02.DY_JFID,D02.DDJ02_JFID,D02.DDJ01_MC,DD02.MC,F_GET_MC('FWNRLB',D02.FWNRLB)
+		FWNRLB,D02.PJJG,TO_CHAR(D02.PJRQ,'yyyy-mm-dd') PJRQ,D02.PJSM FROM
+		DFW02
+		D02,DDJ02 DD02 WHERE DD02.JFID=D02.DDJ02_JFID
+		AND D02.JFID=#{0}
+	</select>
+
+	<!-- 过程插入map -->
+	<parameterMap type="map" id="testParameterMap">
+		<parameter property="psi_jfid" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_PJJG" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_PJSM" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="psi_lrry_mc" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="pso_return" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="pso_reason" jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<!-- 手机提交评价调用接口 -->
+	<select id="p_gd_pj" parameterMap="testParameterMap"
+		statementType="CALLABLE">
+		{call p_gd_pj(?,?,?,?,?,?,?)}
+	</select>
+	<!-- 下面查询的返回集合 -->
+	<resultMap type="DFW02" id="cxjh">
+		<result property="DDJ01_MC" column="DDJ01_MC" />
+		<result property="DDJ02_JFID" column="DDJ02_JFID" />
+		<result property="PJJG" column="PJJG" />
+		<result property="PJSM" column="PJSM" />
+		<result property="PJRQ" column="PJRQ" />
+		<result property="RN" column="RN" />
+	</resultMap>
+	<!-- 获取 时间 组织 用户 条件下的集合 -->
+	<select id="SelectByTimeDddj01Dddj02" parameterType="map"
+		resultMap="cxjh">
+		SELECT * FROM (SELECT A1.*,ROWNUM RN FROM (
+		SELECT DF2.DDJ01_MC,DD2.MC
+		DDJ02_JFID,DF2.PJJG,DF2.PJSM,DF2.PJRQ FROM DFW02 DF2,DDJ02 DD2 WHERE
+		DF2.ZT=1 AND DF2.DDJ02_JFID=DD2.JFID
+		<if test="StarTime != null and StarTime !=''">
+			AND DF2.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND DF2.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DF2.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND DF2.DDJ02_JFID=#{DDJ02_JFID}
+		</if>
+		<if test="PJJG != null and PJJG !=''">
+			AND DF2.PJJG=#{PJJG}
+		</if>
+		ORDER BY PJRQ DESC
+		) A1 WHERE
+		ROWNUM &lt;=#{MAX}) WHERE RN>=#{MIN}
+	</select>
+	<!-- 获取时间 组织 用户下的评论数量 -->
+	<select id="getCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*) FROM DFW02 DF2,DDJ02 DD2 WHERE
+		DF2.ZT=1 AND
+		DF2.DDJ02_JFID=DD2.JFID
+		<if test="StarTime != null and StarTime !=''">
+			AND DF2.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND DF2.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="DDJ01_JFID != null and DDJ01_JFID !=''">
+			AND DF2.DDJ01_JFID=#{DDJ01_JFID}
+		</if>
+		<if test="DDJ02_JFID != null and DDJ02_JFID !=''">
+			AND DF2.DDJ02_JFID=#{DDJ02_JFID}
+		</if>
+		<if test="PJJG != null and PJJG !=''">
+			AND DF2.PJJG=#{PJJG}
+		</if>
+	</select>
+	<!-- 服务效果统计返回集合-->
+	<resultMap type="DFW02" id="fwxgtj">
+		<result property="xm" column="xm" />
+		<result property="hj" column="hj" />
+		<result property="hmy" column="hmy" />
+		<result property="hmybl" column="hmybl" />
+		<result property="my" column="my" />
+		<result property="mybl" column="mybl" />
+		<result property="jbmy" column="jbmy" />
+		<result property="jbmybl" column="jbmybl" />
+		<result property="bmy" column="bmy" />
+		<result property="bmybl" column="bmybl" />
+	</resultMap>
+	<!-- 服务效果统计查询1 -->
+	<select id="SelectFWXGTJ1" parameterType="map" resultMap="fwxgtj">
+	    select rownum RN,xm,hj,hmy,hmybl,my,mybl,jbmy,jbmybl,bmy,bmybl from (
+		select b.ddj01_mc xm,count(b.jfid) hj,
+		sum(decode(b.pjjg,'4',1,0))
+		hmy,round(sum(decode(b.pjjg,'4',1,0))*100/count(b.jfid),2) hmybl,
+		sum(decode(b.pjjg,'3',1,0))
+		my,round(sum(decode(b.pjjg,'3',1,0))*100/count(b.jfid),2) mybl,
+		sum(decode(b.pjjg,'2',1,0))
+		jbmy,round(sum(decode(b.pjjg,'2',1,0))*100/count(b.jfid),2) jbmybl,
+		sum(decode(b.pjjg,'1',1,0))
+		bmy,round(sum(decode(b.pjjg,'1',1,0))*100/count(b.jfid),2) bmybl
+		from dfw02
+		b,ddj01 a
+		where a.jfid=b.ddj01_jfid
+		and b.zt='1'
+		<if test="StarTime != null and StarTime !=''">
+			AND b.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND b.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BMBM != null and BMBM !=''">
+			AND A.BMBM=#{BMBM}
+		</if>
+		group by b.ddj01_mc)
+	</select>
+	<!-- 服务效果统计查询2 -->
+	<select id="SelectFWXGTJ2" parameterType="map" resultMap="fwxgtj">
+	    select rownum RN,xm,hj,hmy,hmybl,my,mybl,jbmy,jbmybl,bmy,bmybl from (
+		select f_get_mc('BMMC',a.bmbm) xm,count(b.jfid) hj,
+		sum(decode(b.pjjg,'4',1,0))
+		hmy,round(sum(decode(b.pjjg,'4',1,0))*100/count(b.jfid),2) hmybl,
+		sum(decode(b.pjjg,'3',1,0))
+		my,round(sum(decode(b.pjjg,'3',1,0))*100/count(b.jfid),2) mybl,
+		sum(decode(b.pjjg,'2',1,0))
+		jbmy,round(sum(decode(b.pjjg,'2',1,0))*100/count(b.jfid),2) jbmybl,
+		sum(decode(b.pjjg,'1',1,0))
+		bmy,round(sum(decode(b.pjjg,'1',1,0))*100/count(b.jfid),2) bmybl
+		from ddj01
+		a,dfw02 b
+		where a.jfid=b.ddj01_jfid
+		and b.zt='1'
+		<if test="StarTime != null and StarTime !=''">
+			AND b.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND b.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BMBM != null and BMBM !=''">
+			AND A.BMBM=#{BMBM}
+		</if>
+		group by f_get_mc('BMMC',a.bmbm))
+	</select>
+	<!-- 服务效果统计查询3 -->
+	<select id="SelectFWXGTJ3" parameterType="map" resultMap="fwxgtj">
+	    select rownum RN,xm,hj,hmy,hmybl,my,mybl,jbmy,jbmybl,bmy,bmybl from (
+		select b.pjry_mc xm,count(b.jfid) hj,
+		sum(decode(b.pjjg,'4',1,0))
+		hmy,round(sum(decode(b.pjjg,'4',1,0))*100/count(b.jfid),2) hmybl,
+		sum(decode(b.pjjg,'3',1,0))
+		my,round(sum(decode(b.pjjg,'3',1,0))*100/count(b.jfid),2) mybl,
+		sum(decode(b.pjjg,'2',1,0))
+		jbmy,round(sum(decode(b.pjjg,'2',1,0))*100/count(b.jfid),2) jbmybl,
+		sum(decode(b.pjjg,'1',1,0))
+		bmy,round(sum(decode(b.pjjg,'1',1,0))*100/count(b.jfid),2) bmybl
+		from dfw02
+		b,ddj01 a
+		where a.jfid=b.ddj01_jfid
+		and b.zt='1'
+		<if test="StarTime != null and StarTime !=''">
+			AND b.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND b.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BMBM != null and BMBM !=''">
+			AND A.BMBM=#{BMBM}
+		</if>
+		group by b.pjry_mc)
+	</select>
+	<!-- 服务效果统计查询3 -->
+	<select id="SelectFWXGTJHJ" parameterType="map" resultType="DFW02">
+		select count(b.jfid) hj,
+		sum(decode(b.pjjg,'4',1,0)) hmy,round(sum(decode(b.pjjg,'4',1,0))*100/count(b.jfid),2) hmybl,
+		sum(decode(b.pjjg,'3',1,0))
+		my,round(sum(decode(b.pjjg,'3',1,0))*100/count(b.jfid),2) mybl,
+		sum(decode(b.pjjg,'2',1,0))
+		jbmy,round(sum(decode(b.pjjg,'2',1,0))*100/count(b.jfid),2) jbmybl,
+		sum(decode(b.pjjg,'1',1,0))
+		bmy,round(sum(decode(b.pjjg,'1',1,0))*100/count(b.jfid),2) bmybl
+		from dfw02 b,ddj01 a
+		where a.jfid=b.ddj01_jfid
+		and b.zt='1'
+		<if test="StarTime != null and StarTime !=''">
+			AND b.PJRQ >= to_date(#{StarTime},'yyyy-mm-dd')
+		</if>
+		<if test="EndTime != null and EndTime !=''">
+			AND b.PJRQ &lt; to_date(#{EndTime},'yyyy-mm-dd')+1
+		</if>
+		<if test="BMBM != null and BMBM !=''">
+			AND A.BMBM=#{BMBM}
+		</if>
+	</select>
+</mapper>
