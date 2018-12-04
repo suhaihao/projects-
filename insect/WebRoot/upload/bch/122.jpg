@@ -1,0 +1,16 @@
+<%set data=server.CreateObject("jf.data") 
+ dim sqlstr
+ if request("table")="dbch_img" then
+	sqlstr = "select jfimage from dbch_img where jfid='"&request("jfid")&"' "  
+ end if
+ if request("table")="dbchzw_img" then
+	sqlstr = "select jfimage from dbchzw_img where jfid='"&request("jfid")&"' "
+ end if
+ data.rs.open sqlstr,data.conn
+ if not  data.rs.eof then      
+     Response.BinaryWrite data.rs(0).GetChunk(60000000)
+ end if
+ data.rs.close
+ data.CloseDB  
+%>
+

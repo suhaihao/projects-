@@ -1,0 +1,82 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<script>window.close();</script>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>采集数据统计</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK"/>
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+	<!-- <meta http-equiv="X-UA-Compatible"content="IE=9; IE=8; IE=7; IE=EDGE">  -->
+	
+	<link href="http://192.168.1.128:8082/assets/css/base.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="http://192.168.1.128:8082/assets/css/com.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="http://192.168.1.128:8082/assets/plug/jquery-ui-1.10.4 2/css/custom/jquery-ui-1.10.4.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script src="http://192.168.1.128:8082/assets/plug/jquery-ui-1.10.4 2/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="http://192.168.1.128:8082/assets/plug/jquery-ui-1.10.4 2/js/jquery-ui-1.10.4.js" type="text/javascript"></script>
+	<!-- 
+	<link href="/insect/assets/css/base.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="/insect/assets/css/com.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="/insect/assets/plug/jquery-ui-1.10.4 2/css/custom/jquery-ui-1.10.4.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script src="/insect/assets/plug/jquery-ui-1.10.4 2/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="/insect/assets/plug/jquery-ui-1.10.4 2/js/jquery-ui-1.10.4.js" type="text/javascript"></script>
+	 -->
+	<script type="text/javascript" src="/insect/javascript/WdatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/insect/javascript/validate.min.js"></script>
+	<script type="text/javascript" src="/insect/javascript/common.js"></script>
+</head>
+<body>
+<div id="container">
+
+<div class="mod">
+<!--
+<div class="mod-hd">
+	<h3 class="mod-tit">
+		采集数据统计
+	</h3>
+</div>
+-->
+	<div class="mod-bd">
+		
+	
+		<table class="w">
+			<tr>
+	
+	
+		<td rowspan="2"><div class="cell-wrap">调查日期</div></td>
+	<td colspan=1 rowspan=2   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>调查株数</td><td colspan=1 rowspan=2   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>有蚜株数</td><td colspan=1 rowspan=2   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>有蚜株率%</td><td colspan=3 rowspan=1   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>蚜虫数(头)</td><td colspan=1 rowspan=2   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>百株蚜量(头)</td><td colspan=1 rowspan=2   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>折算百株天敌单位数</td><tr><td colspan=1 rowspan=1   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>有翅</td><td colspan=1 rowspan=1   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>无翅</td><td colspan=1 rowspan=1   style='WORD-BREAK: break-all;text-align:center;width: ;height: '>合计</td>
+	</tr>
+	<tr><td><div class="cell-wrap">2014-04-22 00:00:00.0</div></td><td style="text-align:right"><div class="cell-wrap">1269</div></td><script>var avg1=0;</script><script>avg1=avg1 + 1269;</script><td style="text-align:right"><div class="cell-wrap">1269</div></td><script>var avg2=0;</script><script>avg2=avg2 + 1269;</script><td style="text-align:right"><div class="cell-wrap">300</div></td><script>var avg3=0;</script><script>avg3=avg3 + 300;</script><td style="text-align:right"><div class="cell-wrap">1269</div></td><script>var avg4=0;</script><script>avg4=avg4 + 1269;</script><td style="text-align:right"><div class="cell-wrap">3</div></td><script>var avg5=0;</script><script>avg5=avg5 + 3;</script><td style="text-align:right"><div class="cell-wrap">855</div></td><script>var avg6=0;</script><script>avg6=avg6 + 855;</script><td style="text-align:right"><div class="cell-wrap">202.13</div></td><script>var avg7=0;</script><script>avg7=avg7 + 202.13;</script><td style="text-align:right"><div class="cell-wrap">1269</div></td><script>var avg8=0;</script><script>avg8=avg8 + 1269;</script></tr><tr><td style='text-align:center' colspan='1'>平均值</td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg1 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg2 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg3 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg4 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg5 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg6 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg7 / 1)*100)/100);</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(Math.round((avg8 / 1)*100)/100);</script></div></td></tr><tr><td style='text-align:center' colspan='1'>合计值</td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg1.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg2.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg3.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg4.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg5.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg6.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg7.toFixed(2));</script></div></td><td style='text-align:right'><div class="cell-wrap"><script>document.write(avg8.toFixed(2));</script></div></td></tr>
+	</table>
+	
+	<script type="text/javascript">
+		function back(id,bb) {
+			window.open("/insect/bbhz.do?ACT_TYPE=LIST&dbbzb_jfid=" + id + "&bbmc="+encodeURIComponent(encodeURIComponent(bb)),"bbhz_list","");
+		}
+		function f_exp(){
+			window.location = "/insect/bbhz/bbhz_update.jsp?p=exp&dbbzb_tj_jfid=127&wh=&col=9&sl=" + encodeURIComponent(encodeURIComponent(""));
+		}
+	</script>
+
+	</div>
+</div>
+
+
+
+</div>
+<!-- end container -->
+</body>
+</html>
+

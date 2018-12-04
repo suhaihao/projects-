@@ -1,0 +1,242 @@
+@charset "utf-8";
+/* === reset.css === */
+html{}
+/*TODO remove settings on BODY since we can't namespace it.*/
+/*TODO test putting a class on HEAD.- Fails on FF.*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,select,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+/*TODO think about hanlding inheritence differently,maybe letting IE6 fail a bit...*/
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+/*TODO Figure out where this list-style rule is best set. Hedger has a request to investigate.*/
+li{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+/* to preserve line-height and selector appearance */
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+/*to enable resizing for IE*/
+input,textarea,select{*font-size:100%;color:#000}
+/*because legend doesn't inherit in IE */
+legend{color:#000;}
+input[type=button],
+button{cursor:pointer;}
+
+i,em{font-style:normal;}
+//ios 手机 按钮样式重置
+input[type=button],
+input[type=submit]{
+	-webkit-appearance:none;
+	outline:none;
+	// -moz-border-radius:0;-webkit-border-radius:0;border-radius:0; 
+}
+
+
+/* typograghy */
+table { empty-cells: show } 
+
+hr.space{display:none;}
+.divideLine{clear:both;display:block;border-bottom:1px solid #333;}
+strong{font-weight:bold;}
+/*
+.no_unl{text-decoration:none !important;}
+.unl{text-decoration:underline !important;}
+*/
+.tablefix{table-layout:fixed}
+
+
+h1{font-size:20px;}
+h2{font-size:20px;}
+h3{font-size:18px;}
+h4,h5{font-size:14px;}
+h6{font-size:12px;}
+
+.f12{font-size:12px;}
+.f13{font-size:13px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.f24{font-size:24px;}
+.fb{font-weight:bold}
+/* position */
+.vt {vertical-align:top}
+.vm {vertical-align:middle;}
+.tl{text-align:left;}
+.tc{text-align:center;}
+.tr{text-align:right;}
+.tin2em{text-indent:2em}
+.bc{margin-left:auto;margin-right:auto;}
+.dib{display:-moz-inline-stack;display:inline-block;zoom:1;*display:inline; }
+.fl{float:left;display:inline}
+.fr{float:right;display:inline}
+.cb{clear:both;}
+.cl{clear:left}
+.cr{clear:right}
+.clear{display:block;clear:both;font-size:0px;height:1px;line-height:0;overflow:hidden;margin-top:-1px;}
+.fix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
+.fix{display:block;*zoom:1}
+
+
+/* forms.css */
+input.text,input.password,textarea{border:1px solid;border-color:#999 #bbb #bbb #999;background:url(../../images/form.png) repeat-x 0 top #fff;}
+input.password:focus,input.text:focus,textarea:focus{outline:2px solid #ffdc97;border-color:#efa100;}
+input.text,input.password{width:150px;padding:3px;line-height:1.5em;}
+textarea{width:300px;height:60px;padding:3px;overflow:hidden;resize:vertical;}
+input.text.disabled{cursor:default;color:#ccc;border:1px solid #eee;background:#F4F4F4;}
+input.text.disabled:focus{outline:0 none;border-color:#ddd;}
+
+/* width and height */
+.w{width:100%}
+.h{height:100%}
+/* margin */
+.m5{margin:5px}
+.m10{margin:10px}
+.m15{margin:15px}
+.m20{margin:20px}
+.m30{margin:30px}
+.mt5{margin-top:5px}
+.mt10{margin-top:10px}
+.mt15{margin-top:15px}
+.mt20{margin-top:20px}
+.mt30{margin-top:30px}
+.mt40{margin-top:40px}
+.mt50{margin-top:50px}
+.mt60{margin-top:60px}
+.mt70{margin-top:70px}
+.mt80{margin-top:80px}
+.mt90{margin-top:90px}
+.mt100{margin-top:100px}
+.mb5{margin-bottom:5px}
+.mb10{margin-bottom:10px}
+.mb15{margin-bottom:15px}
+.mb20{margin-bottom:20px}
+.mb30{margin-bottom:30px}
+.mb40{margin-bottom:40px}
+.mb50{margin-bottom:50px}
+.mb60{margin-bottom:60px}
+.mb70{margin-bottom:70px}
+.mb80{margin-bottom:80px}
+.mb90{margin-bottom:90px}
+.mb100{margin-bottom:100px}
+.ml5{margin-left:5px}
+.ml10{margin-left:10px}
+.ml15{margin-left:15px}
+.ml20{margin-left:20px}
+.ml30{margin-left:30px}
+.ml40{margin-left:40px}
+.ml50{margin-left:50px}
+.ml100{margin-left:100px}
+.mr5{margin-right:5px}
+.mr10{margin-right:10px}
+.mr15{margin-right:15px}
+.mr20{margin-right:20px}
+.mr30{margin-right:30px}
+.mr40{margin-right:40px}
+.mr50{margin-right:50px}
+.mr100{margin-right:100px}
+/* padding */
+.p2{padding:2px}
+.p5{padding:5px}
+.p10{padding:10px}
+.p15{padding:15px}
+.p20{padding:20px}
+.p30{padding:30px}
+.pt5{padding-top:5px}
+.pt10{padding-top:10px}
+.pt15{padding-top:15px}
+.pt20{padding-top:20px}
+.pt30{padding-top:30px}
+.pt50{padding-top:50px}
+.pt100{padding-top:100px}
+.pb0{padding-bottom:0px}
+.pb5{padding-bottom:5px}
+.pb10{padding-bottom:10px}
+.pb15{padding-bottom:15px}
+.pb20{padding-bottom:20px}
+.pb30{padding-bottom:30px}
+.pb50{padding-bottom:50px}
+.pb100{padding-bottom:100px}
+.pl5{padding-left:5px}
+.pl10{padding-left:10px}
+.pl15{padding-left:15px}
+.pl20{padding-left:20px}
+.pl30{padding-left:30px}
+.pl50{padding-left:50px}
+.pl100{padding-left:100px}
+.pr5{padding-right:5px}
+.pr10{padding-right:10px}
+.pr15{padding-right:15px}
+.pr20{padding-right:20px}
+.pr30{padding-right:30px}
+.pr50{padding-right:50px}
+.pr100{padding-right:100px}
+/* 
+	==========================================
+	base_txt.css 
+	==========================================
+*/
+/* =Fonts */
+/*body{color:#666;font:12px/1.5 Tahoma,"宋体",Simsun,sans-serif;background-color:#fff;}*/
+/*body{color:#666;font:12px/1.5 arial,"宋体",Simsun,sans-serif;background-color:#fff;}*/
+//body{color:#666;font:12px/1.5 tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif}
+//body{color:#666;font:12px/1.5 tahoma,arial,'\5b8b\4f53',sans-serif}
+//body{color:#666;font:12px/1.5 tahoma,arial,/*'Hiragino Sans GB',*/'\5b8b\4f53',sans-serif}
+//body{color:#666;font:12px/1.5 tahoma,"microsoft yahei", "\5FAE\8F6F\96C5\9ED1",sans-serif}
+/*body{color:#666;font:12px/1.5 Arial,"Microsoft YaHei","黑体","宋体",sans-serif;background-color:#fff;}*/
+
+
+a.carat{color:#ed7502}
+a.quiet{color:#666;}
+a.loud{color:#c00;}
+a.highlight{color:#ffe790;}
+a.keyword{color:#3c6;}
+.price{color:#c33;font-weight:bold;font-family:Tahoma;}
+.price .yuan{font-weight:normal;font-style:normal;font-family:verdana;color:#aaa;}
+.loud:link{color:#c00;}
+.carat{color:#ed7502;font-size:16px;}
+.loud{color:#c00;}
+.red{color:#c00;}
+.gray{color:#989898;}
+.highlight{color:#ffe790;}
+.keyword{color:#ba0146;}
+.bigger{font-size:1.2em}
+.require_mark {font-weight:normal;color:#f00;font-family:"宋体",Simsun;}/* =用于必填的星号= */
+.error{color:#c00;}
+.link:link{color:#36c !important;}
+.link:hover{color:#ff7725 !important}
+/*=msg 消息类=*/
+.Msg-notice {margin-bottom:10px;background-color:#ffffcc;border: 1px solid #ffeecc;color:#333;
+	-moz-box-shadow: 1px 1px 2px #ddd;
+	-webkit-box-shadow: 1px 1px 2px #ddd;
+		box-shadow: 1px 1px 2px #ddd;
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=120, Color='#dddddd')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=120, Color='#dddddd');
+}
+.Msg-notice .Msg-wrap{padding:5px;border:1px solid #fff;}
+.Msg-notice .Msg-hd {padding-left:30px;height:18px;background:url("../../images/msg_bg.png") no-repeat 5px -142px;}
+	.Msg-notice .Msg-tit {color:#C4161C;}
+	.Msg-notice .Msg-con {padding-left:10px;color:#333;}
+/*=msg 描述类=*/
+.Msg-desc {margin-bottom:10px;background-color:#ffffcc;border: 1px solid #d4d49b;color:#333;}
+.Msg-desc .Msg-wrap{overflow:hidden;_zoom:1;padding:5px;border:1px solid #fff;}
+.Msg-desc .Msg-hd {padding-left:30px;height:18px;/*line-height:23px;*/background:url("../../images/msg_bg.png") no-repeat 5px -142px;}
+.Msg-desc .Msg-tit {color:#C4161C;}
+.Msg-desc .Msg-con {padding-left:10px;color:#333;}
+/*=msg  状态类=*/
+.Msg-error{padding:0.5em 1em;color: #CC0000;background-color: #FFF2F2;border:1px solid #FF8080;}
+.Msg-hidde{display: none;}
+/* =msg 状态类= */
+.Msg-required{color:#f00;background-color:#fff7e1;border:1px solid #f8e7c0;}
+/*=msg  状态类=*/
+.Msg-success{background-color:#ffffcc;border: 1px solid #d4d49b;color:#333;}
+.Msg-success .Msg-wrap{padding:5px;border:1px solid #fff;}
+.Msg-success .Msg-hd {padding-left:30px;height:18px;/*line-height:23px;*/background:url("../../images/msg_bg.png") no-repeat 5px -142px;}
+.Msg-success .Msg-tit {color:#C4161C;}
+.Msg-success .Msg-con {padding-left:10px;color:#333;}

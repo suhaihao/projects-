@@ -1,0 +1,29 @@
+<style>
+.STYLE1 {
+	color: #FF0000;
+}
+.STYLE2 {color: #0000FF}
+</style>
+<script language="javascript" type="text/javascript" src="WdatePicker.js"></script>
+
+<div style="font-size:12px">
+<p>除了支持常规在input单击或获得焦点调用外,还支持使用其他的元素如:&lt;img&gt;&lt;div&gt;等触发WdatePicker函数来调用弹出日期框</p>
+  <h4>示例1-1-1 常规调用</h4>
+  <p>
+	<input type="text" id="d11" onClick="WdatePicker()"/>
+	<br />
+	&lt;input id=&quot;d11&quot; type=&quot;text&quot; <span class="STYLE1">onClick=&quot;WdatePicker()&quot;</span>/&gt;</p>
+</div>
+<div style="font-size:12px">
+  <h4>示例1-1-2 图标触发</h4>
+  <p>
+	<input id="d12" type="text"/>
+	<img src="skin/datePicker.gif" width="16" height="22" align="absmiddle" style="cursor:pointer" onClick="WdatePicker({el:'d12'})" /> <br />
+	&lt;input id=&quot;<span class="STYLE1">d12</span>&quot; type=&quot;text&quot;/&gt;<br />
+	&lt;img onclick=&quot;WdatePicker({<span class="STYLE2">el:</span><span class="STYLE1">'d12'</span>})&quot;  src=&quot;../skin/datePicker.gif&quot; width=&quot;16&quot; height=&quot;22&quot; align=&quot;absmiddle&quot;&gt;<br />
+  <span class="STYLE1">注意:</span>只需要传入控件的id即可</p>
+</div>
+
+
+<br><br><br><br>
+更多demo请访问 <a href="http://www.my97.net/dp/demo/resource/2.1.asp">官方</a>

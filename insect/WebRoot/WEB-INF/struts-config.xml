@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<global-forwards>
+		<forward name="GLOGIN" path="/login.jsp" />
+	</global-forwards>
+	
+	<action-mappings>
+	    <!-- 获取村 -->
+	    <action path="/hqcun" type="com.jf.util.GetCun"></action>
+	    <!-- 获取乡镇 -->
+	    <action path="/hqxz" type="com.jf.util.GETXZ"></action>
+	    <!-- 获取上级部门 -->
+	    <action path="/hqsjbm" type="com.jf.util.GetSJBM"></action>
+	    <!-- 获取任务名称 -->
+	    <action path="/hqrwmc" type="com.jf.util.GetBBLBSon"></action>
+	    <!-- 获取报表名称 -->
+	    <action path="/hqbblb" type="com.jf.util.GetBBLB"></action>
+	    <!-- 获取相应集合 -->
+	    <action path="/hqjih" type="com.jf.util.GetXZJH"></action>
+	    <!-- 退出登录 -->
+		<action path="/outlogin" type="com.jf.bchyj.login.LoginAction">
+		<forward name="out" path="/login.jsp"/>
+		</action>
+		<!-- 修改密码 -->
+		<action path="/uppw" type="com.jf.bchyj.login.LoginAction"></action>
+		
+		<action path="/login" type="com.jf.bchyj.login.LoginAction"/>
+	    <!-- 需要跳转页面 -->
+	    <action path="/scblei" type="com.jf.bchyj.action.system.bbgl.ScbleiAction">
+	    <forward name="Q849" path="/system/bbtj/D849.jsp"/>
+	    <forward name="Q850" path="/system/bbtj/D850.jsp"/>
+	    <forward name="Q852" path="/system/bbtj/D852.jsp"/>
+	    <forward name="Q854" path="/system/bbtj/D854.jsp"/>
+	    <forward name="Q858" path="/system/bbtj/D858.jsp"/>
+	    <forward name="Q859" path="/system/bbtj/D859.jsp"/>
+	    <forward name="Q860" path="/system/bbtj/D860.jsp"/>
+	    <forward name="Q861" path="/system/bbtj/D861.jsp"/>
+	    <forward name="Q862" path="/system/bbtj/D862.jsp"/>
+	    <forward name="Q863" path="/system/bbtj/D863.jsp"/>
+	    <forward name="Q864" path="/system/bbtj/D864.jsp"/>
+	    <forward name="Q865" path="/system/bbtj/D865.jsp"/>
+	    <forward name="Q866" path="/system/bbtj/D866.jsp"/>
+	    <forward name="Q867" path="/system/bbtj/D867.jsp"/>
+	    <forward name="Q869" path="/system/bbtj/D869.jsp"/>
+	    <forward name="Q870" path="/system/bbtj/D870.jsp"/>
+	    <forward name="Q871" path="/system/bbtj/D871.jsp"/>
+	    <forward name="Q872" path="/system/bbtj/D872.jsp"/>
+	    <forward name="Q873" path="/system/bbtj/D873.jsp"/>
+	    <forward name="Q874" path="/system/bbtj/D874.jsp"/>
+	    <forward name="Q875" path="/system/bbtj/D875.jsp"/>
+	    <forward name="Q877" path="/system/bbtj/D877.jsp"/>
+	    <forward name="Q878" path="/system/bbtj/D878.jsp"/>
+	    <forward name="Q880" path="/system/bbtj/D880.jsp"/>
+	    <forward name="Q881" path="/system/bbtj/D881.jsp"/>
+	    <forward name="Q882" path="/system/bbtj/D882.jsp"/>
+	    <forward name="Q883" path="/system/bbtj/D883.jsp"/>
+	    <forward name="Q884" path="/system/bbtj/D884.jsp"/>
+	    <forward name="Q885" path="/system/bbtj/D885.jsp"/>
+	    <forward name="Q886" path="/system/bbtj/D886.jsp"/>
+	    <forward name="Q888" path="/system/bbtj/D888.jsp"/>
+	    <forward name="Q889" path="/system/bbtj/D889.jsp"/>
+	    <forward name="Q890" path="/system/bbtj/D890.jsp"/>
+	    <forward name="Q891" path="/system/bbtj/D891.jsp"/>
+	    <forward name="Q892" path="/system/bbtj/D892.jsp"/>
+	    <forward name="Q893" path="/system/bbtj/D893.jsp"/>
+	    <forward name="Q894" path="/system/bbtj/D894.jsp"/>
+	    <forward name="Q895" path="/system/bbtj/D895.jsp"/>
+	    <forward name="Q896" path="/system/bbtj/D896.jsp"/>
+	    <forward name="Q897" path="/system/bbtj/D897.jsp"/>
+	    <forward name="Q898" path="/system/bbtj/D898.jsp"/>
+	    <forward name="Q899" path="/system/bbtj/D899.jsp"/>
+	    <forward name="Q900" path="/system/bbtj/D900.jsp"/>
+	    <forward name="Q901" path="/system/bbtj/D901.jsp"/>
+	    <forward name="Q902" path="/system/bbtj/D902.jsp"/>
+	    <forward name="Q903" path="/system/bbtj/D903.jsp"/>
+	    <forward name="Q904" path="/system/bbtj/D904.jsp"/>
+	    <forward name="Q905" path="/system/bbtj/D905.jsp"/>
+	    <forward name="Q906" path="/system/bbtj/D906.jsp"/>
+	    <forward name="Q907" path="/system/bbtj/D907.jsp"/>
+	    <forward name="Q908" path="/system/bbtj/D908.jsp"/>
+	    <forward name="Q909" path="/system/bbtj/D909.jsp"/>
+	    <forward name="Q910" path="/system/bbtj/D910.jsp"/>
+	    <forward name="Q911" path="/system/bbtj/D911.jsp"/>
+	    <forward name="Q912" path="/system/bbtj/D912.jsp"/>
+	    <forward name="Q913" path="/system/bbtj/D913.jsp"/>
+	    <forward name="Q914" path="/system/bbtj/D914.jsp"/>
+	    <forward name="Q915" path="/system/bbtj/D915.jsp"/>
+	    <forward name="Q916" path="/system/bbtj/D916.jsp"/>
+	    <forward name="Q917" path="/system/bbtj/D917.jsp"/>
+	    <forward name="Q001" path="/system/bbtj/D001.jsp"/>
+	    <forward name="Q002" path="/system/bbtj/D002.jsp"/>
+	    <forward name="Q003" path="/system/bbtj/D003.jsp"/>
+	    <forward name="Q004" path="/system/bbtj/D004.jsp"/>
+	    <forward name="Q005" path="/system/bbtj/D005.jsp"/>
+	    <forward name="Q006" path="/system/bbtj/D006.jsp"/>
+	    <forward name="Q007" path="/system/bbtj/D007.jsp"/>
+	    <forward name="Q008" path="/system/bbtj/D008.jsp"/>
+	    <forward name="Q009" path="/system/bbtj/D009.jsp"/>
+	    <forward name="Q010" path="/system/bbtj/D010.jsp"/>
+	    <forward name="Q011" path="/system/bbtj/D011.jsp"/>
+	    <forward name="Q012" path="/system/bbtj/D012.jsp"/>
+	    <forward name="Q013" path="/system/bbtj/D013.jsp"/>
+	    <forward name="Q014" path="/system/bbtj/D014.jsp"/>
+	    <forward name="Q015" path="/system/bbtj/D015.jsp"/>
+	    <forward name="Q016" path="/system/bbtj/D016.jsp"/>
+	    <forward name="Q017" path="/system/bbtj/D017.jsp"/>
+	    <forward name="Q018" path="/system/bbtj/D018.jsp"/>
+	    <forward name="Q019" path="/system/bbtj/D019.jsp"/>
+	    <forward name="Q020" path="/system/bbtj/D020.jsp"/>
+	    <forward name="Q021" path="/system/bbtj/D021.jsp"/>
+	    <forward name="Q022" path="/system/bbtj/D022.jsp"/>
+	    <forward name="Q023" path="/system/bbtj/D023.jsp"/>
+	    <forward name="Q024" path="/system/bbtj/D024.jsp"/>
+	    </action>
+	    <!-- 录入对应数据 -->
+	    <action path="/tjbcsj" type="com.jf.bchyj.action.system.bbgl.BcsjAction">
+	     <forward name="Q001" path="/system/bbtj/D001.jsp"/>
+	     <forward name="Q002" path="/system/bbtj/D002.jsp"/>
+	     <forward name="Q003" path="/system/bbtj/D003.jsp"/>
+	     <forward name="Q004" path="/system/bbtj/D004.jsp"/>
+	     <forward name="Q005" path="/system/bbtj/D005.jsp"/>
+	     <forward name="Q006" path="/system/bbtj/D006.jsp"/>
+	     <forward name="Q007" path="/system/bbtj/D007.jsp"/>
+	     <forward name="Q008" path="/system/bbtj/D008.jsp"/>
+	     <forward name="Q009" path="/system/bbtj/D009.jsp"/>
+	     <forward name="Q010" path="/system/bbtj/D010.jsp"/>
+	     <forward name="Q011" path="/system/bbtj/D011.jsp"/>
+	     <forward name="Q012" path="/system/bbtj/D012.jsp"/>
+	    </action>
+	    <!-- 录入对应数据 -->
+	    <action path="/tjbcsj_t" type="com.jf.bchyj.action.system.bbgl.Bcsj_TAction">
+	     <forward name="Q013" path="/system/bbtj/D013.jsp"/>
+	     <forward name="Q014" path="/system/bbtj/D014.jsp"/>
+	     <forward name="Q015" path="/system/bbtj/D015.jsp"/>
+	     <forward name="Q016" path="/system/bbtj/D016.jsp"/>
+	     <forward name="Q017" path="/system/bbtj/D017.jsp"/>
+	     <forward name="Q018" path="/system/bbtj/D018.jsp"/>
+	     <forward name="Q019" path="/system/bbtj/D019.jsp"/>
+	     <forward name="Q020" path="/system/bbtj/D020.jsp"/>
+	     <forward name="Q021" path="/system/bbtj/D021.jsp"/>
+	     <forward name="Q022" path="/system/bbtj/D022.jsp"/>
+	     <forward name="Q023" path="/system/bbtj/D023.jsp"/>
+	     <forward name="Q024" path="/system/bbtj/D024.jsp"/>
+	    </action>
+	     <!-- 页面生成excel -->
+	    <action path="/ymscExcel" type="com.jf.bchyj.action.system.bch.YmExcelAction">
+	     <forward name="Q001" path="/system/bbtj/D001_label.jsp"/>
+	     <forward name="Q002" path="/system/bbtj/D002_label.jsp"/>
+	     <forward name="Q003" path="/system/bbtj/D003_label.jsp"/>
+	     <forward name="Q004" path="/system/bbtj/D004_label.jsp"/>
+	     <forward name="Q005" path="/system/bbtj/D005_label.jsp"/>
+	     <forward name="Q006" path="/system/bbtj/D006_label.jsp"/>
+	     <forward name="Q007" path="/system/bbtj/D007_label.jsp"/>
+	     <forward name="Q008" path="/system/bbtj/D008_label.jsp"/>
+	     <forward name="Q009" path="/system/bbtj/D009_label.jsp"/>
+	     <forward name="Q010" path="/system/bbtj/D010_label.jsp"/>
+	     <forward name="Q011" path="/system/bbtj/D011_label.jsp"/>
+	     <forward name="Q012" path="/system/bbtj/D012_label.jsp"/>
+	     <forward name="Q013" path="/system/bbtj/D013_label.jsp"/>
+	     <forward name="Q014" path="/system/bbtj/D014_label.jsp"/>
+	     <forward name="Q015" path="/system/bbtj/D015_label.jsp"/>
+	     <forward name="Q016" path="/system/bbtj/D016_label.jsp"/>
+	     <forward name="Q017" path="/system/bbtj/D017_label.jsp"/>
+	     <forward name="Q018" path="/system/bbtj/D018_label.jsp"/>
+	     <forward name="Q019" path="/system/bbtj/D019_label.jsp"/>
+	     <forward name="Q020" path="/system/bbtj/D020_label.jsp"/>
+	     <forward name="Q021" path="/system/bbtj/D021_label.jsp"/>
+	     <forward name="Q022" path="/system/bbtj/D022_label.jsp"/>
+	     <forward name="Q023" path="/system/bbtj/D023_label.jsp"/>
+	     <forward name="Q024" path="/system/bbtj/D024_label.jsp"/>
+	    </action>
+	    <!-- 统计查看页面 -->
+	     <action path="/ymscExcel_tj" type="com.jf.bchyj.action.system.bch.YmExcel_TJ_Action">
+	     <forward name="Q001" path="/system/bbtj/D001_TJ.jsp"/>
+	     <forward name="Q002" path="/system/bbtj/D002_TJ.jsp"/>
+	     <forward name="Q003" path="/system/bbtj/D003_TJ.jsp"/>
+	     <forward name="Q004" path="/system/bbtj/D004_TJ.jsp"/>
+	     <forward name="Q005" path="/system/bbtj/D005_TJ.jsp"/>
+	     <forward name="Q006" path="/system/bbtj/D006_TJ.jsp"/>
+	     <forward name="Q007" path="/system/bbtj/D007_TJ.jsp"/>
+	     <forward name="Q009" path="/system/bbtj/D009_TJ.jsp"/>
+	     <forward name="Q013" path="/system/bbtj/D013_TJ.jsp"/>
+	     <forward name="Q014" path="/system/bbtj/D014_TJ.jsp"/>
+	     <forward name="Q021" path="/system/bbtj/D021_TJ.jsp"/>
+	     <forward name="Q022" path="/system/bbtj/D022_TJ.jsp"/>
+	     </action>
+	    <!-- 生成Excel -->
+		<action path="/scExcel" type="com.jf.bchyj.action.system.bbcx.CreatexlAction"></action>
+		<!-- 生成一个页面 -->
+		<action path="/schtml" type="com.jf.bchyj.action.system.bbgl.ScHtmlAction"></action>
+		<!-- 级联 -->
+	    <action path="/cesdm" type="com.jf.bchyj.action.system.bbcx.JLAction"></action>
+	    
+	    <action path="/cessd" type="com.jf.bchyj.action.system.bbcx.TextSuDuAction"></action>
+	    <!-- 详细 -->
+	    <action path="/desits" type="com.jf.bchyj.bbhz.DetailsAction">
+	       <forward name="QUERY" path="/bbhz/bbhz_details.jsp" />
+	    </action>
+		<!-- 首页-信息浏览 -->
+		<action path="/xxll" type="com.jf.bchyj.index.XxllAction">
+			<forward name="QUERY" path="/index/xxll_list.jsp" />
+		</action>
+		<!-- 首页-工作提示 -->
+		<action path="/gzts" type="com.jf.bchyj.index.GztsAction">
+			<forward name="QUERY" path="/index/gzts_list.jsp" />
+		</action>
+		<!-- 首页-预警提示 -->
+		<action path="/yjts" type="com.jf.bchyj.index.YjtsAction">
+			<forward name="QUERY" path="/index/yjts_list.jsp" />
+		</action>
+		<!-- 首页-当前工作 -->
+		<action path="/dqgz" type="com.jf.bchyj.index.DqgzAction">
+			<forward name="QUERY" path="/Dqgz_gd.jsp" />
+		</action>
+		<!-- 市站首页 -->
+		<action path="/qxrwtj" type="com.jf.bchyj.index.QxrwtjAction">
+			<forward name="QUERY" path="/index/qxrw_list.jsp" />
+			<forward name="DETAIL" path="/index/qxrw_detail.jsp" />
+		</action>
+		
+		<!-- 公共模块 -->
+		<action path="/tbsjxz" type="com.jf.bchyj.common.tjsjxz.TbsjxzAction">
+			<forward name="QUERY" path="/common/tbsjxz/tbsjxz.jsp" />
+		</action>
+		
+		<!-- 数据管理-数据查询 -->
+		<action path="/sjcx" type="com.jf.bchyj.sjcx.SjcxAction">
+			<forward name="QUERY" path="/sjcx/list.jsp" />
+			<forward name="LIST" path="/sjcx/sjcx_query.jsp" />
+		</action>
+		<!-- 数据管理-数据填报 -->
+		<action path="/sjtb" type="com.jf.bchyj.sjtb.SjtbAction">
+			<forward name="QUERY" path="/sjtb/list.jsp" />
+		</action>
+		<!-- 数据管理-数据汇总 -->
+		<action path="/bbhz" type="com.jf.bchyj.bbhz.BbhzAction">
+			<forward name="QUERY" path="/bbhz/list.jsp" />
+			<forward name="LIST" path="/bbhz/bbhz_query.jsp" />
+		</action>
+		<action path="/bbhz_ny" type="com.jf.bchyj.bbhz.BbhznyAction">
+			<forward name="QUERY" path="/bbhz/list_ny.jsp" />
+			<forward name="LIST" path="/bbhz/bbhz_ny_query.jsp" />
+		</action>
+		
+		<!-- 系统管理-li -->
+		<!-- 报表查询定义 -->
+		<action path="/sysbbcx" type="com.jf.bchyj.action.system.bbcx.BbcxAction">
+			<forward name="QUERY" path="/system/cxtj/bbcx.jsp" />
+			<forward name="MODIFY" path="/system/cxtj/bbcx_update.jsp" />
+		</action>
+		<!-- 报表统计 -->
+		<action path="/sysbbtj" type="com.jf.bchyj.action.system.bbtj.BbtjAction">
+			<forward name="QUERY" path="/system/bbtj/bbtj_list.jsp" />
+			<forward name="MODIFY" path="/system/bbtj/bbtj_update.jsp" />
+			<forward name="ADD" path="/system/bbtj/bbtj_add.jsp" />
+		</action>
+		<!-- 报表统计表头定义 -->
+		<action path="/sysbbtj_hd" type="com.jf.bchyj.action.system.bbtj.BbtjHeadAction">
+			<forward name="QUERY" path="/system/bbtj/bbtj_head.jsp" />
+			<forward name="QUERY2" path="/system/bbtj/bbtj_head_o.jsp" />
+		</action>
+		<!-- 报表管理 -->
+		<action path="/sysbbgl" type="com.jf.bchyj.action.system.bbgl.BbglAction">
+			<forward name="QUERY" path="/system/bb/list.jsp" />
+		</action>
+		<!-- 任务管理 -->
+		<action path="/systask" type="com.jf.bchyj.action.system.task.TaskAction">
+			<forward name="QUERY" path="/system/task/list.jsp" />
+			<forward name="ADD" path="/system/task/add.jsp" />
+			<forward name="SEARCH" path="/system/task/query.jsp" />
+			<forward name="MODIFY" path="/system/task/update.jsp" />
+		</action>
+		<!-- 监测预警 -->
+		<action path="/jcyj" type="com.jf.bchyj.action.system.jcyj.YcyjAction">
+			<forward name="INSERT" path="/jcyj/jcyj_ifrom.jsp" />
+		</action>
+		<!-- liang -->
+		<action path="/deptAction" type="com.jf.bchyj.action.system.dept.DeptAction">
+			<forward name="QUERY" path="/system/dept/dept_list.jsp" />
+			<forward name="INSERT" path="/system/dept/dept_insert.jsp" />
+			<forward name="DETAIL" path="/system/dept/dept_detail.jsp" />
+			<forward name="UPDATE" path="/system/dept/dept_detail.jsp" />
+		</action>
+		<action path="/roleAction" type="com.jf.bchyj.action.system.role.RoleAction">
+			<forward name="QUERY" path="/system/role/role_list.jsp" />
+			<forward name="INSERT" path="/system/role/role_insert.jsp" />
+			<forward name="DETAIL" path="/system/role/role_detail.jsp" />
+			<forward name="UPDATE" path="/system/role/role_detail.jsp" />
+		</action>
+		<action path="/roleMenuListAction" type="mt.project.user.RoleMenuListAction">
+			<forward name="QUERY" path="/system/role/role_menu_list.jsp" />
+			<!--forward name="INSERT" path="/user/role_close.jsp" /-->
+		</action>
+		<action path="/userAction" type="com.jf.bchyj.action.system.user.UserAction">
+			<forward name="QUERY" path="/system/user/user_list.jsp" />
+			<forward name="INSERT" path="/system/user/user_insert.jsp" />
+			<forward name="DETAIL" path="/system/user/user_detail.jsp" />
+			<forward name="UPDATE" path="/system/user/user_detail.jsp" />
+		</action>
+		<action type="mt.project.user.UserRoleListAction" path="/userRoleListAction">
+			<forward name="QUERY" path="/system/user/user_role_list.jsp" />
+		</action>
+		<action type="com.jf.bchyj.action.system.user.LoginerPasswordModify"
+			path="/loginerPasswordModify">
+			<forward name="QUERY" path="/system/user/changepassword.jsp" />
+		</action>
+		
+		<action path="/dyglAction" type="com.jf.bchyj.action.system.dygl.DyglAction">
+			<forward name="QUERY" path="/system/dygl/dygl_list.jsp" />
+			<forward name="INSERT" path="/system/dygl/dygl_insert.jsp" />
+			<forward name="DETAIL" path="/system/dygl/dygl_detail.jsp" />
+			<forward name="UPDATE" path="/system/dygl/dygl_detail.jsp" />
+		</action>
+		<action path="/systemCodeQuery" type="com.jf.bchyj.action.system.code.SystemCodeQuery">
+			<forward name="QUERY" path="/system/code/code_list.jsp" />
+		</action>
+		<!-- 获取验证码 -->
+		<action path="/hqyzm" type="com.jf.bchyj.login.HqyzmAction"></action>
+		
+		<action path="/systemCodeUpdate" type="com.jf.bchyj.action.system.code.SystemCodeUpdate">
+			<forward name="QUERY" path="/system/code/code_update.jsp" />
+			<forward name="UPDATE" path="/system/code/code_update.jsp" />
+			<forward name="DELETE" path="/system/code/code_update.jsp" />
+		</action>
+		<action path="/bchlbAction" type="com.jf.bchyj.action.system.bchlb.BchlbAction">
+			<forward name="QUERY" path="/system/bchlb/bchlb_list.jsp" />
+			<forward name="INSERT" path="/system/bchlb/bchlb_insert.jsp" />
+			<forward name="DETAIL" path="/system/bchlb/bchlb_detail.jsp" />
+			<forward name="UPDATE" path="/system/bchlb/bchlb_detail.jsp" />
+		</action>
+		<action path="/xxfb_cbgfQueryAction" type="com.jf.bchyj.xxfb.Xxfb_cbgfQueryAction">
+			<forward name="QUERY" path="/xxfb/cbgf_list.jsp" />
+			<forward name="INSERT" path="/xxfb/cbgf_insert.jsp" />
+			<forward name="DETAIL" path="/xxfb/cbgf_detail.jsp" />
+			<forward name="UPDATE" path="/xxfb/cbgf_detail.jsp" />
+			<forward name="DELZJ" path="/xxfb/cbgf_list.jsp" />
+		</action>
+		<action path="/upload" type="com.jf.bchyj.common.zjz_upload.UploadAction">
+			<forward name="QUERY" path="/common/upload/upload.jsp" />
+		</action>
+		<action path="/xxfb_tzggAction" type="com.jf.bchyj.xxfb.Xxfb_tzggAction">
+			<forward name="QUERY" path="/xxfb/tzgg_list.jsp" />
+			<forward name="INSERT" path="/xxfb/tzgg_insert.jsp" />
+			<forward name="DETAIL" path="/xxfb/tzgg_detail.jsp" />
+			<forward name="UPDATE" path="/xxfb/tzgg_detail.jsp" />
+			<forward name="DELZJ" path="/xxfb/tzgg_list.jsp" />
+		</action>
+		<action path="/xxfb_bcqbAction" type="com.jf.bchyj.xxfb.Xxfb_bcqbAction">
+			<forward name="QUERY" path="/xxfb/bcqb_list.jsp" />
+			<forward name="INSERT" path="/xxfb/bcqb_insert.jsp" />
+			<forward name="DETAIL" path="/xxfb/bcqb_detail.jsp" />
+			<forward name="UPDATE" path="/xxfb/bcqb_detail.jsp" />
+			<forward name="DELZJ"  path="/xxfb/bcqb_list.jsp"/>
+		</action>
+		<!-- 文献检索 -->
+		<action path="/wxjs_Action" type="com.jf.bchyj.xxfb.WxjsAction">
+		<forward name="QUERY" path="/xxfb/wxjs_list.jsp" />
+		<forward name="INSERT" path="/xxfb/wxjs_insert.jsp" />
+		<forward name="DETAIL" path="/xxfb/wxjs_detail.jsp" />
+		<forward name="UPDATE" path="/xxfb/wxjs_detail.jsp" />
+		<forward name="DELZJ"  path="/xxfb/wxjs_list.jsp"/>
+		</action>
+		<!-- 文献检索查询 -->
+		<action path="/wxjs_Action_sel" type="com.jf.bchyj.wxjs.WxjsAction">
+		<forward name="QUERY" path="/wxjs/wxjs_list.jsp" />
+		<forward name="DETAIL" path="/wxjs/wxjs_detail.jsp" />
+		</action>
+		<action path="/bcqbAction" type="com.jf.bchyj.bcqb.BcqbAction">
+			<forward name="QUERY" path="/bcqb/bcqb_list.jsp" />
+			<forward name="DETAIL" path="/bcqb/bcqb_detail.jsp" />
+		</action>
+		<action path="/cbgfQueryAction" type="com.jf.bchyj.cbgf.CbgfQueryAction">
+			<forward name="QUERY" path="/cbgf/cbgf_list.jsp" />
+			<forward name="DETAIL" path="/cbgf/cbgf_detail.jsp" />
+		</action>
+		<action path="/tzggAction" type="com.jf.bchyj.tzgg.TzggAction">
+			<forward name="QUERY" path="/tzgg/tzgg_list.jsp" />
+			<forward name="DETAIL" path="/tzgg/tzgg_detail.jsp" />
+		</action>
+		<action path="/zwlbAction" type="com.jf.bchyj.action.system.zwlb.ZwlbAction">
+			<forward name="QUERY" path="/system/zwlb/zwlb_list.jsp" />
+			<forward name="INSERT" path="/system/zwlb/zwlb_insert.jsp" />
+			<forward name="DETAIL" path="/system/zwlb/zwlb_detail.jsp" />
+			<forward name="UPDATE" path="/system/zwlb/zwlb_detail.jsp" />
+		</action>
+		<action path="/bchAction" type="com.jf.bchyj.action.system.bch.BchAction">
+			<forward name="QUERY" path="/system/bch/bch_list.jsp" />
+			<forward name="INSERT" path="/system/bch/bch_insert.jsp" />
+			<forward name="DETAIL" path="/system/bch/bch_detail.jsp" />
+			<forward name="UPDATE" path="/system/bch/bch_detail.jsp" />
+			<forward name="INSERT_ZW" path="/system/bch/bchzw_insert.jsp" />
+			<forward name="DETAIL_ZW" path="/system/bch/bchzw_detail.jsp" />
+			<forward name="UPDATE_ZW" path="/system/bch/bchzw_detail.jsp" />
+		</action>
+		<action path="/zwAction" type="com.jf.bchyj.action.system.zw.ZwAction">
+			<forward name="QUERY" path="/system/zw/zw_list.jsp" />
+			<forward name="INSERT" path="/system/zw/zw_insert.jsp" />
+			<forward name="DETAIL" path="/system/zw/zw_detail.jsp" />
+			<forward name="UPDATE" path="/system/zw/zw_detail.jsp" />
+			<forward name="INSERT_ZW" path="/system/zw/bchzw_insert.jsp" />
+			<forward name="DETAIL_ZW" path="/system/zw/bchzw_detail.jsp" />
+			<forward name="UPDATE_ZW" path="/system/zw/bchzw_detail.jsp" />
+		</action>
+		<action path="/tbglAction" type="com.jf.bchyj.action.system.tbgl.TbglAction">
+			<forward name="QUERY" path="/system/tbgl/tbgl_list.jsp" />
+			<forward name="UPDATE" path="/system/tbgl/tbgl_query.jsp" />
+		</action>
+		<action path="/qxzlAction" type="com.jf.bchyj.qxzl.QxzlAction">
+			<forward name="QUERY" path="/qxzl/qxzl_list.jsp" />
+			<forward name="UPDATE" path="/qxzl/qxzl_update.jsp" />
+			<forward name="DETAIL" path="/qxzl/qxzl_update.jsp" />
+			<forward name="INSERT" path="/qxzl/qxzl_insert.jsp" />
+			<forward name="DELETE" path="/qxzl/qxzl_list.jsp" />
+		</action>
+			<action path="/qxzlActioncx" type="com.jf.bchyj.qxzl.QxzlCXAction">
+			<forward name="QUERY" path="/qxzl/qxzl_cx_list.jsp" />
+			<forward name="DETAIL" path="/qxzl/qxzl_cx_update.jsp" />
+		</action>
+	</action-mappings>
+</struts-config>
